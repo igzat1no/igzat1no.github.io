@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>theory-of-computation-note-1 | igzat1no&#39;s blog</title>
+  <link rel="stylesheet" href="/css/fonts/Chinese-normal-normal.min.css">
+  <link rel="stylesheet" href="/css/fonts/ChineseMono-normal-normal.min.css">
+  <link rel="stylesheet" href="/css/fonts/Chinese-italic-normal.min.css">
+  <link rel="stylesheet" href="/css/fonts/Chinese-normal-bold.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="Formal Logical System
+Formal system
+
+
+tautology 恒真的 statement
+contradiction 恒假的 statement
+">
+  
+  
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox-1.3.4.css">
+  
+  
+    <link rel="stylesheet" href="/katex/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="/katex/katex.min.js" integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="/katex/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+            {left: '\\(', right: '\\)', display: false},
+            {left: '\\[', right: '\\]', display: true}
+          ],
+          throwOnError : false
+        });
+      });
+    </script>
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div id="nav-outer">
+  <nav id="main-nav" class="outer">
+    <a id="main-nav-toggle" class="nav-icon"></a>
+    
+      <a class="main-nav-link" href="/">Home</a>
+    
+      <a class="main-nav-link" href="/archives">Posts</a>
+    
+      <a class="main-nav-link" href="/about">About</a>
+    
+    <div class="main-nav-space-between"></div>
+    
+  </nav>
+</div>
+<div id="header-title">
+
+  
+</div>
+
+      <div id="content" class="outer">
+        <section id="main"><article id="post-theory-of-computation-note" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/05/07/theory-of-computation-note/" class="article-date">
+  <time class="dt-published" datetime="2022-05-07T05:38:44.000Z" itemprop="datePublished">2022-05-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      theory-of-computation-note-1
+    </h1>
+  
+
+      </header>
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="formal-logical system">Formal Logical System</h2>
+<h3 id="formal-system">Formal system</h3>
+<ul>
+<li><img src="16" alt="image-20220418200944459"></li>
+<li><em><strong>tautology</strong></em> 恒真的 statement</li>
+<li><em><strong>contradiction</strong></em> 恒假的 statement</li>
+</ul>
+<span id="more"></span>
+<h3 id="normal-forms">Normal forms</h3>
+<h4 id="disjunctive-normal form (or of and)">Disjunctive normal form (or of and)</h4>
+<ul>
+<li>Every statement form <strong>(not a contradiction)</strong> is logically equivalent to a restricted statement form of the form <span class="markdown-them-math-inline">$\left(\vee_{i=1}^{m}\left(\wedge_{j=1}^{n} Q_{i j}\right)\right)$</span> where each <span class="markdown-them-math-inline">$Q_{ij}$</span> is either a variable or the negation of a variable.</li>
+</ul>
+<h4 id="conjunctive-normal form (and of or)">Conjunctive normal form (and of or)</h4>
+<ul>
+<li>Every statement form <strong>(not a tautology)</strong> is logically equivalent to a restricted statement form of the form <span class="markdown-them-math-inline">$\left(\wedge _{i=1}^{m}\left(\vee_{j=1}^{n} Q_{i j}\right)\right)$</span> where each <span class="markdown-them-math-inline">$Q_{ij}$</span> is either a variable or the negation of a variable.</li>
+</ul>
+<h3 id="adequate-set">Adequate set</h3>
+<ul>
+<li><span class="markdown-them-math-inline">$\sim$</span> 加上 <span class="markdown-them-math-inline">$\{\wedge,\vee, \rightarrow\}$</span> 中的任何一个</li>
+<li>一元的只有 NOR, NAND <span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>必须引入 not<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char></span></li>
+</ul>
+<h2 id="formal-statement calculus(l)">Formal statement calculus(L)</h2>
+<ul>
+<li>
+<p>an alphabet of <strong>symbols</strong>: <span class="markdown-them-math-inline">$\sim, \rightarrow, (, ), P_1, P_2, P_3, \cdots$</span></p>
+</li>
+<li>
+<p>A set of finite string of these symbols, called <strong>well-formed formula</strong>:</p>
+<ul>
+<li><span class="markdown-them-math-inline">$P_i$</span> is a wf <span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>一个变量是一个式子<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char></span></li>
+<li>If <span class="markdown-them-math-inline">$A$</span> and <span class="markdown-them-math-inline">$B$</span> are wfs, then <span class="markdown-them-math-inline">$(\sim A)$</span> and <span class="markdown-them-math-inline">$(A \rightarrow B)$</span> are wfs.</li>
+</ul>
+</li>
+<li>
+<p>Axioms:</p>
+<ul>
+<li><img src="18" alt="image-20220418205040857"></li>
+</ul>
+</li>
+<li>
+<p>rules of deduction</p>
+<p><strong>MP</strong>: From <span class="markdown-them-math-inline">$A$</span> and <span class="markdown-them-math-inline">$A \rightarrow B$</span>,  we can derive <span class="markdown-them-math-inline">$B$</span></p>
+<p><strong>HS</strong>: <span class="markdown-them-math-inline">$\{(A\rightarrow B), (B \rightarrow C)\} \vdash (A \rightarrow C)$</span></p>
+</li>
+</ul>
+<h3 id="deduction-theorem">Deduction Theorem</h3>
+<ul>
+<li><span class="markdown-them-math-inline">$\Delta \cup \{A\} \vdash B \Leftrightarrow \Delta \vdash A \rightarrow B$</span></li>
+<li>Proof: 归纳推导过程的长度<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>枚举最后一步推导的方式<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span>substitution or MP</li>
+</ul>
+<h1 id="unfinished!-some examples">Unfinished! some examples</h1>
+<ul>
+<li><img src="20" alt="image-20220418224906806"></li>
+</ul>
+<h2 id="extension">Extension</h2>
+<ul>
+<li>
+<p>An extension L<em>of L is <strong>consistent</strong> if and only if there is a wf. which is not a theorem of L</em>.</p>
+<ul>
+<li>
+<p>Otherwise</p>
+<p><img src="19" alt="image-20220418224550276"></p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>complete</strong>: we can decide every statement true or false</p>
+</li>
+<li></li>
+</ul>
+<h2 id="turing-machines">Turing Machines</h2>
+<h3 id="standard-turing machine">Standard Turing Machine</h3>
+<ul>
+<li>input <span class="markdown-them-math-inline">$w$</span> is written on the first <span class="markdown-them-math-inline">$|w|$</span> cells, other cells are empty</li>
+<li><strong>when want to move to the left of the leftmost cell, stay put</strong></li>
+<li>At each time
+<ul>
+<li>read the symbol</li>
+<li>write a symbol</li>
+<li>move left or right</li>
+</ul>
+</li>
+<li><img src="1.png" alt="image-20220404110144013"></li>
+<li>A language is <em><strong>recursively enumerable (recognizable)</strong></em> if some TM recognizes it.
+<ul>
+<li>the TM can enumerate all the strings</li>
+</ul>
+</li>
+<li>A language is <em><strong>recursive (decidable)</strong></em> if some TM decides it.
+<ul>
+<li><em><strong>recursive language <span class="markdown-them-math-inline">$\subset$</span> recursively enumerable language</strong></em></li>
+</ul>
+</li>
+</ul>
+<h3 id="multiple-tapes">Multiple Tapes</h3>
+<h4 id="2-tape-turing machine">2-Tape Turing Machine</h4>
+<ul>
+<li>The input is on Tape 1.</li>
+<li>Tape 2 is initially blank.</li>
+<li>Read a symbol from each tape, each head moves. 两个一起动</li>
+</ul>
+<h5 id="simulation-on one tm">Simulation on one TM</h5>
+<ul>
+<li>
+<p>each <span class="markdown-them-math-inline">$a \in \Gamma$</span> has a mirror state <span class="markdown-them-math-inline">$a ^ *$</span></p>
+<p>if one state has <span class="markdown-them-math-inline">$*$</span>  it means 当前 head 位于这个位置</p>
+</li>
+<li>
+<p>Beginning</p>
+<ul>
+<li>input#<span class="markdown-them-math-inline">$\perp^*$</span></li>
+<li>replace the first symbol <span class="markdown-them-math-inline">$a$</span> with <span class="markdown-them-math-inline">$a ^ *$</span>
+<ul>
+<li>表示 一开始 第一个纸带 输入是input 位置在第一位</li>
+<li>第二个纸带 输入是空 位置在第一位</li>
+<li>中间用 # 隔开</li>
+</ul>
+</li>
+<li>每一次在一个上面做完了 就找到另一个 <span class="markdown-them-math-inline">$*$</span> state 然后再做</li>
+<li>special case: 如果第一个纸带做到了 # 上<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>先整体右移</li>
+</ul>
+</li>
+</ul>
+<h3 id="nondeterministic-turing machine">Nondeterministic Turing Machine</h3>
+<ul>
+<li>下一个状态是一个可行集合</li>
+<li>只要有可行的方式到达 accept 那就是 accept</li>
+<li>simulate 的方式
+<ul>
+<li>3-tape TM
+<ul>
+<li>tape 1: input</li>
+<li>tape 2: simulate</li>
+<li>tape 3: 按从短到长的顺序 存储 guess (bfs)</li>
+</ul>
+</li>
+<li>每次把 1 里面的 input load 到 2 上去<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>当前 3 的 guess 在 2 上跑一遍</li>
+</ul>
+</li>
+<li>a NTM is a <em><strong>decider</strong></em> if all branches halt on all inputs</li>
+</ul>
+<h3 id="tm-with outputs">TM with outputs</h3>
+<ul>
+<li>TM with a write only tape</li>
+<li><em><strong>enumerator</strong></em>
+<ul>
+<li>a machine that can enumerate strings one by one, maybe with repetitions</li>
+<li>为什么 Turing recognizable 的 language 称作 recursively enumerable
+<ul>
+<li>因为可以用一个enumerator E 去 generate</li>
+<li><img src="6.png" alt="image-20220412171050992"></li>
+<li>为啥得枚举 步数
+<ul>
+<li>一个 TM 输入的串的长度是否确定了在TM 上运行时间的上界</li>
+</ul>
+</li>
+<li>如何recognize
+<ul>
+<li>每次枚举出来一个 就跟输入 w 比较</li>
+<li>accept的总能判断出来 但 reject 的可能会不停机</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="universal-turing machine (utm)">Universal Turing Machine (UTM)</h3>
+<ul>
+<li>the set of TM is countable
+<ul>
+<li>可以编号<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>用 &lt;M&gt; 代表第 M 这个 <span class="markdown-them-math-inline">$TM$</span> 的编号</li>
+</ul>
+</li>
+<li>UTM
+<ul>
+<li>input: M, w</li>
+<li>output: 与 M 上跑 w 的结果一样</li>
+</ul>
+</li>
+</ul>
+<h2 id="halting-problem">Halting Problem</h2>
+<h3 id="$a_{tm}$"><span class="markdown-them-math-inline">$A_{TM}$</span></h3>
+<ul>
+<li><span class="markdown-them-math-inline">$A_{T M}=\{&lt;M, w&gt;\mid M \text { is a TM and } M \text { accepts } w\}$</span></li>
+<li>want to prove <span class="markdown-them-math-inline">$A_{TM}$</span> is not decidable</li>
+<li>Proof:
+<ul>
+<li>If <span class="markdown-them-math-inline">$A_{TM}$</span> is decidable
+<ul>
+<li><span class="markdown-them-math-inline">$\exist H$</span> that decides <span class="markdown-them-math-inline">$A_{TM}$</span></li>
+<li>consider <span class="markdown-them-math-inline">$H(M, &lt;M&gt;)$</span>
+<ul>
+<li>accept if <span class="markdown-them-math-inline">$M$</span> accepts <span class="markdown-them-math-inline">$&lt;M&gt;$</span></li>
+<li>reject if <span class="markdown-them-math-inline">$M$</span> rejects or loops on <span class="markdown-them-math-inline">$&lt;M&gt;$</span></li>
+<li>always halt</li>
+</ul>
+</li>
+<li>令 <span class="markdown-them-math-inline">$D(&lt;M&gt;)$</span> 如下定义 <span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>也是一个 TM<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char></span>
+<ul>
+<li><img src="7" alt="image-20220412173857875"></li>
+<li>always halt</li>
+</ul>
+</li>
+<li>考虑 <span class="markdown-them-math-inline">$D(&lt;D&gt;)$</span>
+<ul>
+<li><span class="markdown-them-math-inline">$D$</span> accept <span class="markdown-them-math-inline">$&lt;D&gt;$</span> -&gt; <span class="markdown-them-math-inline">$H(D, &lt;D&gt;)$</span> reject -&gt; <span class="markdown-them-math-inline">$D$</span> reject or loop on <span class="markdown-them-math-inline">$&lt;D&gt;$</span></li>
+<li><span class="markdown-them-math-inline">$D$</span> reject <span class="markdown-them-math-inline">$&lt;D&gt;$</span> -&gt; <span class="markdown-them-math-inline">$H(D, &lt;D&gt;)$</span> accept -&gt; <span class="markdown-them-math-inline">$D$</span> accept <span class="markdown-them-math-inline">$&lt;D&gt;$</span></li>
+<li>总是矛盾</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Thus, <span class="markdown-them-math-inline">$A_{TM}$</span> is not decidable</li>
+</ul>
+</li>
+<li>显然 <span class="markdown-them-math-inline">$A_{TM}$</span> is recognizable 因为我们可以直接模拟</li>
+<li>所以 <span class="markdown-them-math-inline">$A_{TM}$</span> is not co-recognizable</li>
+</ul>
+<h3 id="$halt_{tm}$"><span class="markdown-them-math-inline">$HALT_{TM}$</span></h3>
+<ul>
+<li>
+<p><span class="markdown-them-math-inline">$\mathrm{HALT}_{\mathrm{TM}}=\{&lt;M, w&gt;\mid \text{TM } M \text { halts on input } w&gt;$</span></p>
+</li>
+<li>
+<p>not decidable</p>
+</li>
+<li>
+<p>recognizable</p>
+</li>
+<li>
+<p>not co-recognizable</p>
+</li>
+</ul>
+<h2 id="turing-reducibility">Turing reducibility</h2>
+<h3 id="oracle-turing machine (otm)">Oracle Turing Machine (OTM)</h3>
+<ul>
+<li>相当于你有一个 oracle language A 就是有一个 tool A</li>
+<li>你可以询问 A 让他自己告诉你 询问的串 在不在 <span class="markdown-them-math-inline">$A$</span> 中</li>
+</ul>
+<h3 id="definition">Definition</h3>
+<ul>
+<li>
+<p>Language A is Turing reducible to B, if an oracle TM <span class="markdown-them-math-inline">$M^B$</span></p>
+<p>decides A, write <span class="markdown-them-math-inline">$A\leq _T B$</span></p>
+</li>
+<li>
+<p>就是说 有了 <span class="markdown-them-math-inline">$B$</span> <span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span><span class="markdown-them-math-inline">$A$</span> 就是 turing decidable</p>
+</li>
+<li>
+<p>Ex: <span class="markdown-them-math-inline">$A_{TM} \leq_T HALT_{TM}$</span></p>
+</li>
+</ul>
+<h3 id="examples">Examples</h3>
+<ol>
+<li>
+<p><span class="markdown-them-math-inline">$E_{TM} = \{\langle M \rangle \mid M 是一个图灵机&lt;span class=&quot;bd-box&quot;&gt;&lt;h-char class=&quot;bd bd-beg&quot;&gt;&lt;h-inner&gt;，&lt;/h-inner&gt;&lt;/h-char&gt;&lt;/span&gt;且 L(M) = \emptyset\}$</span></p>
+<p><em><strong>Undecidable</strong></em></p>
+<p><img src="8" alt="image-20220412182018250"></p>
+</li>
+<li>
+<p><span class="markdown-them-math-inline">$REGULAR_{TM} = \{\langle M \rangle \mid M 是一个图灵机&lt;span class=&quot;bd-box&quot;&gt;&lt;h-char class=&quot;bd bd-beg&quot;&gt;&lt;h-inner&gt;，&lt;/h-inner&gt;&lt;/h-char&gt;&lt;/span&gt;且 L(M) 是一个正则语言\}$</span></p>
+<p><em><strong>Undecidable</strong></em></p>
+<p><img src="9" alt="image-20220412193319580"></p>
+</li>
+<li>
+<p><span class="markdown-them-math-inline">$E Q_{\mathrm{TM}}=\left\{\left\langle M_{1}, M_{2}\right\rangle \mid M_{1}\right.$</span> 和 <span class="markdown-them-math-inline">$M_{2}$</span> 都是图灵机, 且 <span class="markdown-them-math-inline">$\left.L\left(M_{1}\right)=L\left(M_{2}\right)\right\}$</span></p>
+<p><em><strong>Undecidable</strong></em></p>
+<p>If <span class="markdown-them-math-inline">$EQ_{TM}$</span> is decidable,</p>
+<p>令 <span class="markdown-them-math-inline">$M_1$</span> 是一个拒绝所有输入的图灵机</p>
+<p>对于 <span class="markdown-them-math-inline">$M$</span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>输入 <span class="markdown-them-math-inline">$\langle M, M_1\rangle$</span>  <span class="markdown-them-math-inline">$EQ_{TM}$</span> 即判定 <span class="markdown-them-math-inline">$L(M)$</span> 是否为空</p>
+<p>解决了 <span class="markdown-them-math-inline">$E_{TM}$</span></p>
+</li>
+</ol>
+<h4 id="properties-of cfg">Properties of CFG</h4>
+<p><img src="10" alt="image-20220412193401901"></p>
+<h3 id="reduction-via computation history">Reduction via Computation History</h3>
+<h4 id="definition-of computation history">Definition of computation history</h4>
+<ul>
+<li>
+<p>Let <span class="markdown-them-math-inline">$M$</span> be a TM and <span class="markdown-them-math-inline">$w$</span> be an input string.</p>
+<p>An <em><strong>accepting computation history</strong></em> for <span class="markdown-them-math-inline">$M$</span> on <span class="markdown-them-math-inline">$w$</span> is a sequence of configurations, <span class="markdown-them-math-inline">$C_1, C_2, \cdots, C_l$</span> , where <span class="markdown-them-math-inline">$C_1$</span> is the start configuration of <span class="markdown-them-math-inline">$M$</span> on <span class="markdown-them-math-inline">$w$</span>, <span class="markdown-them-math-inline">$C_l$</span> is an accepting configuration of <span class="markdown-them-math-inline">$M$</span>, and each <span class="markdown-them-math-inline">$C_i$</span> legally follows from <span class="markdown-them-math-inline">$C_{i−1}$</span> according to the rules of <span class="markdown-them-math-inline">$M$</span>.</p>
+<p>A <em><strong>rejecting computation history</strong></em> for <span class="markdown-them-math-inline">$M$</span> on <span class="markdown-them-math-inline">$w$</span> is defined similarly, except that <span class="markdown-them-math-inline">$C_l$</span> is a rejecting configuration.</p>
+<p>一个 configuration <span class="markdown-them-math-inline">$C_i$</span> 是指 形如 <span class="markdown-them-math-inline">$u a q_i b v$</span> 的组合 包含了带子的内容 头的位置和状态信息</p>
+</li>
+<li>
+<p>计算历史 是有限序列</p>
+<p>如果不停机 那么不存在计算历史</p>
+</li>
+</ul>
+<h4 id="example:-linear bounded automaton (lba)">Example: Linear bounded automaton (LBA)</h4>
+<ul>
+<li>
+<p>LBA 是一种图灵机 不允许 head 离开 input 在带子上的区域</p>
+</li>
+<li>
+<p>相当于 纸带的存储大小被 input bound 住</p>
+</li>
+<li>
+<p><span class="markdown-them-math-inline">$A_{LBA} = \{\langle M, w\rangle \mid M是一个接受w的LBA\}$</span></p>
+</li>
+<li>
+<p>Lemma: Let <span class="markdown-them-math-inline">$M$</span> be an <span class="markdown-them-math-inline">$LBA$</span> with <span class="markdown-them-math-inline">$q$</span> states and <span class="markdown-them-math-inline">$g$</span> symbols in the tape alphabet. There are exactly <span class="markdown-them-math-inline">$qng^n$</span> distinct configurations of <span class="markdown-them-math-inline">$M$</span> for a tape of length <span class="markdown-them-math-inline">$n$</span>.</p>
+<p>configuration数有限 显然</p>
+</li>
+<li>
+<p><span class="markdown-them-math-inline">$A_{LBA}$</span> is decidable</p>
+<ul>
+<li>因为 configuration 的上限 is <span class="markdown-them-math-inline">$qng^n$</span> 我们可以在 w 上 模拟这么多步 或者直到它停机</li>
+<li>如果接受就接受 如果拒绝或者还没跑完就拒绝</li>
+</ul>
+</li>
+<li>
+<p><span class="markdown-them-math-inline">$E_{LBA}$</span> is not decidable</p>
+<ul>
+<li>想要从 <span class="markdown-them-math-inline">$E_{LBA}$</span> 规约到 <span class="markdown-them-math-inline">$A_{TM}$</span></li>
+<li>对于 <span class="markdown-them-math-inline">$M$</span> 和 <span class="markdown-them-math-inline">$w$</span> 我们构造一个检查器 检查器的输入是 <span class="markdown-them-math-inline">$M, w$</span> 以及一段 accepting computation history</li>
+<li>检查器就是检查 computation history 是否合法 显然不需要额外的空间 因此是 LBA</li>
+<li>我们只要判断是否属于 <span class="markdown-them-math-inline">$E_{LBA}$</span> 也就是判断了 是否存在 accepting computation history</li>
+</ul>
+</li>
+</ul>
+<h4 id="example:-$all_{cfg}$">Example: <span class="markdown-them-math-inline">$ALL_{CFG}$</span></h4>
+<ul>
+<li>
+<p><span class="markdown-them-math-inline">$ALL_{CFG}$</span> is not decidable</p>
+<ul>
+<li>
+<p>想要从 <span class="markdown-them-math-inline">$ALL_{CFG}$</span> 规约到 <span class="markdown-them-math-inline">$A_{TM}$</span></p>
+</li>
+<li>
+<p>构造一个非确定的 PDA 对于 M 和 w</p>
+<ul>
+<li>如果 M 接受 w 则 PDA 不能接受所有的串
+<ul>
+<li>不接受 M 中 w 的 accepting history<span class="bd-box"><h-char class="bd bd-beg"><h-inner>！</h-inner></h-char><h-char class="bd bd-beg"><h-inner>！</h-inner></h-char><h-char class="bd bd-beg"><h-inner>！</h-inner></h-char></span></li>
+</ul>
+</li>
+<li>如果 M 不接受 w 则 PDA 能够接受所有的串</li>
+</ul>
+</li>
+<li>
+<p>所以只要构造这样的PDA 不接受 w 的 accepting history 其他均接受</p>
+</li>
+<li>
+<p>接受以下所有</p>
+</li>
+<li>
+<ol>
+<li>不以 <span class="markdown-them-math-inline">$C_1$</span> 开始</li>
+<li>不以一个 accepting configuration 结束</li>
+<li>某个 <span class="markdown-them-math-inline">$C_i$</span> 不能派生 <span class="markdown-them-math-inline">$C_{i+1}$</span></li>
+</ol>
+</li>
+<li>
+<p>PDA 也有三个分支分别对应三种情况</p>
+<ul>
+<li>
+<ol>
+<li>
+<p>不以 <span class="markdown-them-math-inline">$C_1$</span> 开始就接受</p>
+</li>
+<li>
+<p>不以 accepting 结束 就接受</p>
+</li>
+<li>
+<p>一个个判断</p>
+<p>在判断 <span class="markdown-them-math-inline">$C_i$</span> 到 <span class="markdown-them-math-inline">$C_{i+1}$</span> 时<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>首先走到 <span class="markdown-them-math-inline">$C_i$</span> 然后将其压入栈</p>
+<p>然后与 <span class="markdown-them-math-inline">$C_{i+1}$</span> 一点点比较<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>除了读写头之外应该相同</p>
+<p>读写头部分用 <span class="markdown-them-math-inline">$M$</span> 去判断是否合理</p>
+</li>
+</ol>
+<blockquote>
+<p>一个小问题 是 压入栈之后顺序会颠倒<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>前一个倒着后一个正着 不能一个个比较</p>
+<p>解决方案<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span>把奇数位置的串正着写 偶数位置的倒着写</p>
+<p><img src="11" alt="image-20220412234303769"></p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="post-correspondence problem (pcp)">Post correspondence problem (PCP)</h4>
+<ul>
+<li>七种block
+<ul>
+<li>开始的block [# | #<span class="markdown-them-math-inline">$q_0w_1w_2\cdots w_n$</span>#]</li>
+<li>如果 <span class="markdown-them-math-inline">$\delta(q, a) = (r, b, R)$</span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span> 加入 [<span class="markdown-them-math-inline">$qa$</span> | <span class="markdown-them-math-inline">$br$</span>]</li>
+<li>如果 <span class="markdown-them-math-inline">$\delta(q,a) = (r, b, L)$</span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span> 加入 [<span class="markdown-them-math-inline">$cqa$</span> | <span class="markdown-them-math-inline">$rcb$</span>] <span class="markdown-them-math-inline">$(\forall c)$</span></li>
+<li>加入 <span class="markdown-them-math-inline">$[a | a]$</span> <span class="markdown-them-math-inline">$(\forall a)$</span></li>
+<li>[# | #], [# | <span class="markdown-them-math-inline">$\epsilon$</span>#]</li>
+<li>[<span class="markdown-them-math-inline">$aq_{accept}$</span> | <span class="markdown-them-math-inline">$q_{accept}$</span>], [<span class="markdown-them-math-inline">$q_{accept}a$</span> | <span class="markdown-them-math-inline">$q_{accept}$</span>] 用来蚕食最后的剩余的骨牌们</li>
+<li>[<span class="markdown-them-math-inline">$q_{accept}$</span>## | #] 最后位置上的匹配</li>
+</ul>
+</li>
+<li>如何强制让第一种排在第一位<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>最后一种排在最后一位<span class="bd-box"><h-char class="bd bd-beg"><h-inner>？</h-inner></h-char></span>
+<ul>
+<li><img src="12" alt="image-20220414154826455"></li>
+<li>这样 只有第一个是开头都是星星</li>
+<li>只有最后一个结尾都是方块</li>
+</ul>
+</li>
+</ul>
+<h3 id="mapping-reducibility">Mapping reducibility</h3>
+<h4 id="definition-1">Definition</h4>
+<ul>
+<li>A function is <em><strong>computable / recursive</strong></em> if some TM <span class="markdown-them-math-inline">$M$</span>, on every input <span class="markdown-them-math-inline">$w$</span>, halts with <span class="markdown-them-math-inline">$f(w)$</span>.</li>
+<li>Language <span class="markdown-them-math-inline">$A$</span> is <em><strong>mapping reducible</strong></em> to language <span class="markdown-them-math-inline">$B$</span> if there is a recursive function <span class="markdown-them-math-inline">$f$</span> s.t. <span class="markdown-them-math-inline">$w\in A \Leftrightarrow f(w) \in B$</span>.</li>
+</ul>
+<h4 id="properties">Properties</h4>
+<ul>
+<li>If <span class="markdown-them-math-inline">$A \leq _m B$</span> and <span class="markdown-them-math-inline">$B$</span> is decidable, then <span class="markdown-them-math-inline">$A$</span> is decidable.</li>
+<li>If <span class="markdown-them-math-inline">$A \leq _m B$</span> and <span class="markdown-them-math-inline">$B$</span> is recognizable, then <span class="markdown-them-math-inline">$A$</span> is recognizable.</li>
+<li>If <span class="markdown-them-math-inline">$A \leq _m B$</span> and <span class="markdown-them-math-inline">$B$</span> is co-recognizable, then <span class="markdown-them-math-inline">$A$</span> is co-recognizable.</li>
+</ul>
+<h4 id="example">Example</h4>
+<ul>
+<li>Prove <span class="markdown-them-math-inline">$EQ_{TM}$</span> is not decidable, recognizable, co-recognizable.</li>
+<li>not decidable:
+<ul>
+<li>proved by Turing reduction</li>
+<li>规约到 <span class="markdown-them-math-inline">$A_{TM}$</span> 是否与一个 空的TM 相同</li>
+</ul>
+</li>
+<li>not recognizable:
+<ul>
+<li><img src="13" alt="image-20220414163247206"></li>
+<li><span class="markdown-them-math-inline">$A_{TM}$</span> is not co-recognizable, so <span class="markdown-them-math-inline">$EQ_{TM}$</span> is not recognizable.</li>
+</ul>
+</li>
+<li>not co-recognizable:
+<ul>
+<li>类似</li>
+</ul>
+</li>
+</ul>
+<h4 id="difference-with turing reducibility">Difference with Turing reducibility</h4>
+<ul>
+<li>
+<p>更强</p>
+</li>
+<li>
+<p>需要是同向的</p>
+</li>
+<li>
+<p>性质一样 因为能够用一个 <span class="markdown-them-math-inline">$f$</span> 去 map</p>
+</li>
+<li>
+<p>Turing-reduction only for proving undecidability, and mapping-reduction can be used for prove unrecognizability.</p>
+</li>
+</ul>
+<h2 id="recursion-theorem">Recursion Theorem</h2>
+<ul>
+<li>Let <span class="markdown-them-math-inline">$t: N \rightarrow N$</span> be a recursive function. There is a TM <span class="markdown-them-math-inline">$F$</span> for which <span class="markdown-them-math-inline">$t(\langle F\rangle)$</span> is the code of a Turing machine equivalent to <span class="markdown-them-math-inline">$F$</span>.</li>
+</ul>
+<h3 id="proof">Proof</h3>
+<ul>
+<li>define such a TM <span class="markdown-them-math-inline">$D$</span>:</li>
+</ul>
+<div class="highlight"><pre class="code"><code>  D(&lt;M&gt;):
+   output <span class="hljs-keyword">the</span> code <span class="hljs-keyword">of</span> <span class="hljs-keyword">the</span> TM:
+   G(y):
+    d = M(&lt;M&gt;)
+    simulate <span class="hljs-keyword">the</span> machine <span class="hljs-keyword">with</span> code d <span class="hljs-keyword">on</span> <span class="hljs-title">y</span>
+</code></pre></div>
+<ul>
+<li>
+<p><span class="markdown-them-math-inline">$D$</span> is recursive because 只是输出一个编号<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>不用运行 <span class="markdown-them-math-inline">$G$</span></p>
+</li>
+<li>
+<p>define a TM <span class="markdown-them-math-inline">$V$</span>:</p>
+</li>
+</ul>
+<div class="highlight"><pre class="code"><code>  <span class="hljs-function"><span class="hljs-title">V</span>(&lt;<span class="hljs-variable">M</span>&gt;):
+   <span class="hljs-variable">output</span> <span class="hljs-title">t</span>(<span class="hljs-title">D</span>(&lt;<span class="hljs-variable">M</span>&gt;))</span>
+</code></pre></div>
+<ul>
+<li>
+<p>Let <span class="markdown-them-math-inline">$\langle F \rangle = D(\langle V \rangle)$</span></p>
+</li>
+<li>
+<p>Then when running <span class="markdown-them-math-inline">$F(y)$</span>:</p>
+<ul>
+<li><code>d = V(&lt;V&gt;) = t(D(&lt;V&gt;)) = t(&lt;F&gt;)</code></li>
+<li><code>simulate the machine with code d on y</code></li>
+</ul>
+</li>
+<li>
+<p>So <code>F(y) = simulating the TM with code t(&lt;F&gt;) on y</code></p>
+</li>
+</ul>
+<h3 id="diagonalized-proof">Diagonalized Proof</h3>
+<ul>
+<li><img src="15" alt="image-20220415172903423"></li>
+<li>Unfinished</li>
+</ul>
+<h3 id="generalization:-kleene's recursion theorem">Generalization: Kleene’s recursion theorem</h3>
+<ul>
+<li>Let <span class="markdown-them-math-inline">$t$</span> be a recursive function <span class="markdown-them-math-inline">$t: N \times N \rightarrow N$</span>. There is a Turing machine <span class="markdown-them-math-inline">$R: N \rightarrow N$</span>, where <span class="markdown-them-math-inline">$R(x)=t(\langle R\rangle, x)$</span></li>
+</ul>
+<h4 id="proof-1">Proof</h4>
+<ul>
+<li>Define a recursive function <span class="markdown-them-math-inline">$s: N \rightarrow N$</span> by s-m-n thm:</li>
+</ul>
+<div class="highlight"><pre class="code"><code>  s(<span class="hljs-meta">x</span>):
+   <span class="hljs-meta">output</span> the code of TM <span class="hljs-meta">on</span> <span class="hljs-meta">input</span> y computing t(<span class="hljs-meta">x</span>,y)
+</code></pre></div>
+<ul>
+<li>
+<p>By recursion theorem on <span class="markdown-them-math-inline">$s$</span>, we have a TM <span class="markdown-them-math-inline">$F$</span> s.t. the TM with code <span class="markdown-them-math-inline">$s(\langle F\rangle)$</span> is equivalent to <span class="markdown-them-math-inline">$F$</span>.</p>
+</li>
+<li>
+<p>The TM with code <span class="markdown-them-math-inline">$s(\langle F \rangle)$</span> is the TM that computes <span class="markdown-them-math-inline">$t(x,y)$</span> on input <span class="markdown-them-math-inline">$y$</span>.</p>
+</li>
+</ul>
+<h1 id="unfinished">Unfinished</h1>
+<h2 id="kolmogorov-complexity">Kolmogorov complexity</h2>
+<h3 id="definition-2">Definition</h3>
+<ul>
+<li>Let <span class="markdown-them-math-inline">$x$</span> be a binary string.</li>
+<li>The <em><strong>minimum description</strong></em> <span class="markdown-them-math-inline">$d(x)$</span> of <span class="markdown-them-math-inline">$x$</span> is the shortest string <span class="markdown-them-math-inline">$&lt;M,w&gt;$</span> where TM <span class="markdown-them-math-inline">$M$</span> on input <span class="markdown-them-math-inline">$w$</span> halts with <span class="markdown-them-math-inline">$x$</span> on the tape.</li>
+<li>The <em><strong>Kolmogorov complexity</strong></em> <span class="markdown-them-math-inline">$K(x)=|d(x)|$</span></li>
+<li>串 <span class="markdown-them-math-inline">$x$</span> 的信息量</li>
+</ul>
+<h3 id="properties-1">Properties</h3>
+<ul>
+<li><span class="markdown-them-math-inline">$\forall x$</span>, <span class="markdown-them-math-inline">$K(x) \leq |x| + c$</span>, for some constant <span class="markdown-them-math-inline">$c$</span>.</li>
+<li><span class="markdown-them-math-inline">$\forall x$</span>, <span class="markdown-them-math-inline">$K(xx) \leq |x| + c$</span>, for some constant <span class="markdown-them-math-inline">$c$</span>.</li>
+<li><span class="markdown-them-math-inline">$\forall x$</span>, <span class="markdown-them-math-inline">$K(x ^ n) \leq |x| + c \log n$</span>, for some constant <span class="markdown-them-math-inline">$c$</span>.
+<ul>
+<li>存储 <span class="markdown-them-math-inline">$n$</span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>这个bound是 <span class="markdown-them-math-inline">$\log n + c$</span></li>
+<li>任何的图灵机 都是固定长度的 除了输入的部分</li>
+</ul>
+</li>
+</ul>
+<h3 id="c-compressible">c-compressible</h3>
+<ul>
+<li>
+<p>A string <span class="markdown-them-math-inline">$x$</span> is <em><strong>c-compressible</strong></em> if <span class="markdown-them-math-inline">$K(x) \leq |x| - c$</span>.</p>
+</li>
+<li>
+<p>If <span class="markdown-them-math-inline">$x$</span> is not <em><strong>1-compressible</strong></em>, then <span class="markdown-them-math-inline">$x$</span> is <em><strong>incompressible</strong></em>.</p>
+</li>
+<li>
+<p><strong>Thm: Incompressible strings of every length exist.</strong></p>
+<ul>
+<li>Proof: 为什么只用 二进制串的 description</li>
+</ul>
+</li>
+<li>
+<p><strong>Thm:</strong> <span class="markdown-them-math-inline">$\forall n, c$</span>, <span class="markdown-them-math-inline">$\operatorname{Pr}_{x \in\{0,1\}^{n}}[K(x) \geq|x|-c] \geq 1-\frac{1}{2^{c}}$</span></p>
+<ul>
+<li>Proof: 一样考虑二进制的 description 的个数</li>
+</ul>
+</li>
+</ul>
+<h3 id="compressibility">Compressibility</h3>
+<ul>
+<li>
+<p><span class="markdown-them-math-inline">$COMPRESS = \{(x, c) \mid K(x) \leq c\}$</span></p>
+</li>
+<li>
+<p><strong>Thm: COMPRESS is undecidable.</strong></p>
+<p>Proof:</p>
+<ul>
+<li>
+<p>Construct a Machine M:</p>
+<div class="highlight"><pre class="code"><code>M(n):
+ <span class="hljs-keyword">For</span> all y in 字典序&lt;span <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;bd-box&quot;</span>&gt;&lt;h-<span class="hljs-keyword">char</span> <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;bd bd-beg&quot;</span>&gt;&lt;h-inner&gt;：&lt;<span class="hljs-regexp">/h-inner&gt;&lt;/</span>h-<span class="hljs-keyword">char</span>&gt;&lt;/span&gt;
+  <span class="hljs-keyword">if</span> (y, n) \notin COMPRESS
+   <span class="hljs-keyword">print</span> y
+   halt
+</code></pre></div>
+</li>
+<li>
+<p>Then we get <span class="markdown-them-math-inline">$y$</span>, the first string of <span class="markdown-them-math-inline">$K(y) &gt; n$</span></p>
+</li>
+<li>
+<p>但是 <span class="markdown-them-math-inline">$M(n)$</span> prints y, <span class="markdown-them-math-inline">$K(y) \leq |\langle M, n\rangle | = c + \log n$</span></p>
+</li>
+<li>
+<p>当 <span class="markdown-them-math-inline">$n$</span> 充分大时矛盾</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="chaitin's-incompleteness theorem">Chaitin’s incompleteness theorem</h3>
+<ul>
+<li>
+<p><img src="14" alt="image-20220415165729111"></p>
+</li>
+<li>
+<p>Proof:</p>
+<ul>
+<li>
+<p>Suppose we can prove <span class="markdown-them-math-inline">$K(x) &gt; L$</span> for some <span class="markdown-them-math-inline">$x$</span>.</p>
+</li>
+<li>
+<p>选择 proof 的长度最小的 <span class="markdown-them-math-inline">$P$</span> which proves <span class="markdown-them-math-inline">$K(y) &gt; L$</span>.</p>
+</li>
+<li>
+<p>考虑这样一个图灵机<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span></p>
+<div class="highlight"><pre class="code"><code>R(L):
+ 枚举所有的argument Q&lt;span class=<span class="hljs-string">&quot;bd-box&quot;</span>&gt;&lt;h-char class=<span class="hljs-string">&quot;bd bd-beg&quot;</span>&gt;&lt;h-inner&gt;：&lt;/h-inner&gt;&lt;/h-char&gt;&lt;/span&gt;
+ <span class="hljs-built_in"> check </span>whether Q is valid
+ <span class="hljs-built_in"> check </span>whether Q proves K(y) &gt; L
+  If yes, outputs y
+</code></pre></div>
+<p>这样一个玩意儿的长度是 <span class="markdown-them-math-inline">$|\langle R, L\rangle| = c + \log L$</span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>与 <span class="markdown-them-math-inline">$K(y) &gt; L$</span> 矛盾</p>
+<p><span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>不需要输入 y 嘛<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>虽然不影响证明<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char></span></p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="&quot;were-you-last&quot;-game">“Were-you-last” Game</h2>
+<ul>
+<li>m players, unlimited bits</li>
+<li>each player can read/write <span class="markdown-them-math-inline">$\leq t$</span> bits</li>
+</ul>
+<h3 id="solution">Solution</h3>
+<h4 id="trivial-solution">Trivial solution</h4>
+<ul>
+<li>Counter</li>
+</ul>
+<div class="highlight"><pre class="code"><code>  If <span class="hljs-attr">Counter</span> = <span class="hljs-number">0</span>, <span class="hljs-attr">Counter</span> = m
+  Else Counter <span class="hljs-attr">-=</span> <span class="hljs-number">1</span>
+</code></pre></div>
+<ul>
+<li><span class="markdown-them-math-inline">$t = O(\log m)$</span></li>
+</ul>
+<h4 id="real-solution">real solution</h4>
+<ul>
+<li>use several blocks to represent the counter
+<ul>
+<li>type of last block 0 / 1</li>
+<li>number of blocks</li>
+<li>size of each block</li>
+</ul>
+</li>
+<li><span class="markdown-them-math-inline">$t \leq 4 \log \log m + O(1)$</span></li>
+<li>How to set the initial counter to m?
+<ul>
+<li>work on <span class="markdown-them-math-inline">$C' = C \oplus  m$</span></li>
+</ul>
+</li>
+<li>Lower bound of <span class="markdown-them-math-inline">$t$</span>: <span class="markdown-them-math-inline">$0.4 \log \log m$</span></li>
+<li>Cannot be solved when <span class="markdown-them-math-inline">$t = o(\log\log m)$</span>
+<ul>
+<li>无论玩家什么策略<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>定义 <span class="markdown-them-math-inline">$S_i$</span> 表示 <span class="markdown-them-math-inline">$i$</span> 这个玩家可能修改的 bits 的集合<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>均有 <span class="markdown-them-math-inline">$|S_i| \leq 2 ^ t - 1$</span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>由于决策树最多 <span class="markdown-them-math-inline">$t$</span> 层<span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>至多可以看 t 个 bit<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>每层最多两个选择<span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>当前看的 bit 是 0/1<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char></span></li>
+<li>如果玩家的策略均相同
+<ul>
+<li><span class="markdown-them-math-inline">$\forall i, S_i = S$</span></li>
+<li><span class="markdown-them-math-inline">$|S| &lt; \log m$</span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>不足以表示 <span class="markdown-them-math-inline">$0\sim m-1$</span></li>
+</ul>
+</li>
+<li>如果玩家策略不同
+<ul>
+<li>Sunflower Lemma
+<ul>
+<li>A sunflower: 一堆集合<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>有共同的交集<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>其他部分两两不交</li>
+<li>Let <span class="markdown-them-math-inline">$S_1, \cdots, S_m$</span> be a collection of sets each of size <span class="markdown-them-math-inline">$\leq l$</span>. If <span class="markdown-them-math-inline">$m &gt; (p - 1) ^ {l+1} l!$</span>, then 存在一个包含p个集合的 sunflower</li>
+</ul>
+</li>
+<li>取 <span class="markdown-them-math-inline">$l = 2 ^ t - 1$</span>, <span class="markdown-them-math-inline">$m &gt; (p-1) ^ {l+1} l!$</span></li>
+<li>存在一个 <span class="markdown-them-math-inline">$p$</span> 的 sunflower<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>记为 <span class="markdown-them-math-inline">$S_1, \cdots, S_p$</span></li>
+<li>首先搞定其他所有的人<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>然后这 p 个人放到最后操作<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>只有 center of sunflower 会有影响<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>center 的 size <span class="markdown-them-math-inline">$\leq l$</span></li>
+<li>center 的状态 <span class="markdown-them-math-inline">$\leq 2 ^ l$</span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>如果 <span class="markdown-them-math-inline">$p &gt; 2 ^ l$</span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>我们有 至少两个人 面对相同的 center 状态<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>设为 <span class="markdown-them-math-inline">$i$</span> 和 <span class="markdown-them-math-inline">$j$</span></li>
+<li>假设 <span class="markdown-them-math-inline">$i$</span> 出现在 <span class="markdown-them-math-inline">$j$</span> 之前<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>把 <span class="markdown-them-math-inline">$i\sim j - 1$</span> 删掉<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>那么对于 <span class="markdown-them-math-inline">$j$</span> 之后的人没有影响<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>原先的最后一个人仍旧会判断自己为最后一个人<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>错误</li>
+<li><span class="markdown-them-math-inline">$(2 ^ l) ^ {l+1} l! \leq 2 ^ {l ^ 2 + l + l\log l} &lt; m$</span> 合理</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="bounds-of complexity">Bounds of Complexity</h2>
+<ul>
+<li><span class="markdown-them-math-inline">$O$</span> 上界 <span class="markdown-them-math-inline">$\Omega$</span> 下界</li>
+<li>基于比较的排序的复杂度
+<ul>
+<li>决策树</li>
+</ul>
+</li>
+</ul>
+<h2 id="dynamic-partial sum">Dynamic Partial Sum</h2>
+<h3 id="description">Description</h3>
+<ul>
+<li>单点修改</li>
+<li>求前缀和</li>
+</ul>
+<h3 id="bound-of complexity">Bound of complexity</h3>
+<ul>
+<li>
+<p>线段树 复杂度 查询修改均为 <span class="markdown-them-math-inline">$O(\log n)$</span></p>
+</li>
+<li>
+<p><img src="21" alt="image-20220419012141083"></p>
+</li>
+</ul>
+<h4 id="interleave-info(il)">Interleave info(IL)</h4>
+<ul>
+<li>
+<p><span class="markdown-them-math-inline">$IL(t_0, t_1, t_2)$</span> 表示 <span class="markdown-them-math-inline">$(t_0,t_1)$</span> 向 <span class="markdown-them-math-inline">$(t_1,t_2)$</span> 传递信息的次数<span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>只考虑 <span class="markdown-them-math-inline">$t1 - t_0 = t_2 - t_1$</span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char></span></p>
+</li>
+<li>
+<p><span class="markdown-them-math-inline">$IL(t_0, t_1, t_2)$</span> is the number of transitions between a value <span class="markdown-them-math-inline">$\pi(i)$</span> with <span class="markdown-them-math-inline">$i&lt;t_1$</span>, and a consecutive value <span class="markdown-them-math-inline">$\pi(j)$</span> with <span class="markdown-them-math-inline">$j&gt;t_1$</span></p>
+</li>
+<li>
+<p><span class="markdown-them-math-inline">$E[IL(t_0, t_1, t_2)]$</span></p>
+<ul>
+<li><span class="markdown-them-math-inline">$\operatorname{Pr}\left[\mathrm{j}\right.$</span> is in <span class="markdown-them-math-inline">$\left.\left[\mathrm{t}_{0}, \mathrm{t}_{1}\right]\right]=\mathrm{k} /(2 \mathrm{k})=1 / 2$</span></li>
+<li><span class="markdown-them-math-inline">$\operatorname{Pr}\left[j+1\right.$</span> is in <span class="markdown-them-math-inline">$\left[t_{1}, t_{2}\right] \mid$</span> j is in <span class="markdown-them-math-inline">$\left.\left[t_{0}, t_{1}\right]\right]=k /(2 k-1)$</span></li>
+<li><span class="markdown-them-math-inline">$\mathrm{E}\left[\mathrm{IL}\left(\mathrm{t}_{0}, \mathrm{t}_{1}, \mathrm{t}_{2}\right)\right]=(2 k-1) \cdot \frac{k}{2(2 k-1)}=\frac{k}{2}$</span></li>
+</ul>
+</li>
+<li>
+<h1 id="unfinished-bound">Unfinished bound</h1>
+</li>
+</ul>
+<h4 id="information-transfer (it)">Information transfer (IT)</h4>
+<ul>
+<li><span class="markdown-them-math-inline">$IT(t_0, t_1, t_2)$</span> 表示 在 <span class="markdown-them-math-inline">$(t_0, t_1)$</span> 写 在 <span class="markdown-them-math-inline">$(t_1, t_2)$</span> 读 且 在 <span class="markdown-them-math-inline">$(t_1, t_2)$</span> 不再写 的 memory locations 的集合</li>
+<li><img src="22" alt="image-20220419014418611"></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Lecture-Note/" rel="tag">Lecture Note</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Theory-of-computation/" rel="tag">Theory of computation</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/05/19/git-useful-commands/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          git-useful-commands
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/05/04/Deep-Learning-notes/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          Deep Learning Lecture notes
+        
+      </div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+        <p>Powered by <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/">Hexo</a> & Theme <a target="_blank" rel="noopener" href="https://github.com/bill-xia/hexo-theme-mashiro">Mashiro</a> & GitHub Pages</p><p>Copyright © 2024 igzat1no. LICENSE CC BY-NC-SA 4.0.</p>
+      
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Posts</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    
+
+<script src="/js/clipboard.min.js"></script>
+<script src="/js/jquery-1.4.3.min.js"></script>
+
+<script src="/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+  </div>
+</body>
+</html>

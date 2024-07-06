@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Deep Learning Lecture notes | igzat1no&#39;s blog</title>
+  <link rel="stylesheet" href="/css/fonts/Chinese-normal-normal.min.css">
+  <link rel="stylesheet" href="/css/fonts/ChineseMono-normal-normal.min.css">
+  <link rel="stylesheet" href="/css/fonts/Chinese-italic-normal.min.css">
+  <link rel="stylesheet" href="/css/fonts/Chinese-normal-bold.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="Grading
+
+HW 15%
+Coding 40%
+Project 25%
+Final 20%
+Note 8%
+">
+  
+  
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox-1.3.4.css">
+  
+  
+    <link rel="stylesheet" href="/katex/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="/katex/katex.min.js" integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="/katex/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+            {left: '\\(', right: '\\)', display: false},
+            {left: '\\[', right: '\\]', display: true}
+          ],
+          throwOnError : false
+        });
+      });
+    </script>
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div id="nav-outer">
+  <nav id="main-nav" class="outer">
+    <a id="main-nav-toggle" class="nav-icon"></a>
+    
+      <a class="main-nav-link" href="/">Home</a>
+    
+      <a class="main-nav-link" href="/archives">Posts</a>
+    
+      <a class="main-nav-link" href="/about">About</a>
+    
+    <div class="main-nav-space-between"></div>
+    
+  </nav>
+</div>
+<div id="header-title">
+
+  
+</div>
+
+      <div id="content" class="outer">
+        <section id="main"><article id="post-Deep-Learning-notes" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/05/04/Deep-Learning-notes/" class="article-date">
+  <time class="dt-published" datetime="2022-05-04T09:33:51.000Z" itemprop="datePublished">2022-05-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Deep Learning Lecture notes
+    </h1>
+  
+
+      </header>
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="grading">Grading</h2>
+<ul>
+<li>HW 15%</li>
+<li>Coding 40%</li>
+<li>Project 25%</li>
+<li>Final 20%</li>
+<li>Note 8%</li>
+</ul>
+<span id="more"></span>
+<h1 id="overview">Overview</h1>
+<h2 id="mcculloch-pitts-neuron">McCulloch-Pitts Neuron</h2>
+<ul>
+<li><img src="1" alt="image-20220504093950186"></li>
+<li><span class="markdown-them-math-inline">$g(x) = \sum_i x_i$</span></li>
+<li><span class="markdown-them-math-inline">$y = f(g(x)) = \mathbb{I} [g(x) &gt; \theta]$</span></li>
+</ul>
+<h2 id="hebbian-learning">Hebbian Learning</h2>
+<ul>
+<li><span class="markdown-them-math-inline">$w_i$</span> is the weight between <span class="markdown-them-math-inline">$x_i$</span> and <span class="markdown-them-math-inline">$y$</span></li>
+<li><span class="markdown-them-math-inline">$w_i = w_i + \eta x_i y$</span></li>
+</ul>
+<h2 id="the-perceptron">The Perceptron</h2>
+<ul>
+<li><img src="image-20220504111219219.png" alt="image-20220504111219219"></li>
+<li>If <span class="markdown-them-math-inline">$\sum_i w_ix_i - T &gt; 0$</span> then <span class="markdown-them-math-inline">$y = 1$</span> else <span class="markdown-them-math-inline">$y = 0$</span></li>
+<li><span class="markdown-them-math-inline">$w = w + \eta(d(x) - y(x))x$</span></li>
+</ul>
+<h3 id="multi-layer-perceptron">Multi-layer Perceptron</h3>
+<ul>
+<li>can compose arbitrarily complicated <strong>Boolean functions</strong></li>
+<li><img src="image-20220504111750020.png" alt="image-20220504111750020"></li>
+</ul>
+<blockquote>
+<p><strong>Training a 3-node neural network is NPC.</strong></p>
+</blockquote>
+<h2 id="the-first ai winter">The first AI Winter</h2>
+<ul>
+<li>The perceptron cannot represent XOR.</li>
+<li>NP-complete</li>
+<li>Funding cuts</li>
+</ul>
+<h2 id="differentiable-functions">Differentiable Functions</h2>
+<ul>
+<li><span class="markdown-them-math-inline">$z = \sum_i w_ix_i$</span></li>
+<li><span class="markdown-them-math-inline">$\sigma (z) = \frac 1 {1 + e ^ {-z}}$</span></li>
+<li>now have gradient, update weights by back-propagation</li>
+</ul>
+<h1 id="supervised-learning(1)">Supervised Learning(1)</h1>
+<h2 id="analytical-solution">analytical solution</h2>
+<ul>
+<li>Consider <span class="markdown-them-math-inline">$f(X) = f(x_1, x_2, \cdots, x_n)$</span></li>
+<li>solve <span class="markdown-them-math-inline">$\nabla f(X) = 0$</span></li>
+<li>calculate <span class="markdown-them-math-inline">$\nabla ^ 2 f(X)$</span> and verify 是否正定</li>
+</ul>
+<h2 id="iterative-solution">Iterative solution</h2>
+<ul>
+<li>
+<p>Start with a guess <span class="markdown-them-math-inline">$X ^ 0$</span></p>
+</li>
+<li>
+<p>iteratively refine <span class="markdown-them-math-inline">$X$</span> until <span class="markdown-them-math-inline">$\nabla_X f(X) = 0$</span> is reached</p>
+</li>
+<li>
+<p>follow the gradient direction</p>
+</li>
+<li>
+<p>Multi-class</p>
+<ul>
+<li>
+<p>softmax function</p>
+</li>
+<li>
+<p><span class="markdown-them-math-inline">$f_c(x) = \frac {\exp(z _ c)} {\sum\exp(z_j)}$</span></p>
+</li>
+<li>
+<p><span class="markdown-them-math-inline">$z_i$</span> is often called a logit (refer to an unscaled value)</p>
+</li>
+<li>
+<p>error function: NLL loss (negative log-likelihood loss)</p>
+<p><span class="markdown-them-math-inline">$err(f(x^i; w), y ^i) = -\log f_{y ^ i }(x ^ i; w)$</span></p>
+</li>
+</ul>
+</li>
+<li>
+<p>Issues with sigmoid function</p>
+<ul>
+<li>always non-negative
+<ul>
+<li>Alternative: <span class="markdown-them-math-inline">$\tanh$</span></li>
+</ul>
+</li>
+<li>Gradient vanishing
+<ul>
+<li>Alternative: <span class="markdown-them-math-inline">$\mathrm{ReLU}$</span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><img src="image-20220504145335451.png" alt="image-20220504145335451"></p>
+</li>
+<li>
+<p>Regularization</p>
+<ul>
+<li>L2 norm on all the weights</li>
+<li><span class="markdown-them-math-inline">$L(w) = Loss(w) + \alpha |w| ^ 2$</span></li>
+<li>不让 <span class="markdown-them-math-inline">$w$</span> 变得太大防止 overfit</li>
+<li>This is also called weight decay
+<ul>
+<li><span class="markdown-them-math-inline">$\nabla_w L = \nabla Loss(w) + \alpha w$</span></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="scanning-mlp">Scanning MLP</h2>
+<ul>
+<li>
+<p>scan 整个图像 or 音频 之类的<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>每个局部都输入到同一个 MLP</p>
+</li>
+<li>
+<p>相当于识别 local 的 pattern 不管在什么位置</p>
+</li>
+<li>
+<p>Effective in any situation where the data are expected to be composed of similar structures at different locations</p>
+<ul>
+<li>Eg. speech recognition, image recognition</li>
+</ul>
+</li>
+<li>
+<p>loss 就是 每个区域的 loss 的和</p>
+</li>
+<li>
+<p>CNN</p>
+<ul>
+<li>Terminology:
+<ul>
+<li>Filters: scans for a pattern on the map from the previous layer</li>
+<li>Receptive Fields: corresponding patch in the input image</li>
+<li>Strides: the scanning ‘hops’ for each filter</li>
+<li>Padding</li>
+<li>zero padding 是 在外面 pad 0<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>不是不做padding</li>
+</ul>
+</li>
+<li>Fully convolutional network:
+<ul>
+<li>Downsample instead of pooling</li>
+<li>Convolution with stride &gt; 1 to reduce the size</li>
+<li>Equivalent to <strong>learn a pooling operator</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="supervised-learning(2)">Supervised Learning(2)</h1>
+<p><a target="_blank" rel="noopener" href="https://cloud.tsinghua.edu.cn/f/4eb80bdf09cc42c19ffd/">https://cloud.tsinghua.edu.cn/f/4eb80bdf09cc42c19ffd/</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Deep-Learning/" rel="tag">Deep Learning</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Lecture-Note/" rel="tag">Lecture Note</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/05/07/theory-of-computation-note/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          theory-of-computation-note-1
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/01/14/2022%E5%AF%92%E5%81%87%E8%AE%A1%E5%88%92/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          2022寒假计划
+        
+      </div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+        <p>Powered by <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/">Hexo</a> & Theme <a target="_blank" rel="noopener" href="https://github.com/bill-xia/hexo-theme-mashiro">Mashiro</a> & GitHub Pages</p><p>Copyright © 2024 igzat1no. LICENSE CC BY-NC-SA 4.0.</p>
+      
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Posts</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    
+
+<script src="/js/clipboard.min.js"></script>
+<script src="/js/jquery-1.4.3.min.js"></script>
+
+<script src="/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+  </div>
+</body>
+</html>
