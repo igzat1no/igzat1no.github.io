@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="/css/fonts/Chinese-normal-bold.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
-  <meta name="description" content="R-CNN
+  <meta name="description" content="R-CNN·
 
 2014 年
 首次使用 CNN 在 2D 目标检测上达到一个不错的效果
@@ -50,7 +50,7 @@ bottom-up region proposals to localize and segment objects
       });
     </script>
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
 <body>
   <div id="container">
@@ -98,7 +98,7 @@ bottom-up region proposals to localize and segment objects
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="r-cnn">R-CNN</h1>
+        <h1 id="R-CNN">R-CNN<a class="anchor" href="#R-CNN">·</a></h1>
 <ul>
 <li>2014 年</li>
 <li>首次使用 CNN 在 2D 目标检测上达到一个不错的效果</li>
@@ -106,7 +106,7 @@ bottom-up region proposals to localize and segment objects
 <li>提供了一个缺少标注数据的问题的训练方法: pre-train the network with supervision for a auxiliary task and fine-tune the network for the target task</li>
 </ul>
 <span id="more"></span>
-<h2 id="object-detection">Object detection</h2>
+<h2 id="Object-detection">Object detection<a class="anchor" href="#Object-detection">·</a></h2>
 <ul>
 <li>generate region proposals
 <ul>
@@ -116,19 +116,18 @@ bottom-up region proposals to localize and segment objects
 <li>use CNN to extract feature vectors</li>
 <li>a set of class-specific linear SVMs</li>
 </ul>
-<h3 id="region-proposals">Region proposals</h3>
-<p>用的还是传统 CV 的手法<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>找到分界线<br>
-用了 selective search</p>
-<h3 id="feature-extraction">Feature extraction</h3>
-<p>从每个 region proposal 提取一个 4096 维的 feature vector by CNN<br>
+<h3 id="Region-proposals">Region proposals<a class="anchor" href="#Region-proposals">·</a></h3>
+<p>用的还是传统 CV 的手法<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>找到分界线用了 selective search</p>
+<h3 id="Feature-extraction">Feature extraction<a class="anchor" href="#Feature-extraction">·</a></h3>
+<p>从每个 region proposal 提取一个 4096 维的 feature vector by CNN
 首先把 region 变换为 227*227 的大小<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>然后 mean-subtract<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>过5个卷积层和2个全连接层</p>
-<h3 id="detection">detection</h3>
-<p>对于某一个 feature vector<br>
-用预训练好的 SVM 去给这个 feature vector 对于每个类算一个 score<br>
+<h3 id="detection">detection<a class="anchor" href="#detection">·</a></h3>
+<p>对于某一个 feature vector
+用预训练好的 SVM 去给这个 feature vector 对于每个类算一个 score
 通过 non-maximum suppression 决定最终的分类</p>
-<h2 id="training">Training</h2>
-<p>在大数据集上预训练 CNN<br>
-用 warped region proposals 在之前的基础上继续做 SGD<span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>用到了 bounding box labels)<br>
+<h2 id="Training">Training<a class="anchor" href="#Training">·</a></h2>
+<p>在大数据集上预训练 CNN
+用 warped region proposals 在之前的基础上继续做 SGD<span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>用到了 bounding box labels)
 N+1 classification layer<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span>N 是分类的数量<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>1 for background</p>
 
       

@@ -42,7 +42,7 @@
       });
     </script>
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
 <body>
   <div id="container">
@@ -117,9 +117,9 @@
 
 
   
-    <article id="post-Machine Learning Notes" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-Machine-Learning-Notes" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2025/01/13/Machine%20Learning%20Notes/" class="article-date">
+    <a href="/2025/01/13/Machine-Learning-Notes/" class="article-date">
   <time class="dt-published" datetime="2025-01-14T04:39:03.000Z" itemprop="datePublished">2025-01-13</time>
 </a>
     
@@ -131,7 +131,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/01/13/Machine%20Learning%20Notes/">Machine Learning Notes</a>
+      <a class="p-name article-title" href="/2025/01/13/Machine-Learning-Notes/">Machine Learning Notes</a>
     </h1>
   
 
@@ -140,17 +140,16 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="lecture-2">Lecture 2</h1>
+        <h1 id="Lecture-2">Lecture 2<a class="anchor" href="#Lecture-2">·</a></h1>
 <ul>
 <li>bottleneck: labeling</li>
 </ul>
-<h2 id="overfit">overfit</h2>
-<img src="Machine Learning Notes/image-20250302110210897.png" alt="image-20250302110210897|500" style="zoom: 33%;" />
+<h2 id="overfit">overfit<a class="anchor" href="#overfit">·</a></h2>
 <ul>
 <li>应对 overfit: restrict the representation power -&gt; “regularization”</li>
 <li>modern view: overfit 并不是问题<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>在 SGD 中天生的就会有 implicit regularization 来减少 overfit 的可能</li>
 </ul>
-<h2 id="unsupervised-learning">Unsupervised Learning</h2>
+<h2 id="Unsupervised-Learning">Unsupervised Learning<a class="anchor" href="#Unsupervised-Learning">·</a></h2>
 <ul>
 <li>clustering</li>
 <li>PCA</li>
@@ -158,72 +157,81 @@
 <li>anomaly detection</li>
 <li>dimension reduction (PCA application)</li>
 </ul>
-<h2 id="semi-supervised-learning">Semi-supervised Learning</h2>
-<h1 id="lecture-3">Lecture 3</h1>
-<h2 id="optimization">Optimization</h2>
+<h2 id="Semi-supervised-Learning">Semi-supervised Learning<a class="anchor" href="#Semi-supervised-Learning">·</a></h2>
+<p><img src="/2025/01/13/Machine-Learning-Notes/image-20250302110210897.png" alt="image-20250302110210897" loading="lazy"></p>
+<h1 id="Lecture-3">Lecture 3<a class="anchor" href="#Lecture-3">·</a></h1>
+<h2 id="Optimization">Optimization<a class="anchor" href="#Optimization">·</a></h2>
 <ul>
 <li>zero-order method
 <ul>
-<li>only knows <span class="markdown-them-math-inline">$f(x)$</span></li>
+<li>only knows $f(x)$</li>
 <li>hyperparameter tuning</li>
 </ul>
 </li>
 <li><strong>first-order method</strong>
 <ul>
-<li>knows <span class="markdown-them-math-inline">$f(x), f'(x)$</span></li>
+<li>knows $f(x), f’(x)$</li>
 </ul>
 </li>
 <li>second-order method
 <ul>
-<li>knows <span class="markdown-them-math-inline">$f(x), f'(x), f''(x)$</span></li>
-<li>Hessian matrix is of size <span class="markdown-them-math-inline">$O(d^2)$</span> , <span class="markdown-them-math-inline">$d$</span> denotes the number of parameters</li>
+<li>knows $f(x), f’(x), f’'(x)$</li>
+<li>Hessian matrix is of size $O(d^2)$ , $d$ denotes the number of parameters</li>
 <li>太费时间</li>
 </ul>
 </li>
 </ul>
-<h3 id="gradient-descent">Gradient descent</h3>
-<p><div class="markdown-them-math-block">$$ w_{t+1}=w_t-\eta\nabla L(w_t)$$</div></p>
+<h3 id="Gradient-descent">Gradient descent<a class="anchor" href="#Gradient-descent">·</a></h3>
+<p>$$ w_{t+1}=w_t-\eta\nabla L(w_t)$$</p>
 <ul>
-<li><strong>Smoothness assumption:</strong> <span class="markdown-them-math-inline">$\|f''(w)\| \leq L$</span></li>
+<li><strong>Smoothness assumption:</strong> $|f’'(w)| \leq L$</li>
 </ul>
 <blockquote>
 <p>什么叫 smoothness: 梯度函数是 L-Lipschitz 的<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>即</p>
-<p><div class="markdown-them-math-block">$$\|\nabla f(x)-\nabla f(y)\|\leq L\|x-y\|.$$</div></p>
+<p>$$|\nabla f(x)-\nabla f(y)|\leq L|x-y|.$$</p>
 <p>梯度不会剧烈变化<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>就说明每一步的梯度下降的步长都比较稳定<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
 </blockquote>
 <ul>
-<li><strong>Lemma</strong>: <span class="markdown-them-math-inline">$f'(w)$</span> 是 L-Lipschitz 当且仅当 <span class="markdown-them-math-inline">$\|f''(w)\| \leq L, \forall w \in R^n$</span></li>
+<li><strong>Lemma</strong>: $f’(w)$ 是 L-Lipschitz 当且仅当 $|f’'(w)| \leq L, \forall w \in R^n$</li>
 </ul>
 <blockquote>
 <p><strong>Proof</strong></p>
-<p>若 <span class="markdown-them-math-inline">$\| f''(w) \| \leq L$</span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>有</p>
-<p><div class="markdown-them-math-block">$$\begin{align*} \|f'(y) - f'(x)\| &amp;= \left\|\left(\int _ 0 ^ 1f''(x + \tau (y - x)) d\tau\right) \cdot (y - x) \right \| \\
-&amp;\leq L \| y - x \|
-\end{align*}$$</div></p>
-<p>若 <span class="markdown-them-math-inline">$\| f'(y) -f '(x)\| \leq L \|y - x\|$</span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>有</p>
-<p><div class="markdown-them-math-block">$$\left\|\left(\int_{0}^{\alpha}f^{\prime\prime}(x+\tau s)d\tau\right)\cdot s\right\|=\parallel f^{\prime}(x+\alpha s)-f^{\prime}(x)\parallel\leq\alpha L\parallel s\parallel.$$</div></p>
-<p>两边除掉 <span class="markdown-them-math-inline">$\alpha$</span> 并令 <span class="markdown-them-math-inline">$\alpha \rightarrow 0$</span> 就有 <span class="markdown-them-math-inline">$\|f''(x)\| \leq L$</span>.</p>
-<p>就是对于每个 <span class="markdown-them-math-inline">$x$</span> 考虑 <span class="markdown-them-math-inline">$x$</span> 周围 <span class="markdown-them-math-inline">$\delta$</span> 的邻域</p>
-</blockquote>
-<ul>
-<li><strong>Lemma:</strong> <span class="markdown-them-math-inline">$f'(w)$</span> 是 L-Lipschitz 时<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>有<div class="markdown-them-math-block">$$\mid f(y)-f(x)-\langle f^{\prime}(x),y-x\rangle\mid\leq\frac{L}{2}\parallel y-x\parallel^2.
-$$</div></li>
-</ul>
-<blockquote>
-<img src="Machine Learning Notes/image-20250302192013008.png" alt="image-20250302192013008" style="zoom: 50%;" />
-</blockquote>
-<ul>
-<li>当满足梯度光滑条件时<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>考虑学习率 <span class="markdown-them-math-inline">$\eta$</span> 的合适取值范围</li>
-</ul>
-<blockquote>
-<p>我们有 <span class="markdown-them-math-inline">$w' = w - \eta f'(w)$</span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span></p>
-<div class="markdown-them-math-block">$$\begin{align*}
-f(w') - f(w) &amp;\leq \langle f'(w), w'- w\rangle + \frac L 2 \| w'-w\| ^ 2 \\
-&amp;= - \eta \| f'(w)\|^2 + \frac {\eta ^ 2L} 2 \|f'(w)\|^2 \\
-&amp;= -\eta \left(1 - \frac {\eta L} 2\right)  \|f'(w)\|^2 
+<p>若 $| f’'(w) | \leq L$<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>有</p>
+<p>$$
+\begin{align*} |f’(y) - f’(x)| &amp;= \left|\left(\int _ 0 ^ 1f’'(x + \tau (y - x)) d\tau\right) \cdot (y - x) \right | \
+&amp;\leq L | y - x |
 \end{align*}
-$$</div><p>我们希望每一次更新都有 <span class="markdown-them-math-inline">$f(w') - f(w) &lt; 0$</span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>这需要 <span class="markdown-them-math-inline">$\eta &lt; \frac 2 L$</span>.</p>
-<p>这意味着如果函数 <span class="markdown-them-math-inline">$f$</span> 的梯度平滑<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>那么梯度下降的效果有很好的保证<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+$$</p>
+<p>若 $| f’(y) -f '(x)| \leq L |y - x|$<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>有</p>
+<p>$$
+\left|\left(\int_{0}<sup>{\alpha}f</sup>{\prime\prime}(x+\tau s)d\tau\right)\cdot s\right|=\parallel f^{\prime}(x+\alpha s)-f^{\prime}(x)\parallel\leq\alpha L\parallel s\parallel.
+$$</p>
+<p>两边除掉 $\alpha$ 并令 $\alpha \rightarrow 0$ 就有 $|f’'(x)| \leq L$.</p>
+<p>就是对于每个 $x$ 考虑 $x$ 周围 $\delta$ 的邻域</p>
+</blockquote>
+<ul>
+<li><strong>Lemma:</strong> $f’(w)$ 是 L-Lipschitz 时<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>有
+$$
+\mid f(y)-f(x)-\langle f^{\prime}(x),y-x\rangle\mid\leq\frac{L}{2}\parallel y-x\parallel^2.
+$$</li>
+</ul>
+<blockquote>
+<p><img src="/2025/01/13/Machine-Learning-Notes/image-20250302192013008.png" alt="image-20250302192013008" loading="lazy"></p>
+</blockquote>
+<ul>
+<li>当满足梯度光滑条件时<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>考虑学习率 $\eta$ 的合适取值范围</li>
+</ul>
+<blockquote>
+<p>我们有 $w’ = w - \eta f’(w)$<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>
+$$
+\begin{align*}
+f(w’) - f(w) &amp;\leq \langle f’(w), w’- w\rangle + \frac L 2 | w’-w| ^ 2 \
+&amp;= - \eta | f’(w)|^2 + \frac {\eta ^ 2L} 2 |f’(w)|^2 \
+&amp;= -\eta \left(1 - \frac {\eta L} 2\right)  |f’(w)|^2
+\end{align*}
+$$
+我们希望每一次更新都有 $f(w’) - f(w) &lt; 0$<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>这需要 $\eta &lt; \frac 2 L$.</p>
+<p>这意味着如果函数 $f$ 的梯度平滑<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>那么梯度下降的效果有很好的保证<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
 </blockquote>
 
       
@@ -231,8 +239,8 @@ $$</div><p>我们希望每一次更新都有 <span class="markdown-them-math-inl
     <footer class="article-footer">
       
       
-        <a href="/2025/01/13/Machine%20Learning%20Notes/#comments" class="article-comment-link">
-          <span class="post-comments-count valine-comment-count" data-xid="/2025/01/13/Machine%20Learning%20Notes/" itemprop="commentCount"></span>
+        <a href="/2025/01/13/Machine-Learning-Notes/#comments" class="article-comment-link">
+          <span class="post-comments-count valine-comment-count" data-xid="/2025/01/13/Machine-Learning-Notes/" itemprop="commentCount"></span>
           Comments
         </a>
       
@@ -414,7 +422,7 @@ $$</div><p>我们希望每一次更新都有 <span class="markdown-them-math-inl
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p><img src="image-20220630144049347.png" alt="image-20220630144049347"></p>
+        <p><img src="/2022/06/30/DETR/image-20220630144049347.png" alt="image-20220630144049347" loading="lazy"></p>
         
           <p class="article-more-link">
             <a href="/2022/06/30/DETR/#more">Read More</a>

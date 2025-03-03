@@ -49,7 +49,7 @@
       });
     </script>
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
 <body>
   <div id="container">
@@ -104,7 +104,7 @@
 <li>结合不同分辨率的预测来处理多尺寸的问题</li>
 </ul>
 <span id="more"></span>
-<h1 id="此前已经用过的技巧">此前已经用过的技巧</h1>
+<h1 id="此前已经用过的技巧">此前已经用过的技巧<a class="anchor" href="#此前已经用过的技巧">·</a></h1>
 <ul>
 <li>金字塔结构<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>大分辨率的用来检测小物体<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>小分辨率用来检测大物体</li>
 <li>采用 anchor box
@@ -113,17 +113,17 @@
 </ul>
 </li>
 </ul>
-<h1 id="网络结构">网络结构</h1>
-<p><img src="image-20220624105403252.png" alt="image-20220624105403252"></p>
-<h3 id="atrous-algorithm&lt;span class=&quot;bd-box&quot;&gt;&lt;h-char class=&quot;bd bd-end&quot;&gt;&lt;h-inner&gt;（&lt;/h-inner&gt;&lt;/h-char&gt;&lt;/span&gt;dilated convolution膨胀卷积&lt;span class=&quot;bd-box&quot;&gt;&lt;h-char class=&quot;bd bd-beg&quot;&gt;&lt;h-inner&gt;、&lt;/h-inner&gt;&lt;/h-char&gt;&lt;/span&gt;空洞卷积&lt;span class=&quot;bd-box&quot;&gt;&lt;h-char class=&quot;bd bd-beg&quot;&gt;&lt;h-inner&gt;）&lt;/h-inner&gt;&lt;/h-char&gt;&lt;/span&gt;">Atrous Algorithm<span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>Dilated Convolution膨胀卷积<span class="bd-box"><h-char class="bd bd-beg"><h-inner>、</h-inner></h-char></span>空洞卷积<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char></span></h3>
-<h3 id="损失函数">损失函数</h3>
-<p>和Faster RCNN的基本一样<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>由分类和回归两部分组成<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>回归部分的loss是希望预测的box和prior box的差距尽可能跟ground truth和prior box的差距接近<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>这样预测的box就能尽量和ground truth一样<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>总损失是置信度损失和位置损失的加权和<br>
-<img src="a1ed0d903ca63276a4a56d37652805db.png" alt="总误差"><br>
-<img src="30045a4eff896f3a86e98ea0715685b4.png" alt="位置损失"></p>
-<h3 id="数据扩增">数据扩增</h3>
-<p>为了使模型对各种输入目标大小和形状更鲁棒<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>每张训练图像都是通过以下选项之一进行随机采样的<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span>1.直接使用整个原始输入图像<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span><br>
-2.采样一个patch<span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>就是feature map 上裁下来一部分<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>使得与目标之间的最小Jaccard overlap重叠为0.1<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>0.3<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>0.5<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>0.7或0.9<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span><br>
-3.水平翻转<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span>以0.5的概率进行水平翻转<br>
+<h1 id="网络结构">网络结构<a class="anchor" href="#网络结构">·</a></h1>
+<p><img src="/2022/06/24/SSD/image-20220624105403252.png" alt="image-20220624105403252" loading="lazy"></p>
+<h3 id="Atrous-Algorithm-span-class-bd-box-h-char-class-bd-bd-end-h-inner-（-h-inner-h-char-span-Dilated-Convolution膨胀卷积-span-class-bd-box-h-char-class-bd-bd-beg-h-inner-、-h-inner-h-char-span-空洞卷积-span-class-bd-box-h-char-class-bd-bd-beg-h-inner-）-h-inner-h-char-span">Atrous Algorithm<span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>Dilated Convolution膨胀卷积<span class="bd-box"><h-char class="bd bd-beg"><h-inner>、</h-inner></h-char></span>空洞卷积<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char></span><a class="anchor" href="#Atrous-Algorithm-span-class-bd-box-h-char-class-bd-bd-end-h-inner-（-h-inner-h-char-span-Dilated-Convolution膨胀卷积-span-class-bd-box-h-char-class-bd-bd-beg-h-inner-、-h-inner-h-char-span-空洞卷积-span-class-bd-box-h-char-class-bd-bd-beg-h-inner-）-h-inner-h-char-span">·</a></h3>
+<h3 id="损失函数">损失函数<a class="anchor" href="#损失函数">·</a></h3>
+<p>和Faster RCNN的基本一样<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>由分类和回归两部分组成<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>回归部分的loss是希望预测的box和prior box的差距尽可能跟ground truth和prior box的差距接近<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>这样预测的box就能尽量和ground truth一样<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>总损失是置信度损失和位置损失的加权和
+<img src="/2022/06/24/SSD/a1ed0d903ca63276a4a56d37652805db.png" alt="总误差" loading="lazy">
+<img src="/2022/06/24/SSD/30045a4eff896f3a86e98ea0715685b4.png" alt="位置损失" loading="lazy"></p>
+<h3 id="数据扩增">数据扩增<a class="anchor" href="#数据扩增">·</a></h3>
+<p>为了使模型对各种输入目标大小和形状更鲁棒<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>每张训练图像都是通过以下选项之一进行随机采样的<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span>1.直接使用整个原始输入图像<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>
+2.采样一个patch<span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>就是feature map 上裁下来一部分<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>使得与目标之间的最小Jaccard overlap重叠为0.1<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>0.3<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>0.5<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>0.7或0.9<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>
+3.水平翻转<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span>以0.5的概率进行水平翻转
 4.光度失真<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span> Some improvements on deep convolutional neural network based image classification中提出的</p>
 
       

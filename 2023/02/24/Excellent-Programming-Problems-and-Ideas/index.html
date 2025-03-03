@@ -44,7 +44,7 @@
       });
     </script>
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
 <body>
   <div id="container">
@@ -94,12 +94,12 @@
       
         <p>Record some brilliant problems and ideas I met.</p>
 <span id="more"></span>
-<h2 id="[dora-and search](c)"><a href="C">Dora and Search</a></h2>
+<h2 id="Dora-and-Search"><a href="C">Dora and Search</a><a class="anchor" href="#Dora-and-Search">·</a></h2>
 <ul>
-<li>The problem is to find in a permutation of <span class="markdown-them-math-inline">$n$</span> numbers a subsegment such that the leftmost and rightmost elements are not the maximum or the minimum in the subsegment.</li>
-<li>My brute force idea is, for each element in the permutation, to find the nearest one on the left which is bigger than itself, the nearest one on the left which is smaller, the nearest one on the right which is bigger and the nearest one on the right which is smaller. According to them we can easily determine the left and right boarder <span class="markdown-them-math-inline">$l$</span> and <span class="markdown-them-math-inline">$r$</span> for some element <span class="markdown-them-math-inline">$a_i$</span> such that <span class="markdown-them-math-inline">$a_i$</span> is not the maximum or the minimum in both the range <span class="markdown-them-math-inline">$a_l \cdots a_i$</span> and <span class="markdown-them-math-inline">$a_i \cdots a_r$</span>. Let’s denote the <span class="markdown-them-math-inline">$l$</span> and <span class="markdown-them-math-inline">$r$</span> for <span class="markdown-them-math-inline">$a_i$</span> as <span class="markdown-them-math-inline">$l_i$</span> and <span class="markdown-them-math-inline">$r_i$</span>.</li>
-<li>Then, we can iterate <span class="markdown-them-math-inline">$l$</span> from <span class="markdown-them-math-inline">$1$</span> to <span class="markdown-them-math-inline">$n$</span> and find <span class="markdown-them-math-inline">$t = \max_{k \in [r_l, n]} l_k$</span>. If <span class="markdown-them-math-inline">$t &gt;= l$</span>, we can make sure that <span class="markdown-them-math-inline">$\left[l, \arg \max_{k \in [r_l, n]} l_k \right]$</span> is a valid subsegment.</li>
-<li>The official solution is much simpler. We start from the whole segment <span class="markdown-them-math-inline">$[1, n]$</span>, and each step if one of the two ends of the segment does not meet our requirements we can directly remove it. Then we will get some valid solution or there is no valid subsegments.</li>
+<li>The problem is to find in a permutation of $n$ numbers a subsegment such that the leftmost and rightmost elements are not the maximum or the minimum in the subsegment.</li>
+<li>My brute force idea is, for each element in the permutation, to find the nearest one on the left which is bigger than itself, the nearest one on the left which is smaller, the nearest one on the right which is bigger and the nearest one on the right which is smaller. According to them we can easily determine the left and right boarder $l$ and $r$ for some element $a_i$ such that $a_i$ is not the maximum or the minimum in both the range $a_l \cdots a_i$ and $a_i \cdots a_r$. Let’s denote the $l$ and $r$ for $a_i$ as $l_i$ and $r_i$.</li>
+<li>Then, we can iterate $l$ from $1$ to $n$ and find $t = \max_{k \in [r_l, n]} l_k$. If $t &gt;= l$, we can make sure that $\left[l, \arg \max_{k \in [r_l, n]} l_k \right]$ is a valid subsegment.</li>
+<li>The official solution is much simpler. We start from the whole segment $[1, n]$, and each step if one of the two ends of the segment does not meet our requirements we can directly remove it. Then we will get some valid solution or there is no valid subsegments.</li>
 <li>The correctness is quite obvious. If one end does not meet the requirements, for example, the leftmost element is larger than all the other elements, then every subsegment containing the leftmost element (which must start from the left end) should be invalid. So we can directly delete this element and look for our solution in the remaining numbers.</li>
 </ul>
 

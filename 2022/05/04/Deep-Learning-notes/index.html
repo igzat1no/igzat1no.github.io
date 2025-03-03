@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="/css/fonts/Chinese-normal-bold.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
-  <meta name="description" content="Grading
+  <meta name="description" content="Grading·
 
 HW 15%
 Coding 40%
@@ -51,7 +51,7 @@ Note 8%
       });
     </script>
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
 <body>
   <div id="container">
@@ -99,7 +99,7 @@ Note 8%
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="grading">Grading</h2>
+        <h2 id="Grading">Grading<a class="anchor" href="#Grading">·</a></h2>
 <ul>
 <li>HW 15%</li>
 <li>Coding 40%</li>
@@ -108,58 +108,58 @@ Note 8%
 <li>Note 8%</li>
 </ul>
 <span id="more"></span>
-<h1 id="overview">Overview</h1>
-<h2 id="mcculloch-pitts-neuron">McCulloch-Pitts Neuron</h2>
+<h1 id="Overview">Overview<a class="anchor" href="#Overview">·</a></h1>
+<h2 id="McCulloch-Pitts-Neuron">McCulloch-Pitts Neuron<a class="anchor" href="#McCulloch-Pitts-Neuron">·</a></h2>
 <ul>
-<li><img src="1" alt="image-20220504093950186"></li>
-<li><span class="markdown-them-math-inline">$g(x) = \sum_i x_i$</span></li>
-<li><span class="markdown-them-math-inline">$y = f(g(x)) = \mathbb{I} [g(x) &gt; \theta]$</span></li>
+<li><img src="/2022/05/04/Deep-Learning-notes/1" alt="image-20220504093950186" loading="lazy"></li>
+<li>$g(x) = \sum_i x_i$</li>
+<li>$y = f(g(x)) = \mathbb{I} [g(x) &gt; \theta]$</li>
 </ul>
-<h2 id="hebbian-learning">Hebbian Learning</h2>
+<h2 id="Hebbian-Learning">Hebbian Learning<a class="anchor" href="#Hebbian-Learning">·</a></h2>
 <ul>
-<li><span class="markdown-them-math-inline">$w_i$</span> is the weight between <span class="markdown-them-math-inline">$x_i$</span> and <span class="markdown-them-math-inline">$y$</span></li>
-<li><span class="markdown-them-math-inline">$w_i = w_i + \eta x_i y$</span></li>
+<li>$w_i$ is the weight between $x_i$ and $y$</li>
+<li>$w_i = w_i + \eta x_i y$</li>
 </ul>
-<h2 id="the-perceptron">The Perceptron</h2>
+<h2 id="The-Perceptron">The Perceptron<a class="anchor" href="#The-Perceptron">·</a></h2>
 <ul>
-<li><img src="image-20220504111219219.png" alt="image-20220504111219219"></li>
-<li>If <span class="markdown-them-math-inline">$\sum_i w_ix_i - T &gt; 0$</span> then <span class="markdown-them-math-inline">$y = 1$</span> else <span class="markdown-them-math-inline">$y = 0$</span></li>
-<li><span class="markdown-them-math-inline">$w = w + \eta(d(x) - y(x))x$</span></li>
+<li><img src="/2022/05/04/Deep-Learning-notes/image-20220504111219219.png" alt="image-20220504111219219" loading="lazy"></li>
+<li>If $\sum_i w_ix_i - T &gt; 0$ then $y = 1$ else $y = 0$</li>
+<li>$w = w + \eta(d(x) - y(x))x$</li>
 </ul>
-<h3 id="multi-layer-perceptron">Multi-layer Perceptron</h3>
+<h3 id="Multi-layer-Perceptron">Multi-layer Perceptron<a class="anchor" href="#Multi-layer-Perceptron">·</a></h3>
 <ul>
 <li>can compose arbitrarily complicated <strong>Boolean functions</strong></li>
-<li><img src="image-20220504111750020.png" alt="image-20220504111750020"></li>
+<li><img src="/2022/05/04/Deep-Learning-notes/image-20220504111750020.png" alt="image-20220504111750020" loading="lazy"></li>
 </ul>
 <blockquote>
 <p><strong>Training a 3-node neural network is NPC.</strong></p>
 </blockquote>
-<h2 id="the-first ai winter">The first AI Winter</h2>
+<h2 id="The-first-AI-Winter">The first AI Winter<a class="anchor" href="#The-first-AI-Winter">·</a></h2>
 <ul>
 <li>The perceptron cannot represent XOR.</li>
 <li>NP-complete</li>
 <li>Funding cuts</li>
 </ul>
-<h2 id="differentiable-functions">Differentiable Functions</h2>
+<h2 id="Differentiable-Functions">Differentiable Functions<a class="anchor" href="#Differentiable-Functions">·</a></h2>
 <ul>
-<li><span class="markdown-them-math-inline">$z = \sum_i w_ix_i$</span></li>
-<li><span class="markdown-them-math-inline">$\sigma (z) = \frac 1 {1 + e ^ {-z}}$</span></li>
+<li>$z = \sum_i w_ix_i$</li>
+<li>$\sigma (z) = \frac 1 {1 + e ^ {-z}}$</li>
 <li>now have gradient, update weights by back-propagation</li>
 </ul>
-<h1 id="supervised-learning(1)">Supervised Learning(1)</h1>
-<h2 id="analytical-solution">analytical solution</h2>
+<h1 id="Supervised-Learning-1">Supervised Learning(1)<a class="anchor" href="#Supervised-Learning-1">·</a></h1>
+<h2 id="analytical-solution">analytical solution<a class="anchor" href="#analytical-solution">·</a></h2>
 <ul>
-<li>Consider <span class="markdown-them-math-inline">$f(X) = f(x_1, x_2, \cdots, x_n)$</span></li>
-<li>solve <span class="markdown-them-math-inline">$\nabla f(X) = 0$</span></li>
-<li>calculate <span class="markdown-them-math-inline">$\nabla ^ 2 f(X)$</span> and verify 是否正定</li>
+<li>Consider $f(X) = f(x_1, x_2, \cdots, x_n)$</li>
+<li>solve $\nabla f(X) = 0$</li>
+<li>calculate $\nabla ^ 2 f(X)$ and verify 是否正定</li>
 </ul>
-<h2 id="iterative-solution">Iterative solution</h2>
+<h2 id="Iterative-solution">Iterative solution<a class="anchor" href="#Iterative-solution">·</a></h2>
 <ul>
 <li>
-<p>Start with a guess <span class="markdown-them-math-inline">$X ^ 0$</span></p>
+<p>Start with a guess $X ^ 0$</p>
 </li>
 <li>
-<p>iteratively refine <span class="markdown-them-math-inline">$X$</span> until <span class="markdown-them-math-inline">$\nabla_X f(X) = 0$</span> is reached</p>
+<p>iteratively refine $X$ until $\nabla_X f(X) = 0$ is reached</p>
 </li>
 <li>
 <p>follow the gradient direction</p>
@@ -171,14 +171,14 @@ Note 8%
 <p>softmax function</p>
 </li>
 <li>
-<p><span class="markdown-them-math-inline">$f_c(x) = \frac {\exp(z _ c)} {\sum\exp(z_j)}$</span></p>
+<p>$f_c(x) = \frac {\exp(z _ c)} {\sum\exp(z_j)}$</p>
 </li>
 <li>
-<p><span class="markdown-them-math-inline">$z_i$</span> is often called a logit (refer to an unscaled value)</p>
+<p>$z_i$ is often called a logit (refer to an unscaled value)</p>
 </li>
 <li>
 <p>error function: NLL loss (negative log-likelihood loss)</p>
-<p><span class="markdown-them-math-inline">$err(f(x^i; w), y ^i) = -\log f_{y ^ i }(x ^ i; w)$</span></p>
+<p>$err(f(x^i; w), y ^i) = -\log f_{y ^ i }(x ^ i; w)$</p>
 </li>
 </ul>
 </li>
@@ -187,34 +187,34 @@ Note 8%
 <ul>
 <li>always non-negative
 <ul>
-<li>Alternative: <span class="markdown-them-math-inline">$\tanh$</span></li>
+<li>Alternative: $\tanh$</li>
 </ul>
 </li>
 <li>Gradient vanishing
 <ul>
-<li>Alternative: <span class="markdown-them-math-inline">$\mathrm{ReLU}$</span></li>
+<li>Alternative: $\mathrm{ReLU}$</li>
 </ul>
 </li>
 </ul>
 </li>
 <li>
-<p><img src="image-20220504145335451.png" alt="image-20220504145335451"></p>
+<p><img src="/2022/05/04/Deep-Learning-notes/image-20220504145335451.png" alt="image-20220504145335451" loading="lazy"></p>
 </li>
 <li>
 <p>Regularization</p>
 <ul>
 <li>L2 norm on all the weights</li>
-<li><span class="markdown-them-math-inline">$L(w) = Loss(w) + \alpha |w| ^ 2$</span></li>
-<li>不让 <span class="markdown-them-math-inline">$w$</span> 变得太大防止 overfit</li>
+<li>$L(w) = Loss(w) + \alpha |w| ^ 2$</li>
+<li>不让 $w$ 变得太大防止 overfit</li>
 <li>This is also called weight decay
 <ul>
-<li><span class="markdown-them-math-inline">$\nabla_w L = \nabla Loss(w) + \alpha w$</span></li>
+<li>$\nabla_w L = \nabla Loss(w) + \alpha w$</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<h2 id="scanning-mlp">Scanning MLP</h2>
+<h2 id="Scanning-MLP">Scanning MLP<a class="anchor" href="#Scanning-MLP">·</a></h2>
 <ul>
 <li>
 <p>scan 整个图像 or 音频 之类的<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>每个局部都输入到同一个 MLP</p>
@@ -253,8 +253,8 @@ Note 8%
 </ul>
 </li>
 </ul>
-<h1 id="supervised-learning(2)">Supervised Learning(2)</h1>
-<p><a target="_blank" rel="noopener" href="https://cloud.tsinghua.edu.cn/f/4eb80bdf09cc42c19ffd/">https://cloud.tsinghua.edu.cn/f/4eb80bdf09cc42c19ffd/</a></p>
+<h1 id="Supervised-Learning-2">Supervised Learning(2)<a class="anchor" href="#Supervised-Learning-2">·</a></h1>
+<p>https://cloud.tsinghua.edu.cn/f/4eb80bdf09cc42c19ffd/</p>
 
       
     </div>

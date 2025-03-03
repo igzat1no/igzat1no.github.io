@@ -44,7 +44,7 @@
       });
     </script>
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
 <body>
   <div id="container">
@@ -92,40 +92,40 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p><img src="image-20220630144049347.png" alt="image-20220630144049347"></p>
+        <p><img src="/2022/06/30/DETR/image-20220630144049347.png" alt="image-20220630144049347" loading="lazy"></p>
 <span id="more"></span>
-<h1 id="introduction">Introduction</h1>
+<h1 id="Introduction">Introduction<a class="anchor" href="#Introduction">·</a></h1>
 <ul>
 <li>predict all objects at once</li>
 <li>bipartite matching between predicted and ground-truth objects</li>
 <li>抛弃了许多之前的技巧<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>比如 spatial anchors 或者 non-maximal supression</li>
 </ul>
-<h1 id="the-detr model">The DETR model</h1>
+<h1 id="The-DETR-model">The DETR model<a class="anchor" href="#The-DETR-model">·</a></h1>
 <ul>
 <li>a set prediction loss that forces unique matching between predicted and ground truth boxes</li>
 <li>an architecture that predicts a set of objects and models their relation</li>
 </ul>
-<h2 id="object-detection set prediction loss">Object detection set prediction loss</h2>
-<p>in a single pass, infers a fixed-size of <span class="markdown-them-math-inline">$N$</span> predictions</p>
-<p><span class="markdown-them-math-inline">$N$</span> 是一个预设的较大的数<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>远大于图中物体总数</p>
-<p>假设 <span class="markdown-them-math-inline">$y$</span> 是所有的 ground truth objects<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span><span class="markdown-them-math-inline">$\hat{y}$</span> 是所有的 predictions<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
-<p>Find a permutation <span class="markdown-them-math-inline">$\sigma$</span> with the lowest cost:</p>
-<p><img src="image-20220630145321234.png" alt="image-20220630145321234"></p>
-<p><span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span><span class="markdown-them-math-inline">$\hat{y}$</span> 的数量大于 <span class="markdown-them-math-inline">$y$</span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>可以把 <span class="markdown-them-math-inline">$y$</span> 用 <span class="markdown-them-math-inline">$\emptyset$</span> 补到一样大小<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char></span></p>
-<p>用匈牙利做二分匹配可以快速得到 <span class="markdown-them-math-inline">$\hat \sigma$</span></p>
-<p><span class="markdown-them-math-inline">$L_{match}$</span>: 每个 ground truth 和 prediction 都可以视为 <span class="markdown-them-math-inline">$(c,b)$</span> 其中 <span class="markdown-them-math-inline">$c$</span> 是分类<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span><span class="markdown-them-math-inline">$b$</span> 是 bounding box<span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>一个四元组<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char></span><span class="markdown-them-math-inline">$L_{match}$</span> 定义如下<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span></p>
-<p><img src="image-20220630145626483.png" alt="image-20220630145626483"></p>
+<h2 id="Object-detection-set-prediction-loss">Object detection set prediction loss<a class="anchor" href="#Object-detection-set-prediction-loss">·</a></h2>
+<p>in a single pass, infers a fixed-size of $N$ predictions</p>
+<p>$N$ 是一个预设的较大的数<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>远大于图中物体总数</p>
+<p>假设 $y$ 是所有的 ground truth objects<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>$\hat{y}$ 是所有的 predictions<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<p>Find a permutation $\sigma$ with the lowest cost:</p>
+<p><img src="/2022/06/30/DETR/image-20220630145321234.png" alt="image-20220630145321234" loading="lazy"></p>
+<p><span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>$\hat{y}$ 的数量大于 $y$<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>可以把 $y$ 用 $\emptyset$ 补到一样大小<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char></span></p>
+<p>用匈牙利做二分匹配可以快速得到 $\hat \sigma$</p>
+<p>$L_{match}$: 每个 ground truth 和 prediction 都可以视为 $(c,b)$ 其中 $c$ 是分类<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>$b$ 是 bounding box<span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>一个四元组<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char></span>$L_{match}$ 定义如下<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span></p>
+<p><img src="/2022/06/30/DETR/image-20220630145626483.png" alt="image-20220630145626483" loading="lazy"></p>
 <p>最终的loss如下</p>
-<p><img src="image-20220630150027430.png" alt="image-20220630150027430"></p>
-<h2 id="architecture">architecture</h2>
-<h3 id="backbone">Backbone</h3>
-<p>从初始图片 <span class="markdown-them-math-inline">$x \in R^{3 \times H_0 \times W_0}$</span> 做 CNN 提取特征<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>得到 <span class="markdown-them-math-inline">$f \in R^{C \times H \times W}$</span>,  where <span class="markdown-them-math-inline">$C = 2048, H, W = \frac {H_0} {32}, \frac {W_0} {32}$</span></p>
-<h3 id="transformer-encoder">Transformer encoder</h3>
-<p>首先做一个 <span class="markdown-them-math-inline">$1 \times 1$</span> 的卷积<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>把 <span class="markdown-them-math-inline">$2048$</span> channel 降低到 <span class="markdown-them-math-inline">$d$</span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>得到 <span class="markdown-them-math-inline">$z_0 \in R^{d \times H \times W}$</span></p>
-<p>直接摊平成一维<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>得到 <span class="markdown-them-math-inline">$d \times HW$</span> 的向量<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>进 transformer</p>
+<p><img src="/2022/06/30/DETR/image-20220630150027430.png" alt="image-20220630150027430" loading="lazy"></p>
+<h2 id="architecture">architecture<a class="anchor" href="#architecture">·</a></h2>
+<h3 id="Backbone">Backbone<a class="anchor" href="#Backbone">·</a></h3>
+<p>从初始图片 $x \in R^{3 \times H_0 \times W_0}$ 做 CNN 提取特征<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>得到 $f \in R^{C \times H \times W}$,  where $C = 2048, H, W = \frac {H_0} {32}, \frac {W_0} {32}$</p>
+<h3 id="Transformer-encoder">Transformer encoder<a class="anchor" href="#Transformer-encoder">·</a></h3>
+<p>首先做一个 $1 \times 1$ 的卷积<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>把 $2048$ channel 降低到 $d$<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>得到 $z_0 \in R^{d \times H \times W}$</p>
+<p>直接摊平成一维<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>得到 $d \times HW$ 的向量<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>进 transformer</p>
 <p>multi-head self-attention</p>
-<h3 id="transformer-decoder">Transformer decoder</h3>
-<p>transform <span class="markdown-them-math-inline">$N$</span> embeddings of size <span class="markdown-them-math-inline">$d$</span></p>
+<h3 id="Transformer-decoder">Transformer decoder<a class="anchor" href="#Transformer-decoder">·</a></h3>
+<p>transform $N$ embeddings of size $d$</p>
 
       
     </div>

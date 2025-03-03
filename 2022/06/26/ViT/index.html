@@ -44,7 +44,7 @@
       });
     </script>
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
 <body>
   <div id="container">
@@ -94,22 +94,22 @@
       
         <p>Pre-trained on large amounts of data, Vision Transformer (ViT) attains excellent results compared to sota and requires fewer computational resources to train.</p>
 <span id="more"></span>
-<h1 id="introduction">Introduction</h1>
+<h1 id="Introduction">Introduction<a class="anchor" href="#Introduction">·</a></h1>
 <p>split an image into patches</p>
 <p>直接把 patch 的内容 embed 当成序列扔进 transformer</p>
 <p>在中等大小的数据集上训练时<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>比同等大小的 ResNet 要差一些<span class="bd-box"><h-char class="bd bd-beg"><h-inner>；</h-inner></h-char></span>在大型数据集<span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>14M-300M images<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char></span>上训练时<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>ViT 效果大于等于 SOTA<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
-<h1 id="method">Method</h1>
-<p><img src="image-20220626171812887.png" alt="image-20220626171812887"></p>
-<h2 id="vit">ViT</h2>
-<p>reshape the image <span class="markdown-them-math-inline">$x \in R^{H \times W \times C}$</span> into a sequence of <span class="markdown-them-math-inline">$x_p \in R^{N \times (P^2 C)}$</span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>其中 <span class="markdown-them-math-inline">$N = HW/P^2$</span> 表示 patch 的数量<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span><span class="markdown-them-math-inline">$P$</span> 是 patch 的大小<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
-<p>embedding 就是 linear projection 从 patch 的大小到 latent vector 的维度 <span class="markdown-them-math-inline">$D$</span></p>
+<h1 id="Method">Method<a class="anchor" href="#Method">·</a></h1>
+<p><img src="/2022/06/26/ViT/image-20220626171812887.png" alt="image-20220626171812887" loading="lazy"></p>
+<h2 id="ViT">ViT<a class="anchor" href="#ViT">·</a></h2>
+<p>reshape the image $x \in R^{H \times W \times C}$ into a sequence of $x_p \in R^{N \times (P^2 C)}$<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>其中 $N = HW/P^2$ 表示 patch 的数量<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>$P$ 是 patch 的大小<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<p>embedding 就是 linear projection 从 patch 的大小到 latent vector 的维度 $D$</p>
 <p>加入了 position embedding (standard learnable 1D position embedding)</p>
 <p>perfirm 2D interpolation of the pre-trained position embeddings may now longer be powerful</p>
-<h3 id="hybrid-architecture">Hybrid Architecture</h3>
+<h3 id="Hybrid-Architecture">Hybrid Architecture<a class="anchor" href="#Hybrid-Architecture">·</a></h3>
 <p>用做完 CNN 以后的 feature map 作为 input sequence 而非原图</p>
-<h2 id="fine-tuning-and higher resolution">Fine-Tuning and higher resolution</h2>
+<h2 id="Fine-Tuning-and-higher-resolution">Fine-Tuning and higher resolution<a class="anchor" href="#Fine-Tuning-and-higher-resolution">·</a></h2>
 <p>pre-train ViT on large datasets and fine-tune to downstream tasks</p>
-<p>remove the prediction head and attach <span class="markdown-them-math-inline">$D \times K$</span> 的一个 feedforward layer<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span><span class="markdown-them-math-inline">$K$</span> 是 downstream task 的 class 数量</p>
+<p>remove the prediction head and attach $D \times K$ 的一个 feedforward layer<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>$K$ 是 downstream task 的 class 数量</p>
 <ul>
 <li>
 <p>ViT-Base 12 768 3072 12 86M</p>

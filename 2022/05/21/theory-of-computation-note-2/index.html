@@ -11,8 +11,8 @@
   <link rel="stylesheet" href="/css/fonts/Chinese-normal-bold.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
-  <meta name="description" content="Time complexity
-Definition
+  <meta name="description" content="Time complexity·
+Definition·
 
 Let M be a deterministic Turing machine that halts on all input. The running time or time complexity of $M$ is the function $f: N\rightarrow N$, where $f(n)$ is the maximum number of steps that $M$ uses on any input of length $n$.
 ">
@@ -48,7 +48,7 @@ Let M be a deterministic Turing machine that halts on all input. The running tim
       });
     </script>
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
 <body>
   <div id="container">
@@ -96,36 +96,36 @@ Let M be a deterministic Turing machine that halts on all input. The running tim
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="time-complexity">Time complexity</h2>
-<h3 id="definition">Definition</h3>
+        <h2 id="Time-complexity">Time complexity<a class="anchor" href="#Time-complexity">·</a></h2>
+<h3 id="Definition">Definition<a class="anchor" href="#Definition">·</a></h3>
 <ul>
-<li>Let M be a deterministic Turing machine that halts on all input. The <strong>running time</strong> or <strong>time complexity</strong> of <span class="markdown-them-math-inline">$M$</span> is the function <span class="markdown-them-math-inline">$f: N\rightarrow N$</span>, where <span class="markdown-them-math-inline">$f(n)$</span> is the <strong>maximum number of steps</strong> that <span class="markdown-them-math-inline">$M$</span> uses on any input of length <span class="markdown-them-math-inline">$n$</span>.</li>
+<li>Let M be a deterministic Turing machine that halts on all input. The <strong>running time</strong> or <strong>time complexity</strong> of $M$ is the function $f: N\rightarrow N$, where $f(n)$ is the <strong>maximum number of steps</strong> that $M$ uses on any input of length $n$.</li>
 </ul>
 <span id="more"></span>
-<h3 id="time-complexity class">Time complexity class</h3>
+<h3 id="Time-complexity-class">Time complexity class<a class="anchor" href="#Time-complexity-class">·</a></h3>
 <ul>
-<li><strong>TIME(t(n))</strong>: languages decidable by <span class="markdown-them-math-inline">$O(t(n))$</span> time deterministic TM</li>
-<li><strong>NTIME(t(n))</strong>: languages decidable by <span class="markdown-them-math-inline">$O(t(n))$</span> time nondeterministic TM</li>
-<li><img src="23" alt="image-20220426134109416"></li>
-<li><span class="markdown-them-math-inline">$NP = \cup_k NTIME(n ^ k)$</span> 的理解<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span>
+<li><strong>TIME(t(n))</strong>: languages decidable by $O(t(n))$ time deterministic TM</li>
+<li><strong>NTIME(t(n))</strong>: languages decidable by $O(t(n))$ time nondeterministic TM</li>
+<li><img src="/2022/05/21/theory-of-computation-note-2/23" alt="image-20220426134109416" loading="lazy"></li>
+<li>$NP = \cup_k NTIME(n ^ k)$ 的理解<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span>
 <ul>
-<li>NP 是能在多项式时间内验证答案正确性<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>那么可以用 非确定性图灵机 猜一个答案 然后多项式时间内验证他 猜的时候可以保证如果有答案就能猜到答案 所以 NP <span class="markdown-them-math-inline">$\Leftrightarrow$</span> NTIME</li>
+<li>NP 是能在多项式时间内验证答案正确性<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>那么可以用 非确定性图灵机 猜一个答案 然后多项式时间内验证他 猜的时候可以保证如果有答案就能猜到答案 所以 NP $\Leftrightarrow$ NTIME</li>
 </ul>
 </li>
 </ul>
-<h3 id="the-cobham-edmonds thesis">The Cobham-Edmonds thesis</h3>
+<h3 id="The-Cobham-Edmonds-thesis">The Cobham-Edmonds thesis<a class="anchor" href="#The-Cobham-Edmonds-thesis">·</a></h3>
 <ul>
-<li>For any realistic models of computation <span class="markdown-them-math-inline">$M_1$</span> and <span class="markdown-them-math-inline">$M_2$</span>, <span class="markdown-them-math-inline">$M_1$</span> can be simulated on <span class="markdown-them-math-inline">$M_2$</span> with at most <strong>polynomial slowdown</strong>.</li>
+<li>For any realistic models of computation $M_1$ and $M_2$, $M_1$ can be simulated on $M_2$ with at most <strong>polynomial slowdown</strong>.</li>
 <li>只有多项式复杂度的东西才能够在实际计算机上计算</li>
 </ul>
-<h2 id="space-complexity">Space complexity</h2>
-<h3 id="space-complexity class">Space complexity class</h3>
+<h2 id="Space-complexity">Space complexity<a class="anchor" href="#Space-complexity">·</a></h2>
+<h3 id="Space-complexity-class">Space complexity class<a class="anchor" href="#Space-complexity-class">·</a></h3>
 <ul>
 <li>
-<p>For any function <span class="markdown-them-math-inline">$f:N \rightarrow N$</span>, we define:</p>
+<p>For any function $f:N \rightarrow N$, we define:</p>
 <ul>
-<li><strong>SPACE(f(n))</strong> = { L : L is decidable by a <strong>deterministic</strong> TM M which scans <span class="markdown-them-math-inline">$O(f(n))$</span> tape cells}</li>
-<li><strong>NSPACE(f(n))</strong> = { L : L is decidable by a <strong>non-deterministic</strong> TM M which scans <span class="markdown-them-math-inline">$O(f(n))$</span> tape cells on any branch of its computation}</li>
+<li><strong>SPACE(f(n))</strong> = { L : L is decidable by a <strong>deterministic</strong> TM M which scans $O(f(n))$ tape cells}</li>
+<li><strong>NSPACE(f(n))</strong> = { L : L is decidable by a <strong>non-deterministic</strong> TM M which scans $O(f(n))$ tape cells on any branch of its computation}</li>
 <li>NTIME(f(n)) 就是说 模拟的步骤 时间是 f(n)</li>
 <li>NSPACE(f(n)) 就是说 模拟的步骤 空间是 f(n)</li>
 </ul>
@@ -134,468 +134,470 @@ Let M be a deterministic Turing machine that halts on all input. The running tim
 <p>Example:</p>
 <ul>
 <li>
-<p>SAT <span class="markdown-them-math-inline">$\in$</span> SPACE(n)</p>
+<p>SAT $\in$ SPACE(n)</p>
 <p>can be solved in linear space</p>
 </li>
 </ul>
 </li>
 </ul>
-<h3 id="low-space classes">Low Space classes</h3>
+<h3 id="Low-Space-classes">Low Space classes<a class="anchor" href="#Low-Space-classes">·</a></h3>
 <ul>
-<li><strong>L</strong> = SPACE(<span class="markdown-them-math-inline">$\log n$</span>)</li>
-<li><strong>NL</strong> = NSPACE(<span class="markdown-them-math-inline">$\log n$</span>)</li>
-<li><strong>PSPACE</strong> = <span class="markdown-them-math-inline">$\cup_k$</span> SPACE(<span class="markdown-them-math-inline">$n^k$</span>)</li>
-<li><strong>NPSPACE</strong> = <span class="markdown-them-math-inline">$\cup_k$</span> NSPACE(<span class="markdown-them-math-inline">$n^k$</span>)</li>
+<li><strong>L</strong> = SPACE($\log n$)</li>
+<li><strong>NL</strong> = NSPACE($\log n$)</li>
+<li><strong>PSPACE</strong> = $\cup_k$ SPACE($n^k$)</li>
+<li><strong>NPSPACE</strong> = $\cup_k$ NSPACE($n^k$)</li>
 </ul>
-<h3 id="3-tape-machines">3-TAPE machines</h3>
+<h3 id="3-TAPE-machines">3-TAPE machines<a class="anchor" href="#3-TAPE-machines">·</a></h3>
 <ul>
-<li><img src="24" alt="image-20220426135707701"></li>
+<li><img src="/2022/05/21/theory-of-computation-note-2/24" alt="image-20220426135707701" loading="lazy"></li>
 <li>Configuration
 <ul>
-<li>the state   <span class="markdown-them-math-inline">$O(c)$</span></li>
-<li>the content of the work tape   <span class="markdown-them-math-inline">$O(g ^ {f(n)})$</span></li>
-<li>the head position of input tape   <span class="markdown-them-math-inline">$O(n)$</span></li>
-<li>the head position of work tape   <span class="markdown-them-math-inline">$O(f(n))$</span></li>
-<li>total number = <span class="markdown-them-math-inline">$O(cnf(n)g^{f(n)}) = O(n\cdot 2^{f(n)})$</span>
+<li>the state   $O©$</li>
+<li>the content of the work tape   $O(g ^ {f(n)})$</li>
+<li>the head position of input tape   $O(n)$</li>
+<li>the head position of work tape   $O(f(n))$</li>
+<li>total number = $O(cnf(n)g^{f(n)}) = O(n\cdot 2^{f(n)})$
 <ul>
-<li>If <span class="markdown-them-math-inline">$f(n) = O(\log n)$</span>, configuration 的总数 <span class="markdown-them-math-inline">$O(n)$</span></li>
+<li>If $f(n) = O(\log n)$, configuration 的总数 $O(n)$</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>消耗 空间 <span class="markdown-them-math-inline">$O(f(n))$</span> 的 图灵机 在 时间 <span class="markdown-them-math-inline">$n 2 ^ {O(f(n))}$</span> 内运行</li>
+<li>消耗 空间 $O(f(n))$ 的 图灵机 在 时间 $n 2 ^ {O(f(n))}$ 内运行</li>
 </ul>
-<h3 id="some-observations">Some observations</h3>
+<h3 id="Some-observations">Some observations<a class="anchor" href="#Some-observations">·</a></h3>
 <ul>
 <li>
-<p><span class="markdown-them-math-inline">$TIME(f(n))⊆SPACE(f(n))$</span></p>
+<p>$TIME(f(n))⊆SPACE(f(n))$</p>
 <ul>
 <li>a machine uses f(n) time can use at most f(n) space</li>
 </ul>
 </li>
 <li>
-<p><span class="markdown-them-math-inline">$SPACE(f(n))⊆TIME(f(n)·2^{O(f(n))})$</span></p>
+<p>$SPACE(f(n))⊆TIME(f(n)·2^{O(f(n))})$</p>
 <ul>
 <li>
-<p>a machine uses <span class="markdown-them-math-inline">$O(f(n))$</span> space can have at most <span class="markdown-them-math-inline">$2^{O(f(n))}$</span> configurations</p>
+<p>a machine uses $O(f(n))$ space can have at most $2^{O(f(n))}$ configurations</p>
 </li>
 <li>
 <p>a TM that halts may not repeat a configuration</p>
 </li>
 <li>
-<p>the total time to <span class="bd-box"><h-char class="bd bd-end"><h-inner>“</h-inner></h-char></span>list<span class="bd-box"><h-char class="bd bd-beg"><h-inner>”</h-inner></h-char></span> all configurations is <span class="markdown-them-math-inline">$f(n)·2^{O(f(n))}$</span></p>
+<p>the total time to <span class="bd-box"><h-char class="bd bd-end"><h-inner>“</h-inner></h-char></span>list<span class="bd-box"><h-char class="bd bd-beg"><h-inner>”</h-inner></h-char></span> all configurations is $f(n)·2^{O(f(n))}$</p>
 </li>
 </ul>
 </li>
 <li>
-<p><span class="markdown-them-math-inline">$NTIME(f(n)) \subset SPACE(f(n))$</span></p>
+<p>$NTIME(f(n)) \subset SPACE(f(n))$</p>
 <ul>
-<li>we can enumerate all <span class="markdown-them-math-inline">$O(f(n))$</span> guesses in <span class="markdown-them-math-inline">$O(f(n))$</span> space</li>
+<li>we can enumerate all $O(f(n))$ guesses in $O(f(n))$ space</li>
 </ul>
 </li>
 <li>
-<p><span class="markdown-them-math-inline">$ L⊆P⊆NP⊆PSPACE=NPSPACE⊆EXPTIME$</span></p>
+<p>$ L⊆P⊆NP⊆PSPACE=NPSPACE⊆EXPTIME$</p>
 </li>
 </ul>
-<h2 id="nl-completeness">NL Completeness</h2>
-<h3 id="log-space-reduction">Log-space reduction</h3>
+<h2 id="NL-Completeness">NL Completeness<a class="anchor" href="#NL-Completeness">·</a></h2>
+<h3 id="Log-space-reduction">Log-space reduction<a class="anchor" href="#Log-space-reduction">·</a></h3>
 <ul>
-<li><span class="markdown-them-math-inline">$A$</span> is log-space reducible to <span class="markdown-them-math-inline">$B$</span>, written <span class="markdown-them-math-inline">$A \leq _L B$</span>, if there exists a log space TM <span class="markdown-them-math-inline">$M$</span> that, given input <span class="markdown-them-math-inline">$w$</span>, outputs <span class="markdown-them-math-inline">$f(w)$</span> s.t. <span class="markdown-them-math-inline">$w\in A$</span> iff <span class="markdown-them-math-inline">$f(w) \in B$</span>.</li>
+<li>$A$ is log-space reducible to $B$, written $A \leq _L B$, if there exists a log space TM $M$ that, given input $w$, outputs $f(w)$ s.t. $w\in A$ iff $f(w) \in B$.</li>
 </ul>
-<h3 id="definition-1">Definition</h3>
+<h3 id="Definition-2">Definition<a class="anchor" href="#Definition-2">·</a></h3>
 <ul>
-<li>A language <span class="markdown-them-math-inline">$B$</span> is <strong>NL-complete</strong> if
+<li>A language $B$ is <strong>NL-complete</strong> if
 <ul>
-<li><span class="markdown-them-math-inline">$B \in NL$</span></li>
-<li><span class="markdown-them-math-inline">$\forall A \in NL, A \leq_L B$</span></li>
-</ul>
-</li>
-<li>Thm: If <span class="markdown-them-math-inline">$A\leq_L B$</span> and <span class="markdown-them-math-inline">$B \in L$</span>, then <span class="markdown-them-math-inline">$A \in L$</span>.
-<ul>
-<li>直接考虑 对于 <span class="markdown-them-math-inline">$A$</span> 的输入 <span class="markdown-them-math-inline">$w$</span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>用 <span class="markdown-them-math-inline">$M$</span> 计算 <span class="markdown-them-math-inline">$f(w)$</span> 不可行<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>因为虽然计算的过程是 log space 但是输出 <span class="markdown-them-math-inline">$f(w)$</span> 可能会很大</li>
-<li>我们不计算整个 <span class="markdown-them-math-inline">$f(w)$</span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>只在 <span class="markdown-them-math-inline">$B$</span> 需要用到 <span class="markdown-them-math-inline">$f(w)$</span> 的某个 bit 的时候去计算那个字符<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span><span class="markdown-them-math-inline">$f(w)$</span> 的长度 is bounded by poly(n) 故我们只要 <span class="markdown-them-math-inline">$O(\log n)$</span> bits.</li>
-<li>从 <span class="markdown-them-math-inline">$w$</span> 到 <span class="markdown-them-math-inline">$f(w)$</span> 和从 <span class="markdown-them-math-inline">$f(w)$</span> 到最终的 output 都是 log space<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>输入是 <span class="markdown-them-math-inline">$poly(n)$</span> 所以空间开销是 <span class="markdown-them-math-inline">$O(\log n)$</span></li>
+<li>$B \in NL$</li>
+<li>$\forall A \in NL, A \leq_L B$</li>
 </ul>
 </li>
-<li>More generally, if <span class="markdown-them-math-inline">$f$</span> and <span class="markdown-them-math-inline">$g$</span> are log-space computable functions, <span class="markdown-them-math-inline">$f \circ g$</span> is also log-space computable. <span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>就等 g 的结果的第 i 位算出来在用到 f 里面<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char></span></li>
+<li>Thm: If $A\leq_L B$ and $B \in L$, then $A \in L$.
+<ul>
+<li>直接考虑 对于 $A$ 的输入 $w$<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>用 $M$ 计算 $f(w)$ 不可行<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>因为虽然计算的过程是 log space 但是输出 $f(w)$ 可能会很大</li>
+<li>我们不计算整个 $f(w)$<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>只在 $B$ 需要用到 $f(w)$ 的某个 bit 的时候去计算那个字符<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>$f(w)$ 的长度 is bounded by poly(n) 故我们只要 $O(\log n)$ bits.</li>
+<li>从 $w$ 到 $f(w)$ 和从 $f(w)$ 到最终的 output 都是 log space<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>输入是 $poly(n)$ 所以空间开销是 $O(\log n)$</li>
+</ul>
+</li>
+<li>More generally, if $f$ and $g$ are log-space computable functions, $f \circ g$ is also log-space computable. <span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>就等 g 的结果的第 i 位算出来在用到 f 里面<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char></span></li>
 <li><strong>log space 可以让输出和输入的长度是poly关系 <span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>在log 意义下同阶<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char></span></strong></li>
 </ul>
-<h3 id="$path$"><span class="markdown-them-math-inline">$PATH$</span></h3>
+<h3 id="PATH">$PATH$<a class="anchor" href="#PATH">·</a></h3>
 <ul>
 <li>
 <p>Graph Connevtivity</p>
 <ul>
-<li><span class="markdown-them-math-inline">$PATH$</span>    有向图<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>两个点 <span class="markdown-them-math-inline">$s,t$</span> 的连通性
+<li>$PATH$    有向图<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>两个点 $s,t$ 的连通性
 <ul>
-<li>in <span class="markdown-them-math-inline">$NL$</span> and in <span class="markdown-them-math-inline">$P$</span></li>
+<li>in $NL$ and in $P$</li>
 </ul>
 </li>
-<li><span class="markdown-them-math-inline">$USTCON$</span>    无向图<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>两个点 <span class="markdown-them-math-inline">$s,t$</span> 的连通性
+<li>$USTCON$    无向图<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>两个点 $s,t$ 的连通性
 <ul>
-<li>in <span class="markdown-them-math-inline">$L$</span></li>
+<li>in $L$</li>
 </ul>
 </li>
-</ul>
-</li>
-<li>
-<p><span class="markdown-them-math-inline">$PATH \in NL$</span></p>
-<ul>
-<li><img src="25" alt="image-20220426140928942"></li>
 </ul>
 </li>
 <li>
-<p><span class="markdown-them-math-inline">$PATH \in P$</span></p>
+<p>$PATH \in NL$</p>
 <ul>
-<li>从 <span class="markdown-them-math-inline">$s$</span> 出发 bfs</li>
+<li><img src="/2022/05/21/theory-of-computation-note-2/25" alt="image-20220426140928942" loading="lazy"></li>
+</ul>
+</li>
+<li>
+<p>$PATH \in P$</p>
+<ul>
+<li>从 $s$ 出发 bfs</li>
 </ul>
 </li>
 </ul>
-<h3 id="savitch's-theorem">Savitch’s Theorem</h3>
+<h3 id="Savitch’s-Theorem">Savitch’s Theorem<a class="anchor" href="#Savitch’s-Theorem">·</a></h3>
 <ul>
-<li><span class="markdown-them-math-inline">$NL \subset SPACE(\log ^ 2n)$</span></li>
+<li>$NL \subset SPACE(\log ^ 2n)$</li>
 <li>Proof:
 <ul>
-<li>First prove <span class="markdown-them-math-inline">$PATH$</span> is <strong>NL-complete</strong></li>
-<li>Then show an algorithm for <span class="markdown-them-math-inline">$PATH$</span> that uses <span class="markdown-them-math-inline">$\log ^ 2 n$</span> space</li>
+<li>First prove $PATH$ is <strong>NL-complete</strong></li>
+<li>Then show an algorithm for $PATH$ that uses $\log ^ 2 n$ space</li>
 </ul>
 </li>
 </ul>
-<h4 id="$path$-is nl-complete"><span class="markdown-them-math-inline">$PATH$</span> is NL-complete</h4>
+<h4 id="PATH-is-NL-complete">$PATH$ is NL-complete<a class="anchor" href="#PATH-is-NL-complete">·</a></h4>
 <ul>
-<li>已经证明了 <span class="markdown-them-math-inline">$PATH \in NL$</span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>下面证明任何 <span class="markdown-them-math-inline">$NL$</span> 都可以对数空间规约到 <span class="markdown-them-math-inline">$PATH$</span></li>
-<li>对于一个语言 <span class="markdown-them-math-inline">$A$</span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>存在一个 NTM <span class="markdown-them-math-inline">$M$</span> 在 <span class="markdown-them-math-inline">$O(\log n)$</span> 的空间内能 decide <span class="markdown-them-math-inline">$A$</span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>不妨设 <span class="markdown-them-math-inline">$M$</span> 只有一个 accept configuration</li>
-<li>For input <span class="markdown-them-math-inline">$w$</span>, we construct a directed graph <span class="markdown-them-math-inline">$\langle G, s, t\rangle $</span> in 对数空间内<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>s.t. <span class="markdown-them-math-inline">$G$</span> contains a path from <span class="markdown-them-math-inline">$s$</span> to <span class="markdown-them-math-inline">$t$</span> iff <span class="markdown-them-math-inline">$M$</span> accepts <span class="markdown-them-math-inline">$w$</span>.</li>
-<li><span class="markdown-them-math-inline">$M$</span> 的每个 configuration 视作一个节点<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>如果 <span class="markdown-them-math-inline">$c_1$</span> 出发下一个能到 <span class="markdown-them-math-inline">$c_2$</span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>那么 <span class="markdown-them-math-inline">$(c_1, c_2)$</span> 是 <span class="markdown-them-math-inline">$G$</span> 的一条边<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span><span class="markdown-them-math-inline">$s$</span> 是一个初始 configuration<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>t 是 accept configuration</li>
-<li>从 <span class="markdown-them-math-inline">$w$</span> 到 <span class="markdown-them-math-inline">$\langle G, s, t\rangle$</span> 的转换也是 log-space
+<li>已经证明了 $PATH \in NL$<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>下面证明任何 $NL$ 都可以对数空间规约到 $PATH$</li>
+<li>对于一个语言 $A$<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>存在一个 NTM $M$ 在 $O(\log n)$ 的空间内能 decide $A$<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>不妨设 $M$ 只有一个 accept configuration</li>
+<li>For input $w$, we construct a directed graph $\langle G, s, t\rangle $ in 对数空间内<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>s.t. $G$ contains a path from $s$ to $t$ iff $M$ accepts $w$.</li>
+<li>$M$ 的每个 configuration 视作一个节点<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>如果 $c_1$ 出发下一个能到 $c_2$<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>那么 $(c_1, c_2)$ 是 $G$ 的一条边<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>$s$ 是一个初始 configuration<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>t 是 accept configuration</li>
+<li>从 $w$ 到 $\langle G, s, t\rangle$ 的转换也是 log-space
 <ul>
 <li>列举所有的 nodes    nodes就对应 configuration 所以是log space</li>
 <li>For every two nodes, check whether connected 这只需要看一下head指向的位置</li>
 </ul>
 </li>
 </ul>
-<h4 id="$nl-\subset p$"><span class="markdown-them-math-inline">$NL \subset P$</span></h4>
+<h4 id="NL-subset-P">$NL \subset P$<a class="anchor" href="#NL-subset-P">·</a></h4>
 <ul>
 <li>a simple corollary</li>
-<li><span class="markdown-them-math-inline">$PATH \in P$</span></li>
-<li>all <span class="markdown-them-math-inline">$NL$</span> language is log-space reducible to <span class="markdown-them-math-inline">$PATH$</span>
+<li>$PATH \in P$</li>
+<li>all $NL$ language is log-space reducible to $PATH$
 <ul>
-<li>-&gt; all <span class="markdown-them-math-inline">$NL$</span> language is poly-time reducible to <span class="markdown-them-math-inline">$PATH$</span></li>
+<li>-&gt; all $NL$ language is poly-time reducible to $PATH$</li>
 </ul>
 </li>
-<li>any <span class="markdown-them-math-inline">$NL$</span> language is in <span class="markdown-them-math-inline">$P$</span></li>
+<li>any $NL$ language is in $P$</li>
 </ul>
-<h4 id="then-show $path$ can be decided by a deterministic tm in $o(\log ^ 2n)$ space">Then show <span class="markdown-them-math-inline">$PATH$</span> can be decided by a deterministic TM in <span class="markdown-them-math-inline">$O(\log ^ 2n)$</span> space</h4>
+<h4 id="Then-show-PATH-can-be-decided-by-a-deterministic-TM-in-O-log-2n-space">Then show $PATH$ can be decided by a deterministic TM in $O(\log ^ 2n)$ space<a class="anchor" href="#Then-show-PATH-can-be-decided-by-a-deterministic-TM-in-O-log-2n-space">·</a></h4>
 <ul>
-<li><img src="26" alt="image-20220426154810334"></li>
-<li><span class="markdown-them-math-inline">$S(n) = S(n / 2) + O(\log n)$</span></li>
+<li><img src="/2022/05/21/theory-of-computation-note-2/26" alt="image-20220426154810334" loading="lazy"></li>
+<li>$S(n) = S(n / 2) + O(\log n)$</li>
 </ul>
-<p><strong>So we have proven <span class="markdown-them-math-inline">$NL \subset SPACE (\log ^ 2 n)$</span></strong></p>
-<h3 id="padding-argument -- example">Padding argument – Example</h3>
+<p><strong>So we have proven $NL \subset SPACE (\log ^ 2 n)$</strong></p>
+<h3 id="Padding-argument-–-Example">Padding argument – Example<a class="anchor" href="#Padding-argument-–-Example">·</a></h3>
 <ul>
 <li>
-<p>Claim: If <span class="markdown-them-math-inline">$P = NP$</span>, then <span class="markdown-them-math-inline">$EXP = NEXP$</span>.</p>
+<p>Claim: If $P = NP$, then $EXP = NEXP$.</p>
 </li>
 <li>
 <p>Proof.</p>
 <blockquote>
-<p>Since <span class="markdown-them-math-inline">$EXP \subset NEXP$</span> is by definition, we only need to show <span class="markdown-them-math-inline">$NEXP \subset EXP$</span>.</p>
-<p>考虑 <span class="markdown-them-math-inline">$NEXP$</span> 中的某个语言 <span class="markdown-them-math-inline">$L$</span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>存在某个自动机 <span class="markdown-them-math-inline">$M$</span> 能够在 <span class="markdown-them-math-inline">${2 ^ {n ^ c}}$</span> 的时间内 decide <span class="markdown-them-math-inline">$L$</span>. 我们定义</p>
-<div class="markdown-them-math-block">$$L' = \left\{x 1 ^ {2 ^ {|x| ^ c}} \mid x \in L\right\}
-$$</div><p>其中 1 表示一个不在 <span class="markdown-them-math-inline">$L$</span> 中的符号.</p>
-<p>首先我们证明 <span class="markdown-them-math-inline">$L'$</span> is in <span class="markdown-them-math-inline">$NP$</span>, 然后我们通过 <span class="markdown-them-math-inline">$NP= P$</span>, 我们证明 <span class="markdown-them-math-inline">$L$</span> is in EXP.</p>
+<p>Since $EXP \subset NEXP$ is by definition, we only need to show $NEXP \subset EXP$.</p>
+<p>考虑 $NEXP$ 中的某个语言 $L$<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>存在某个自动机 $M$ 能够在 ${2 ^ {n ^ c}}$ 的时间内 decide $L$. 我们定义
+$$
+L’ = \left{x 1 ^ {2 ^ {|x| ^ c}} \mid x \in L\right}
+$$
+其中 1 表示一个不在 $L$ 中的符号.</p>
+<p>首先我们证明 $L’$ is in $NP$, 然后我们通过 $NP= P$, 我们证明 $L$ is in EXP.</p>
 </blockquote>
 <blockquote>
-<p>首先证明 <span class="markdown-them-math-inline">$L'$</span> is in <span class="markdown-them-math-inline">$NP$</span>.</p>
-<p>给定输入 <span class="markdown-them-math-inline">$x'$</span> 我们需要判断 <span class="markdown-them-math-inline">$x' \in L'$</span> or not.  我们先看 <span class="markdown-them-math-inline">$x'$</span> 的形式. 如果 <span class="markdown-them-math-inline">$x'$</span> 符合 <span class="markdown-them-math-inline">$L'$</span> 的形式, 就是说存在一个<span class="markdown-them-math-inline">$x$</span>, <span class="markdown-them-math-inline">$x' = x \left\{x 1 ^ {2 ^ {|x| ^ c}} \mid x \in L\right\}$</span>,  simulate <span class="markdown-them-math-inline">$M(x)$</span>. 这个 simulation 的时间 是 <span class="markdown-them-math-inline">$2 ^ {|x| ^ c}$</span>, 关于 <span class="markdown-them-math-inline">$x'$</span> 的长度是线性的. 自然也是多项式的. 这整个过程就能 decide <span class="markdown-them-math-inline">$x'$</span> is in <span class="markdown-them-math-inline">$L'$</span> or not. 并且是 <span class="markdown-them-math-inline">$NP$</span> 的. 因此, <span class="markdown-them-math-inline">$L'$</span> is in <span class="markdown-them-math-inline">$NP$</span>.</p>
+<p>首先证明 $L’$ is in $NP$.</p>
+<p>给定输入 $x’$ 我们需要判断 $x’ \in L’$ or not.  我们先看 $x’$ 的形式. 如果 $x’$ 符合 $L’$ 的形式, 就是说存在一个$x$, $x’ = x \left{x 1 ^ {2 ^ {|x| ^ c}} \mid x \in L\right}$,  simulate $M(x)$. 这个 simulation 的时间 是 $2 ^ {|x| ^ c}$, 关于 $x’$ 的长度是线性的. 自然也是多项式的. 这整个过程就能 decide $x’$ is in $L’$ or not. 并且是 $NP$ 的. 因此, $L’$ is in $NP$.</p>
 </blockquote>
 <blockquote>
-<p>由于假设 <span class="markdown-them-math-inline">$P=NP$</span>, <span class="markdown-them-math-inline">$L'$</span> is in <span class="markdown-them-math-inline">$P$</span>. Then, 存在一个确定自动机, 能够在 poly time 内decide <span class="markdown-them-math-inline">$L'$</span>. 这个自动机关于 <span class="markdown-them-math-inline">$|x|$</span> 的复杂度就是 <span class="markdown-them-math-inline">$EXP$</span>. 因此 <span class="markdown-them-math-inline">$L \in EXP$</span>.</p>
+<p>由于假设 $P=NP$, $L’$ is in $P$. Then, 存在一个确定自动机, 能够在 poly time 内decide $L’$. 这个自动机关于 $|x|$ 的复杂度就是 $EXP$. 因此 $L \in EXP$.</p>
 </blockquote>
 </li>
 <li>
-<p><strong>padding</strong> 指的就是在 <span class="markdown-them-math-inline">$x$</span> 后面加许多个 <span class="markdown-them-math-inline">$1$</span> 的操作. 这有时用于不同复杂度类型的转换.</p>
+<p><strong>padding</strong> 指的就是在 $x$ 后面加许多个 $1$ 的操作. 这有时用于不同复杂度类型的转换.</p>
 </li>
 </ul>
-<h3 id="savitch's-theorem ---- generalized form">Savitch’s Theorem ---- Generalized form</h3>
+<h3 id="Savitch’s-Theorem-Generalized-form">Savitch’s Theorem ---- Generalized form<a class="anchor" href="#Savitch’s-Theorem-Generalized-form">·</a></h3>
 <ul>
 <li>
 <p>Theorem:</p>
-<p><span class="markdown-them-math-inline">$\forall S(n) \geq \log (n)$</span>, <span class="markdown-them-math-inline">$NSPACE (S(n)) \subset SPACE(S(n) ^ 2)$</span></p>
+<p>$\forall S(n) \geq \log (n)$, $NSPACE (S(n)) \subset SPACE(S(n) ^ 2)$</p>
 </li>
 <li>
-<p>用 <span class="markdown-them-math-inline">$NL \subset SPACE(\log ^ 2 n)$</span> 证明</p>
+<p>用 $NL \subset SPACE(\log ^ 2 n)$ 证明</p>
 </li>
 </ul>
-<h4 id="definition-2">Definition</h4>
+<h4 id="Definition-3">Definition<a class="anchor" href="#Definition-3">·</a></h4>
 <ul>
 <li>
-<p>A function <span class="markdown-them-math-inline">$f: N \rightarrow N$</span>, where <span class="markdown-them-math-inline">$f(n) \geq \log n$</span>, is called <em><strong>space constructable</strong></em>, if the function that maps <span class="markdown-them-math-inline">$1 ^ n$</span> to the binary representation of <span class="markdown-them-math-inline">$f(n)$</span> is computable in space <span class="markdown-them-math-inline">$O(f(n))$</span>.</p>
+<p>A function $f: N \rightarrow N$, where $f(n) \geq \log n$, is called <em><strong>space constructable</strong></em>, if the function that maps $1 ^ n$ to the binary representation of $f(n)$ is computable in space $O(f(n))$.</p>
 </li>
 <li>
-<p>A function <span class="markdown-them-math-inline">$f: N \rightarrow N$</span>, where <span class="markdown-them-math-inline">$f(n) \geq n \log n$</span>, is called <em><strong>time constructable</strong></em> if the function that maps <span class="markdown-them-math-inline">$1^n$</span> to the binary representation of <span class="markdown-them-math-inline">$f(n)$</span> is computable in time <span class="markdown-them-math-inline">$O(f(n))$</span>.</p>
+<p>A function $f: N \rightarrow N$, where $f(n) \geq n \log n$, is called <em><strong>time constructable</strong></em> if the function that maps $1^n$ to the binary representation of $f(n)$ is computable in time $O(f(n))$.</p>
 </li>
 <li>
 <p><strong>All commonly used functions are space/time constructable.</strong></p>
 </li>
 </ul>
-<h4 id="claim">Claim</h4>
+<h4 id="Claim">Claim<a class="anchor" href="#Claim">·</a></h4>
 <ul>
 <li>
-<p>For any two <strong>space constructable</strong> functions <span class="markdown-them-math-inline">$s_1(n), s_2(n) \geq \log n, f(n) \geq n$</span>:</p>
-<p><span class="markdown-them-math-inline">$NSPACE(s_1(n)) \subset SPACE(s_2(n))$</span> can derive that <span class="markdown-them-math-inline">$NSPACE(s_1(f(n))) \subset SPACE(s_2(f(n)))$</span></p>
+<p>For any two <strong>space constructable</strong> functions $s_1(n), s_2(n) \geq \log n, f(n) \geq n$:</p>
+<p>$NSPACE(s_1(n)) \subset SPACE(s_2(n))$ can derive that $NSPACE(s_1(f(n))) \subset SPACE(s_2(f(n)))$</p>
 </li>
 </ul>
-<h4 id="proof">Proof</h4>
+<h4 id="Proof">Proof<a class="anchor" href="#Proof">·</a></h4>
 <p>我们也用 <strong>padding</strong> 的方式去证明 Savitch’s Theorem.</p>
-<p>假设 <span class="markdown-them-math-inline">$L \in NSPACE(s_1(f(n)))$</span></p>
-<p>就是有一个 <span class="markdown-them-math-inline">$s_1(f(n))$</span> 空间复杂度的 NTM <span class="markdown-them-math-inline">$M_L$</span> 能够 decide <span class="markdown-them-math-inline">$L$</span>.</p>
-<p>我们想要转化到一个 <span class="markdown-them-math-inline">$NSPACE(s_1(n))$</span> 的问题 就是把输入长度变成 <span class="markdown-them-math-inline">$f(n)$</span></p>
-<p>我们将输入 <span class="markdown-them-math-inline">$x$</span> 从长度 <span class="markdown-them-math-inline">$n$</span> 补到 <span class="markdown-them-math-inline">$f(n)$</span></p>
-<p>令 <span class="markdown-them-math-inline">$L'=\{x \text{@} 0 ^ {f(n) -n} \mid x \in L\}$</span> , 那么 我们考虑这样一个 NTM</p>
+<p>假设 $L \in NSPACE(s_1(f(n)))$</p>
+<p>就是有一个 $s_1(f(n))$ 空间复杂度的 NTM $M_L$ 能够 decide $L$.</p>
+<p>我们想要转化到一个 $NSPACE(s_1(n))$ 的问题 就是把输入长度变成 $f(n)$</p>
+<p>我们将输入 $x$ 从长度 $n$ 补到 $f(n)$</p>
+<p>令 $L’={x \text{@} 0 ^ {f(n) -n} \mid x \in L}$ , 那么 我们考虑这样一个 NTM</p>
 <ol>
-<li>数最后的 <span class="markdown-them-math-inline">$0$</span> 的数量, check 是否有某个 <span class="markdown-them-math-inline">$n$</span> 满足 <span class="markdown-them-math-inline">$0$</span> 的数量 等于 <span class="markdown-them-math-inline">$f(n)-n$</span></li>
-<li>假如找到了这样的 <span class="markdown-them-math-inline">$n$</span>, 我们相当于得到了输入 <span class="markdown-them-math-inline">$x$</span>, 然后 run <span class="markdown-them-math-inline">$M_L$</span> on <span class="markdown-them-math-inline">$x$</span></li>
+<li>数最后的 $0$ 的数量, check 是否有某个 $n$ 满足 $0$ 的数量 等于 $f(n)-n$</li>
+<li>假如找到了这样的 $n$, 我们相当于得到了输入 $x$, 然后 run $M_L$ on $x$</li>
 </ol>
-<p>之前那个 <span class="markdown-them-math-inline">$M_L$</span> 的空间复杂度是 <span class="markdown-them-math-inline">$s_1(f(n))$</span> 其中 <span class="markdown-them-math-inline">$n$</span> 指的是 <span class="markdown-them-math-inline">$x$</span> 的长度, 所以现在这个 <span class="markdown-them-math-inline">$NTM$</span> 的复杂度就是 <span class="markdown-them-math-inline">$s_1(n)$</span>. 那么 <span class="markdown-them-math-inline">$L' \in NSPACE(s_1(n))$</span>. 于是, 根据条件, <span class="markdown-them-math-inline">$L' \in SPACE(s_2(n))$</span>, 再做一个从 <span class="markdown-them-math-inline">$L' \rightarrow L$</span> 的转换, 我们就得到了一个 确定性图灵机, works in <span class="markdown-them-math-inline">$O(s_2(f(n)))$</span> space.</p>
-<h4 id="原始定理的证明">原始定理的证明</h4>
+<p>之前那个 $M_L$ 的空间复杂度是 $s_1(f(n))$ 其中 $n$ 指的是 $x$ 的长度, 所以现在这个 $NTM$ 的复杂度就是 $s_1(n)$. 那么 $L’ \in NSPACE(s_1(n))$. 于是, 根据条件, $L’ \in SPACE(s_2(n))$, 再做一个从 $L’ \rightarrow L$ 的转换, 我们就得到了一个 确定性图灵机, works in $O(s_2(f(n)))$ space.</p>
+<h4 id="原始定理的证明">原始定理的证明<a class="anchor" href="#原始定理的证明">·</a></h4>
 <ul>
-<li>只要 <span class="markdown-them-math-inline">$s_1(n) = \log(n)$</span>, <span class="markdown-them-math-inline">$s_2(n) = \log^2(n)$</span>, 我们已经有 <span class="markdown-them-math-inline">$NSPACE(s_1(n)) \subset SPACE(s_2(n))$</span>, 那么我们就有 <span class="markdown-them-math-inline">$NSPACE(s_1(f(n))) \subset SPACE(s_2(f(n)))$</span> 对任意的 <span class="markdown-them-math-inline">$f(n) \geq n$</span>. 代入就是 <span class="markdown-them-math-inline">$NSPACE(\log(f(n))) \subset SPACE(\log ^ 2(f(n)))$</span>. 令 <span class="markdown-them-math-inline">$g(n) = \log (f(n))$</span>, 那么就是 <span class="markdown-them-math-inline">$NSPACE(g(n)) \subset SPACE(g^2(n))$</span>, <span class="markdown-them-math-inline">$g(n)$</span> 的限制条件只有 <span class="markdown-them-math-inline">$g(n) \geq \log n$</span>.</li>
+<li>只要 $s_1(n) = \log(n)$, $s_2(n) = \log^2(n)$, 我们已经有 $NSPACE(s_1(n)) \subset SPACE(s_2(n))$, 那么我们就有 $NSPACE(s_1(f(n))) \subset SPACE(s_2(f(n)))$ 对任意的 $f(n) \geq n$. 代入就是 $NSPACE(\log(f(n))) \subset SPACE(\log ^ 2(f(n)))$. 令 $g(n) = \log (f(n))$, 那么就是 $NSPACE(g(n)) \subset SPACE(g^2(n))$, $g(n)$ 的限制条件只有 $g(n) \geq \log n$.</li>
 </ul>
-<h4 id="corollary">Corollary</h4>
+<h4 id="Corollary">Corollary<a class="anchor" href="#Corollary">·</a></h4>
 <ul>
 <li>
-<p><span class="markdown-them-math-inline">$PSPACE = NPSPACE$</span></p>
+<p>$PSPACE = NPSPACE$</p>
 </li>
 <li>
-<p>Clearly, <span class="markdown-them-math-inline">$PSPACE \subset NPSPACE$</span>. By Savitch’s theorem, <span class="markdown-them-math-inline">$NPSPACE \subset PSPACE$</span>.</p>
+<p>Clearly, $PSPACE \subset NPSPACE$. By Savitch’s theorem, $NPSPACE \subset PSPACE$.</p>
 </li>
 </ul>
-<h4 id="remark">Remark</h4>
+<h4 id="Remark">Remark<a class="anchor" href="#Remark">·</a></h4>
 <p>可以看到, 时间复杂度和空间复杂度有很大不同. NP 和 P 差距极大, 而 NSPACE 和 PSPACE 并没有太大的差别.</p>
-<h2 id="pspace">PSPACE</h2>
+<h2 id="PSPACE">PSPACE<a class="anchor" href="#PSPACE">·</a></h2>
 <ul>
 <li>在多项式空间内能被 确定图灵机 decide 的语言</li>
-<li>e.g. SAT is in PSPACE 只需要顺序枚举每一个 <span class="markdown-them-math-inline">$x_i$</span> 的值 也因此 <span class="markdown-them-math-inline">$NP \subset PSPACE$</span></li>
+<li>e.g. SAT is in PSPACE 只需要顺序枚举每一个 $x_i$ 的值 也因此 $NP \subset PSPACE$</li>
 </ul>
-<h3 id="tqbf-(true quantified boolean formula)">TQBF (true quantified Boolean formula)</h3>
+<h3 id="TQBF-true-quantified-Boolean-formula">TQBF (true quantified Boolean formula)<a class="anchor" href="#TQBF-true-quantified-Boolean-formula">·</a></h3>
 <ul>
 <li>complete for <strong>PSPACE</strong></li>
 </ul>
-<h4 id="problem-statement">Problem statement</h4>
+<h4 id="Problem-statement">Problem statement<a class="anchor" href="#Problem-statement">·</a></h4>
 <ul>
-<li>Instance: a fully quantified Boolean formula <span class="markdown-them-math-inline">$\phi$</span></li>
-<li>fully quantified 就是对于 formula 中的每个变量, 都有一个 <span class="markdown-them-math-inline">$\exists$</span> 或者 <span class="markdown-them-math-inline">$\forall$</span> 去限定他 -&gt; quantifier</li>
-<li>Problem: to decide if <span class="markdown-them-math-inline">$\phi$</span> is true</li>
+<li>Instance: a fully quantified Boolean formula $\phi$</li>
+<li>fully quantified 就是对于 formula 中的每个变量, 都有一个 $\exists$ 或者 $\forall$ 去限定他 -&gt; quantifier</li>
+<li>Problem: to decide if $\phi$ is true</li>
 </ul>
-<h4 id="tqbf-is in pspace">TQBF is in PSPACE</h4>
+<h4 id="TQBF-is-in-PSPACE">TQBF is in PSPACE<a class="anchor" href="#TQBF-is-in-PSPACE">·</a></h4>
 <ul>
-<li>We describe a poly-space algorithm for evaluating <span class="markdown-them-math-inline">$\phi$</span></li>
-<li>If <span class="markdown-them-math-inline">$\phi$</span> has no quantifiers: 那么式子里所有变量取值都确定了, 直接算</li>
-<li>If <span class="markdown-them-math-inline">$\phi = \forall x (\psi(x))$</span>: 那么把 <span class="markdown-them-math-inline">$x=0$</span> 和 <span class="markdown-them-math-inline">$x=1$</span> 都带进去算, 都 accept 才 accept</li>
-<li>If <span class="markdown-them-math-inline">$\phi = \exists x (\psi(x))$</span>: 把 <span class="markdown-them-math-inline">$x=0$</span> 和 <span class="markdown-them-math-inline">$x=1$</span> 带进去算, 只要有一个 accept 就 accept</li>
+<li>We describe a poly-space algorithm for evaluating $\phi$</li>
+<li>If $\phi$ has no quantifiers: 那么式子里所有变量取值都确定了, 直接算</li>
+<li>If $\phi = \forall x (\psi(x))$: 那么把 $x=0$ 和 $x=1$ 都带进去算, 都 accept 才 accept</li>
+<li>If $\phi = \exists x (\psi(x))$: 把 $x=0$ 和 $x=1$ 带进去算, 只要有一个 accept 就 accept</li>
 <li>空间是线性的</li>
 </ul>
-<h3 id="pspace-completeness">PSPACE Completeness</h3>
-<h4 id="definition-3">Definition</h4>
+<h3 id="PSPACE-Completeness">PSPACE Completeness<a class="anchor" href="#PSPACE-Completeness">·</a></h3>
+<h4 id="Definition-4">Definition<a class="anchor" href="#Definition-4">·</a></h4>
 <ul>
-<li>A language <span class="markdown-them-math-inline">$B$</span> is <strong>PSPACE-complete</strong> iff
+<li>A language $B$ is <strong>PSPACE-complete</strong> iff
 <ul>
-<li><span class="markdown-them-math-inline">$B \in PSPACE$</span></li>
-<li><span class="markdown-them-math-inline">$\forall A \in PSPACE, A \leq_P B$</span>
+<li>$B \in PSPACE$</li>
+<li>$\forall A \in PSPACE, A \leq_P B$
 <ul>
-<li>这里的 <span class="markdown-them-math-inline">$\leq_P$</span> 就是多项式时间的归约</li>
+<li>这里的 $\leq_P$ 就是多项式时间的归约</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<h4 id="tqbf-is pspace-complete">TQBF is PSPACE-complete</h4>
+<h4 id="TQBF-is-PSPACE-complete">TQBF is PSPACE-complete<a class="anchor" href="#TQBF-is-PSPACE-complete">·</a></h4>
 <ul>
 <li>已经证明了 TQBF is in PSPACE</li>
 <li>需要证明 TQBF is PSPACE-hard</li>
-<li>给定一个图灵机 <span class="markdown-them-math-inline">$M$</span> for a language <span class="markdown-them-math-inline">$L \in PSPACE$</span>, 给定一个输入 <span class="markdown-them-math-inline">$x$</span>, 需要将 <span class="markdown-them-math-inline">$M$</span> 是否 accept <span class="markdown-them-math-inline">$x$</span> 多项式时间内归约到 <span class="markdown-them-math-inline">$TQBF$</span></li>
-<li>construct a QBF <span class="markdown-them-math-inline">$\phi$</span> of polynomial size s.t. <span class="markdown-them-math-inline">$\phi$</span> is true 等价于 <span class="markdown-them-math-inline">$M$</span> accepts <span class="markdown-them-math-inline">$x$</span></li>
-<li>对所有的 configuration 编码, for configurations <span class="markdown-them-math-inline">$u, v$</span> and an integer <span class="markdown-them-math-inline">$t$</span>, define <span class="markdown-them-math-inline">$\phi(u, v, t) = \text{true}$</span> iff <span class="markdown-them-math-inline">$v$</span> is reachable from <span class="markdown-them-math-inline">$u$</span> in <span class="markdown-them-math-inline">$t$</span> steps</li>
+<li>给定一个图灵机 $M$ for a language $L \in PSPACE$, 给定一个输入 $x$, 需要将 $M$ 是否 accept $x$ 多项式时间内归约到 $TQBF$</li>
+<li>construct a QBF $\phi$ of polynomial size s.t. $\phi$ is true 等价于 $M$ accepts $x$</li>
+<li>对所有的 configuration 编码, for configurations $u, v$ and an integer $t$, define $\phi(u, v, t) = \text{true}$ iff $v$ is reachable from $u$ in $t$ steps</li>
 <li>下面用 <em><strong>分治</strong></em></li>
-<li>首先考虑 <span class="markdown-them-math-inline">$\phi(u,v,1)$</span> 就是说 <span class="markdown-them-math-inline">$u$</span> 与 <span class="markdown-them-math-inline">$v$</span> 一步就到达, 那么他们最多在三个位置上能不同, 其他位置都相同, 非常好判断</li>
-<li>对于 <span class="markdown-them-math-inline">$t &gt; 1$</span>, 我们有 <span class="markdown-them-math-inline">$\phi(u,v,t) = \exists m [\phi(u, m, t / 2) \mathbf{\  and \  } \phi(m, v, t / 2)]$</span></li>
-<li>问题在于 <span class="markdown-them-math-inline">$t$</span> 并不一定是 poly(|x|) 的</li>
-<li>change the previous 递推式 to</li>
-</ul>
-<div class="markdown-them-math-block">$$\phi(u, v, t) = (\exist m) (\forall (a, b) \in \{(u, m), (m, v)\} [\phi(a, b, t / 2)]) \\
-\phi(u, v, t) = (\exist m) (\forall a) (\forall b) [((a = u \&amp; b = m) \text{ or } (a = m \&amp; b = v)) \rightarrow \phi(a, b, t / 2)]
-$$</div><ul>
-<li>size: <span class="markdown-them-math-inline">$S(t) = S(t / 2) + poly(|x|)$</span>, thus <span class="markdown-them-math-inline">$S(t)$</span> is <span class="markdown-them-math-inline">$poly(|x|)$</span></li>
-<li><span class="markdown-them-math-inline">$\phi_{M, x} = \phi(c_{start}, c_{accept}, h)$</span> is TRUE 当且仅当 <span class="markdown-them-math-inline">$M$</span> accepts <span class="markdown-them-math-inline">$x$</span> in <span class="markdown-them-math-inline">$h$</span> steps</li>
-<li><span class="markdown-them-math-inline">$\phi$</span> is constructible in poly-time</li>
+<li>首先考虑 $\phi(u,v,1)$ 就是说 $u$ 与 $v$ 一步就到达, 那么他们最多在三个位置上能不同, 其他位置都相同, 非常好判断</li>
+<li>对于 $t &gt; 1$, 我们有 $\phi(u,v,t) = \exists m [\phi(u, m, t / 2) \mathbf{\  and \  } \phi(m, v, t / 2)]$</li>
+<li>问题在于 $t$ 并不一定是 poly(|x|) 的</li>
+<li>change the previous 递推式 to
+$$
+\phi(u, v, t) = (\exist m) (\forall (a, b) \in {(u, m), (m, v)} [\phi(a, b, t / 2)]) \
+\phi(u, v, t) = (\exist m) (\forall a) (\forall b) [((a = u &amp; b = m) \text{ or } (a = m &amp; b = v)) \rightarrow \phi(a, b, t / 2)]
+$$</li>
+<li>size: $S(t) = S(t / 2) + poly(|x|)$, thus $S(t)$ is $poly(|x|)$</li>
+<li>$\phi_{M, x} = \phi(c_{start}, c_{accept}, h)$ is TRUE 当且仅当 $M$ accepts $x$ in $h$ steps</li>
+<li>$\phi$ is constructible in poly-time</li>
 <li>证毕</li>
 </ul>
-<h4 id="formula-game">Formula Game</h4>
-<h5 id="description">Description</h5>
+<h4 id="Formula-Game">Formula Game<a class="anchor" href="#Formula-Game">·</a></h4>
+<h5 id="Description">Description<a class="anchor" href="#Description">·</a></h5>
 <ul>
-<li>一个 formula <span class="markdown-them-math-inline">$\psi$</span> with variables <span class="markdown-them-math-inline">$x_1, x_2, \cdots, x_n$</span></li>
-<li>两个人轮流选择 <span class="markdown-them-math-inline">$x_i$</span> 的取值, 第一个人 <span class="markdown-them-math-inline">$A$</span> 想要 <span class="markdown-them-math-inline">$\psi$</span> 为真, 第二个人 <span class="markdown-them-math-inline">$E$</span> 想要 <span class="markdown-them-math-inline">$\psi$</span> 为假</li>
-<li>FORMULA-GAME = <span class="markdown-them-math-inline">$\{\langle \psi \rangle \mid \text{ 在 } \psi \text{ 的 formula game 中 E 有必胜策略 } \}$</span></li>
+<li>一个 formula $\psi$ with variables $x_1, x_2, \cdots, x_n$</li>
+<li>两个人轮流选择 $x_i$ 的取值, 第一个人 $A$ 想要 $\psi$ 为真, 第二个人 $E$ 想要 $\psi$ 为假</li>
+<li>FORMULA-GAME = ${\langle \psi \rangle \mid \text{ 在 } \psi \text{ 的 formula game 中 E 有必胜策略 } }$</li>
 <li>这个问题等价于 <strong>TQBF</strong></li>
 </ul>
-<h4 id="generalized-geography game">Generalized Geography game</h4>
-<h5 id="description-1">Description</h5>
+<h4 id="Generalized-Geography-game">Generalized Geography game<a class="anchor" href="#Generalized-Geography-game">·</a></h4>
+<h5 id="Description-2">Description<a class="anchor" href="#Description-2">·</a></h5>
 <ul>
-<li>一个有向图 <span class="markdown-them-math-inline">$G$</span> 起点 <span class="markdown-them-math-inline">$s$</span></li>
+<li>一个有向图 $G$ 起点 $s$</li>
 <li>两个人轮流选择一条边往下走 走不了的输</li>
-<li><span class="markdown-them-math-inline">$GG = \{\langle G, b \rangle \mid \text{Player I has a winning strategy on G starting from b}\}$</span></li>
-<li><span class="markdown-them-math-inline">$GG$</span> is <strong>PSPACE-complete</strong>
+<li>$GG = {\langle G, b \rangle \mid \text{Player I has a winning strategy on G starting from b}}$</li>
+<li>$GG$ is <strong>PSPACE-complete</strong>
 <ul>
 <li>
-<p><span class="markdown-them-math-inline">$GG$</span> is PSPACE</p>
-<p><img src="image-20220520154644261.png" alt="image-20220520154644261"></p>
+<p>$GG$ is PSPACE</p>
+<p><img src="/2022/05/21/theory-of-computation-note-2/image-20220520154644261.png" alt="image-20220520154644261" loading="lazy"></p>
 </li>
 <li>
 <p>把 Formula Game 规约到他</p>
 <ul>
 <li>
-<h1 id="unfinished">Unfinished</h1>
+<h1 id="Unfinished">Unfinished<a class="anchor" href="#Unfinished">·</a></h1>
 </li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<h2 id="hierarchy-theorem (层次定理)">Hierarchy theorem (层次定理)</h2>
-<h3 id="time-hierarchy theorem">Time Hierarchy Theorem</h3>
+<h2 id="Hierarchy-theorem-层次定理">Hierarchy theorem (层次定理)<a class="anchor" href="#Hierarchy-theorem-层次定理">·</a></h2>
+<h3 id="Time-Hierarchy-Theorem">Time Hierarchy Theorem<a class="anchor" href="#Time-Hierarchy-Theorem">·</a></h3>
 <ul>
-<li>For any <strong>time constructable</strong> function <span class="markdown-them-math-inline">$f: N \rightarrow N$</span>, 存在语言 <span class="markdown-them-math-inline">$L$</span> that is decidable in time <span class="markdown-them-math-inline">$O(f(n))$</span>, but not in time <span class="markdown-them-math-inline">$O\left(\frac {f(n)} {\log f(n)} \right)$</span></li>
+<li>For any <strong>time constructable</strong> function $f: N \rightarrow N$, 存在语言 $L$ that is decidable in time $O(f(n))$, but not in time $O\left(\frac {f(n)} {\log f(n)} \right)$</li>
 </ul>
-<h3 id="space-hierarchy theorem">Space Hierarchy Theorem</h3>
+<h3 id="Space-Hierarchy-Theorem">Space Hierarchy Theorem<a class="anchor" href="#Space-Hierarchy-Theorem">·</a></h3>
 <ul>
-<li>For any <strong>space constructable</strong> function <span class="markdown-them-math-inline">$f:N \rightarrow N$</span>, 存在语言 <span class="markdown-them-math-inline">$L$</span> that is decidable in space <span class="markdown-them-math-inline">$O(f(n))$</span> but not in space <span class="markdown-them-math-inline">$o(f(n))$</span></li>
+<li>For any <strong>space constructable</strong> function $f:N \rightarrow N$, 存在语言 $L$ that is decidable in space $O(f(n))$ but not in space $o(f(n))$</li>
 </ul>
-<h4 id="证明思路">证明思路</h4>
+<h4 id="证明思路">证明思路<a class="anchor" href="#证明思路">·</a></h4>
 <ul>
-<li>采用跟证明 <span class="markdown-them-math-inline">$A_{TM}$</span> 不可解时用的 对角线法</li>
-<li>我们想要一个函数 <span class="markdown-them-math-inline">$D$</span>, 他对应的语言 <span class="markdown-them-math-inline">$L$</span>, 有 <span class="markdown-them-math-inline">$D$</span> 在 <span class="markdown-them-math-inline">$O(f(n))$</span> 空间内运行, 并且 <span class="markdown-them-math-inline">$L$</span> 不同于任何在 <span class="markdown-them-math-inline">$o(f(n))$</span> 内能判定的语言</li>
+<li>采用跟证明 $A_{TM}$ 不可解时用的 对角线法</li>
+<li>我们想要一个函数 $D$, 他对应的语言 $L$, 有 $D$ 在 $O(f(n))$ 空间内运行, 并且 $L$ 不同于任何在 $o(f(n))$ 内能判定的语言</li>
 <li>不同于任何这样的语言 -&gt; 有至少一个输入结果不同 -&gt; 对于 M, 在输入 &lt;M&gt; 上不同</li>
 </ul>
-<h4 id="proof-1">Proof</h4>
-<p><img src="image-20220521113553392.png" alt="image-20220521113553392"></p>
-<p>对于所有的 <span class="markdown-them-math-inline">$o(f(n))$</span> 空间内能判定的语言, 在第四步的判定中能够运行完, 因为模拟一个 <span class="markdown-them-math-inline">$g(n)$</span> 空间内运行的图灵机 <span class="markdown-them-math-inline">$M$</span> 只需要 <span class="markdown-them-math-inline">$dg(n)$</span> 空间, 其中 <span class="markdown-them-math-inline">$d$</span> 是依赖于 <span class="markdown-them-math-inline">$M$</span> 的常数. 所以可以找到一个充分大的 <span class="markdown-them-math-inline">$n_0$</span>, <span class="markdown-them-math-inline">$dg(n_0) &lt; f(n_0)$</span>. 我们在 <span class="markdown-them-math-inline">$\langle M \rangle$</span> 后面补上 <span class="markdown-them-math-inline">$10 ^ {n_0}$</span>, 让长度足够, 所以第四步就能运行完.</p>
-<p>这样, 运行的结果一定与 <span class="markdown-them-math-inline">$M(\langle M \rangle)$</span> 本身的结果相反, 所以 <span class="markdown-them-math-inline">$D$</span> 不能判定 <span class="markdown-them-math-inline">$A$</span>.</p>
-<h4 id="corollary-1">Corollary</h4>
-<p><img src="image-20220521114222944.png" alt="image-20220521114222944"></p>
-<p><img src="image-20220521114246555.png" alt="image-20220521114246555"></p>
-<p><img src="image-20220521114304575.png" alt="image-20220521114304575"></p>
-<h3 id="the-polynomial hierarchy (ph)">The polynomial Hierarchy (PH)</h3>
-<p>For <span class="markdown-them-math-inline">$i\geq 1$</span>, a language <span class="markdown-them-math-inline">$L$</span> is in <span class="markdown-them-math-inline">$\Sigma_{i^p}$</span> if there exists a <strong>polynomial time</strong> TM <span class="markdown-them-math-inline">$M$</span> and a polynomial <span class="markdown-them-math-inline">$q$</span> s.t.</p>
-<p><span class="markdown-them-math-inline">$x \in L \Leftrightarrow \exists u_{1} \in\{0,1\}^{q(|x|)} \forall u_{2} \in\{0,1\}^{q(|x|)} \ldots Q_{i} u_{i} \in\{0,1\}^{q(|x|)} M\left(x, u_{1}, \ldots, u_{i}\right)=1$</span></p>
-<p>where <span class="markdown-them-math-inline">$Q_i$</span> is <span class="markdown-them-math-inline">$\exists$</span> when i is odd; is <span class="markdown-them-math-inline">$\forall$</span> when i is even.<br>
+<h4 id="Proof-2">Proof<a class="anchor" href="#Proof-2">·</a></h4>
+<p><img src="/2022/05/21/theory-of-computation-note-2/image-20220521113553392.png" alt="image-20220521113553392" loading="lazy"></p>
+<p>对于所有的 $o(f(n))$ 空间内能判定的语言, 在第四步的判定中能够运行完, 因为模拟一个 $g(n)$ 空间内运行的图灵机 $M$ 只需要 $dg(n)$ 空间, 其中 $d$ 是依赖于 $M$ 的常数. 所以可以找到一个充分大的 $n_0$, $dg(n_0) &lt; f(n_0)$. 我们在 $\langle M \rangle$ 后面补上 $10 ^ {n_0}$, 让长度足够, 所以第四步就能运行完.</p>
+<p>这样, 运行的结果一定与 $M(\langle M \rangle)$ 本身的结果相反, 所以 $D$ 不能判定 $A$.</p>
+<h4 id="Corollary-2">Corollary<a class="anchor" href="#Corollary-2">·</a></h4>
+<p><img src="/2022/05/21/theory-of-computation-note-2/image-20220521114222944.png" alt="image-20220521114222944" loading="lazy"></p>
+<p><img src="/2022/05/21/theory-of-computation-note-2/image-20220521114246555.png" alt="image-20220521114246555" loading="lazy"></p>
+<p><img src="/2022/05/21/theory-of-computation-note-2/image-20220521114304575.png" alt="image-20220521114304575" loading="lazy"></p>
+<h3 id="The-polynomial-Hierarchy-PH">The polynomial Hierarchy (PH)<a class="anchor" href="#The-polynomial-Hierarchy-PH">·</a></h3>
+<p>For $i\geq 1$, a language $L$ is in $\Sigma_{i^p}$ if there exists a <strong>polynomial time</strong> TM $M$ and a polynomial $q$ s.t.</p>
+<p>$x \in L \Leftrightarrow \exists u_{1} \in{0,1}^{q(|x|)} \forall u_{2} \in{0,1}^{q(|x|)} \ldots Q_{i} u_{i} \in{0,1}^{q(|x|)} M\left(x, u_{1}, \ldots, u_{i}\right)=1$</p>
+<p>where $Q_i$ is $\exists$ when i is odd; is $\forall$ when i is even.
 (sometimes we can omit superscript “p”)</p>
 <ul>
 <li>
-<p><strong>Theorem:</strong> Any wf. <span class="markdown-them-math-inline">$A$</span> 等价于 wf. <span class="markdown-them-math-inline">$B$</span> in prenex form.</p>
+<p><strong>Theorem:</strong> Any wf. $A$ 等价于 wf. $B$ in prenex form.</p>
 </li>
 <li>
-<p><span class="markdown-them-math-inline">$\Sigma_0 = P$</span></p>
+<p>$\Sigma_0 = P$</p>
 <ul>
-<li><span class="markdown-them-math-inline">$\Sigma_0$</span>  就是 <span class="markdown-them-math-inline">$x\in L \Leftrightarrow M(x)=1$</span>  就是一个多项式时间内能 decide 的 TM</li>
+<li>$\Sigma_0$  就是 $x\in L \Leftrightarrow M(x)=1$  就是一个多项式时间内能 decide 的 TM</li>
 </ul>
 </li>
 <li>
-<p><span class="markdown-them-math-inline">$\Sigma_1 = NP$</span></p>
+<p>$\Sigma_1 = NP$</p>
 <ul>
-<li><span class="markdown-them-math-inline">$\Sigma_1$</span> 就是 <span class="markdown-them-math-inline">$x\in L \Leftrightarrow \exists u, M(x,u)=1$</span> 就是先猜一个解然后多项式时间内判断是否正确</li>
+<li>$\Sigma_1$ 就是 $x\in L \Leftrightarrow \exists u, M(x,u)=1$ 就是先猜一个解然后多项式时间内判断是否正确</li>
 </ul>
 </li>
 <li>
-<p>定义 <span class="markdown-them-math-inline">$PH=\cup_i \Sigma_i$</span></p>
+<p>定义 $PH=\cup_i \Sigma_i$</p>
 </li>
 <li>
-<p>定义 <span class="markdown-them-math-inline">$\Pi_{i^p} = co\Sigma_{i^p}$</span>, which is</p>
-<p><span class="markdown-them-math-inline">$x \in L \Leftrightarrow \forall u_{1} \in\{0,1\}^{q(|x|)} \exists u_{2} \in\{0,1\}^{q(|x|)} \ldots Q_{i} u_{i} \in\{0,1\}^{q(|x|)} M\left(x, u_{1}, \ldots, u_{i}\right)=1$</span></p>
+<p>定义 $\Pi_{i^p} = co\Sigma_{i^p}$, which is</p>
+<p>$x \in L \Leftrightarrow \forall u_{1} \in{0,1}^{q(|x|)} \exists u_{2} \in{0,1}^{q(|x|)} \ldots Q_{i} u_{i} \in{0,1}^{q(|x|)} M\left(x, u_{1}, \ldots, u_{i}\right)=1$</p>
 </li>
 <li>
-<p>跟之前 <span class="markdown-them-math-inline">$\Sigma$</span> 和 <span class="markdown-them-math-inline">$\Pi$</span> prenex form 差不多</p>
+<p>跟之前 $\Sigma$ 和 $\Pi$ prenex form 差不多</p>
 </li>
 <li>
-<p>Note that <span class="markdown-them-math-inline">$\Sigma_{i^p}\subset \Pi_{\\{i+1}^p}\subset \Sigma_{\\{i+2}^p}$</span>, 所以 <span class="markdown-them-math-inline">$PH = \cup_i \Pi_i$</span></p>
+<p>Note that $\Sigma_{i^p}\subset \Pi_{\{i+1}^p}\subset \Sigma_{\{i+2}^p}$, 所以 $PH = \cup_i \Pi_i$</p>
 </li>
 </ul>
-<h2 id="oracle-turing machine (otm)">Oracle Turing Machine (OTM)</h2>
-<h3 id="definition-4">Definition</h3>
+<h2 id="Oracle-Turing-Machine-OTM">Oracle Turing Machine (OTM)<a class="anchor" href="#Oracle-Turing-Machine-OTM">·</a></h2>
+<h3 id="Definition-5">Definition<a class="anchor" href="#Definition-5">·</a></h3>
 <ul>
-<li>针对一个语言 <span class="markdown-them-math-inline">$A$</span> 的 oracle 是一个能判断 <span class="markdown-them-math-inline">$w$</span> 是否属于 <span class="markdown-them-math-inline">$A$</span> 的黑盒子. <strong>Oracle Turing Machine</strong> <span class="markdown-them-math-inline">$M^A$</span> 指的是在一个通常的图灵机上增加查询 <span class="markdown-them-math-inline">$A$</span> 的 oracle 的能力. 有三个特殊的状态 <span class="markdown-them-math-inline">$q_{query}, q_{yes}, q_{no}$</span>. 每当进入到 <span class="markdown-them-math-inline">$q_{query}$</span> 态的时候, 就可以<strong>在一步之内查询</strong>在询问纸带上的 <span class="markdown-them-math-inline">$y$</span> 是否属于 <span class="markdown-them-math-inline">$A$</span> 并且依照结果进入到 <span class="markdown-them-math-inline">$q_{yes}$</span> 或者 <span class="markdown-them-math-inline">$q_{no}$</span> 状态.</li>
+<li>针对一个语言 $A$ 的 oracle 是一个能判断 $w$ 是否属于 $A$ 的黑盒子. <strong>Oracle Turing Machine</strong> $M^A$ 指的是在一个通常的图灵机上增加查询 $A$ 的 oracle 的能力. 有三个特殊的状态 $q_{query}, q_{yes}, q_{no}$. 每当进入到 $q_{query}$ 态的时候, 就可以<strong>在一步之内查询</strong>在询问纸带上的 $y$ 是否属于 $A$ 并且依照结果进入到 $q_{yes}$ 或者 $q_{no}$ 状态.</li>
 <li>我们可以类似地定义 <strong>Nondeterministic OTM</strong></li>
 </ul>
-<h3 id="一些记号">一些记号</h3>
+<h3 id="一些记号">一些记号<a class="anchor" href="#一些记号">·</a></h3>
 <ul>
 <li>
-<p><img src="image-20220521152929685.png" alt="image-20220521152929685"></p>
+<p><img src="/2022/05/21/theory-of-computation-note-2/image-20220521152929685.png" alt="image-20220521152929685" loading="lazy"></p>
 </li>
 <li>
-<p><img src="image-20220521152954350.png" alt="image-20220521152954350"></p>
+<p><img src="/2022/05/21/theory-of-computation-note-2/image-20220521152954350.png" alt="image-20220521152954350" loading="lazy"></p>
 </li>
 <li>
-<p>Both together: <span class="markdown-them-math-inline">$C^D$</span> = languages decided by OTM <span class="bd-box"><h-char class="bd bd-end"><h-inner>“</h-inner></h-char></span>in<span class="bd-box"><h-char class="bd bd-beg"><h-inner>”</h-inner></h-char></span> <span class="markdown-them-math-inline">$C$</span> with oracle language from <span class="markdown-them-math-inline">$D$</span></p>
+<p>Both together: $C^D$ = languages decided by OTM <span class="bd-box"><h-char class="bd bd-end"><h-inner>“</h-inner></h-char></span>in<span class="bd-box"><h-char class="bd bd-beg"><h-inner>”</h-inner></h-char></span> $C$ with oracle language from $D$</p>
 <ul>
-<li>e.g. <span class="markdown-them-math-inline">$P^{SAT}=P^{NP}$</span></li>
+<li>e.g. $P<sup>{SAT}=P</sup>{NP}$</li>
 </ul>
 </li>
 <li>
-<p><span class="markdown-them-math-inline">$\Sigma_2 = NP^{NP}$</span></p>
+<p>$\Sigma_2 = NP^{NP}$</p>
 </li>
 <li>
-<p><span class="markdown-them-math-inline">$\Pi_2 = co{NP}^{NP}$</span></p>
+<p>$\Pi_2 = co{NP}^{NP}$</p>
 </li>
 <li>
-<p><img src="image-20220521154542700.png" alt="image-20220521154542700"></p>
+<p><img src="/2022/05/21/theory-of-computation-note-2/image-20220521154542700.png" alt="image-20220521154542700" loading="lazy"></p>
 </li>
 </ul>
-<h2 id="relativization">Relativization</h2>
+<h2 id="Relativization">Relativization<a class="anchor" href="#Relativization">·</a></h2>
 <ul>
 <li>Many proofs and techniques we have seen are <strong>relativize</strong>
 <ul>
-<li>they hold after replacing all TMs with oracle TMs that have<br>
-access to an oracle <span class="markdown-them-math-inline">$A$</span></li>
+<li>they hold after replacing all TMs with oracle TMs that have
+access to an oracle $A$</li>
 <li>including <strong>diagonalization</strong></li>
 </ul>
 </li>
-<li>我们想要说明 <span class="markdown-them-math-inline">$P$</span> 是否等于 <span class="markdown-them-math-inline">$NP$</span> 的问题不是简单的对角化就能解决的
+<li>我们想要说明 $P$ 是否等于 $NP$ 的问题不是简单的对角化就能解决的
 <ul>
-<li>只要说明 加了某个 oracle 之后 <span class="markdown-them-math-inline">$P^{A}= NP^{A}$</span>, 加了另一个 oracle 之后 <span class="markdown-them-math-inline">$P^B \neq NP^B$</span></li>
+<li>只要说明 加了某个 oracle 之后 $P^{A}= NP^{A}$, 加了另一个 oracle 之后 $P^B \neq NP^B$</li>
 </ul>
 </li>
 </ul>
-<h3 id="$p^a-= np^a$"><span class="markdown-them-math-inline">$P^A = NP^A$</span></h3>
+<h3 id="P-A-NP-A">$P^A = NP^A$<a class="anchor" href="#P-A-NP-A">·</a></h3>
 <ul>
-<li>这需要 <span class="markdown-them-math-inline">$A$</span> 很牛逼</li>
-<li><span class="markdown-them-math-inline">$A=TQBF$</span> works</li>
-<li><span class="markdown-them-math-inline">$PSPACE ⊆P^{TQBF} ⊆NP^{TQBF} ⊆NPSPACE$</span></li>
-<li>we also know <span class="markdown-them-math-inline">$PSPACE=NPSPACE$</span></li>
+<li>这需要 $A$ 很牛逼</li>
+<li>$A=TQBF$ works</li>
+<li>$PSPACE ⊆P^{TQBF} ⊆NP^{TQBF} ⊆NPSPACE$</li>
+<li>we also know $PSPACE=NPSPACE$</li>
 </ul>
-<h3 id="$p^b-\neq np^b$"><span class="markdown-them-math-inline">$P^B \neq NP^B$</span></h3>
-<ul>
-<li>
-<p>定义 <span class="markdown-them-math-inline">$L(B) = \{1^k : \exists x \in B, s.t. |x|=k\}$</span></p>
-</li>
-<li>
-<p>we will find <span class="markdown-them-math-inline">$B$</span> such that <span class="markdown-them-math-inline">$L(B) \in NP^B - P^B$</span></p>
-</li>
-<li>
-<p>首先, <span class="markdown-them-math-inline">$L(B) \in NP^B$</span></p>
-<ul>
-<li>对于任意 <span class="markdown-them-math-inline">$w$</span> 我们想判断是否属于 <span class="markdown-them-math-inline">$L(B)$</span></li>
-<li>只需要猜一个 <span class="markdown-them-math-inline">$x \in B$</span> 然后让 <span class="markdown-them-math-inline">$|x|=|w|$</span></li>
-</ul>
-</li>
-<li>
-<p>其次, find <span class="markdown-them-math-inline">$B$</span> such that <span class="markdown-them-math-inline">$L(B) \notin P^B$</span></p>
+<h3 id="P-B-neq-NP-B">$P^B \neq NP^B$<a class="anchor" href="#P-B-neq-NP-B">·</a></h3>
 <ul>
 <li>
-<h1 id="unfinished-1">unfinished</h1>
+<p>定义 $L(B) = {1^k : \exists x \in B, s.t. |x|=k}$</p>
+</li>
+<li>
+<p>we will find $B$ such that $L(B) \in NP^B - P^B$</p>
+</li>
+<li>
+<p>首先, $L(B) \in NP^B$</p>
+<ul>
+<li>对于任意 $w$ 我们想判断是否属于 $L(B)$</li>
+<li>只需要猜一个 $x \in B$ 然后让 $|x|=|w|$</li>
+</ul>
+</li>
+<li>
+<p>其次, find $B$ such that $L(B) \notin P^B$</p>
+<ul>
+<li>
+<h1 id="unfinished">unfinished<a class="anchor" href="#unfinished">·</a></h1>
 </li>
 </ul>
 </li>
 </ul>
-<h2 id="randomized-computation">Randomized Computation</h2>
+<h2 id="Randomized-Computation">Randomized Computation<a class="anchor" href="#Randomized-Computation">·</a></h2>
 
       
     </div>
