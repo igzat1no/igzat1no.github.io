@@ -42,7 +42,9 @@
       });
     </script>
   
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><script src="/js/prism.js"></script>
+<script src="/js/prism-line-numbers.min.js"></script></head>
 
 <body>
   <div id="container">
@@ -98,12 +100,12 @@
 <p>Obsidian 安装 Zotero Integration 插件<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>设置如下<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span></p>
 <p><img src="/2025/06/14/Zotero-obsidian-for-paper-note/image-20250614220922344.png" alt="image-20250614220922344" loading="lazy"></p>
 <p>Template 如下<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span></p>
-<pre><code class="language-markdown">---
+<pre class="line-numbers language-language-markdown"><code class="language-language-markdown">---
 cssclass: paper-note
 &#123;% if title %&#125;title: "&#123;&#123;title&#125;&#125;"&#123;% endif %&#125;&#123;% if shortTitle %&#125;
 shortTitle: "&#123;&#123;shortTitle&#125;&#125;"&#123;% endif %&#125;
-type: &quot;&#123;&#123;itemType&#125;&#125;&quot;&#123;% for type, creators in creators | groupby ("creatorType") -%&#125;&#123;% if loop. first %&#125;
-&#123;% endif %&#125;&#123;&#123;type | replace("interviewee", "author") | replace("director", "author") | replace("presenter", "author") | replace("podcaster", "author") | replace("programmer", "author") | replace("cartographer", "author") | replace("inventor", "author") | replace("sponsor", "author")  | replace("performer", "author") | replace("artist", "author")&#125;&#125; : "&#123;%- for creator in creators -%&#125;&#123;%- if creator. name %&#125; &#123;&#123;creator.name&#125;&#125; &#123;%- else %&#125; &#123;&#123;creator.lastName&#125;&#125; , &#123;&#123;creator.firstName&#125;&#125; &#123;%- endif %&#125;&#123;% if not loop. last %&#125;; &#123;% endif %&#125;&#123;% endfor %&#125;&quot;&#123;% if not loop. last %&#125;
+type: "&#123;&#123;itemType&#125;&#125;"&#123;% for type, creators in creators | groupby ("creatorType") -%&#125;&#123;% if loop. first %&#125;
+&#123;% endif %&#125;&#123;&#123;type | replace("interviewee", "author") | replace("director", "author") | replace("presenter", "author") | replace("podcaster", "author") | replace("programmer", "author") | replace("cartographer", "author") | replace("inventor", "author") | replace("sponsor", "author")  | replace("performer", "author") | replace("artist", "author")&#125;&#125; : "&#123;%- for creator in creators -%&#125;&#123;%- if creator. name %&#125; &#123;&#123;creator.name&#125;&#125; &#123;%- else %&#125; &#123;&#123;creator.lastName&#125;&#125; , &#123;&#123;creator.firstName&#125;&#125; &#123;%- endif %&#125;&#123;% if not loop. last %&#125;; &#123;% endif %&#125;&#123;% endfor %&#125;"&#123;% if not loop. last %&#125;
 &#123;% endif %&#125;&#123;%- endfor %&#125;&#123;% if publicationTitle %&#125;
 publication: "&#123;&#123;publicationTitle&#125;&#125;"&#123;% endif %&#125;&#123;% if date %&#125;
 date: &#123;&#123;date | format("YYYY-MM-DD")&#125;&#125; &#123;% endif %&#125;&#123;% if archive %&#125;
@@ -119,7 +121,7 @@ takeaway:
 
 %image%
 
-</code></pre>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>**注意<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span>**所有的 paper 需要设置 shortTitle<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>感觉很合理因为本身论文的题目太长了而且经常有冒号之类的奇怪符号<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
 <p>然后通过 Dataview 来创建一个 paper summary 界面<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
 
