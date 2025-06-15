@@ -69,6 +69,81 @@
       <div id="content" class="outer">
         <section id="main">
   
+    <article id="post-Zotero-obsidian-for-paper-note" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/06/14/Zotero-obsidian-for-paper-note/" class="article-date">
+  <time class="dt-published" datetime="2025-06-15T04:35:59.000Z" itemprop="datePublished">2025-06-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/06/14/Zotero-obsidian-for-paper-note/">Zotero-obsidian for paper note</a>
+    </h1>
+  
+
+      </header>
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>以前的论文笔记都是在 obsidian 里直接开新的页面记录<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>最近觉得需要一个表格或者数据库来统一这些笔记<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>否则记录之后由于难以检索也不会再翻开<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>obsidian 的表格功能一直做的不好<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>因此一度想要转向 notion<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>但是毕竟其他的笔记都在 obsidian 的仓库里<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>单独把论文笔记拎出去既不合理也不方便<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<p>于是在网上找到了 Zotero + obsidian 的解决方案<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>正好一并把 ReadPaper 也换成 Zotero<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>抄袭的总归不如正版好使<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<p>Zotero 安装 Better Bibtex 插件<span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>以及 pdf-translate 插件<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<p>Obsidian 安装 Zotero Integration 插件<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>设置如下<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span></p>
+<p><img src="/2025/06/14/Zotero-obsidian-for-paper-note/image-20250614220922344.png" alt="image-20250614220922344" loading="lazy"></p>
+<p>Template 如下<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span></p>
+<pre><code class="language-markdown">---
+cssclass: paper-note
+&#123;% if title %&#125;title: "&#123;&#123;title&#125;&#125;"&#123;% endif %&#125;&#123;% if shortTitle %&#125;
+shortTitle: "&#123;&#123;shortTitle&#125;&#125;"&#123;% endif %&#125;
+type: &quot;&#123;&#123;itemType&#125;&#125;&quot;&#123;% for type, creators in creators | groupby ("creatorType") -%&#125;&#123;% if loop. first %&#125;
+&#123;% endif %&#125;&#123;&#123;type | replace("interviewee", "author") | replace("director", "author") | replace("presenter", "author") | replace("podcaster", "author") | replace("programmer", "author") | replace("cartographer", "author") | replace("inventor", "author") | replace("sponsor", "author")  | replace("performer", "author") | replace("artist", "author")&#125;&#125; : "&#123;%- for creator in creators -%&#125;&#123;%- if creator. name %&#125; &#123;&#123;creator.name&#125;&#125; &#123;%- else %&#125; &#123;&#123;creator.lastName&#125;&#125; , &#123;&#123;creator.firstName&#125;&#125; &#123;%- endif %&#125;&#123;% if not loop. last %&#125;; &#123;% endif %&#125;&#123;% endfor %&#125;&quot;&#123;% if not loop. last %&#125;
+&#123;% endif %&#125;&#123;%- endfor %&#125;&#123;% if publicationTitle %&#125;
+publication: "&#123;&#123;publicationTitle&#125;&#125;"&#123;% endif %&#125;&#123;% if date %&#125;
+date: &#123;&#123;date | format("YYYY-MM-DD")&#125;&#125; &#123;% endif %&#125;&#123;% if archive %&#125;
+archive: "&#123;&#123;archive&#125;&#125;"&#123;% endif %&#125;&#123;% if archiveLocation %&#125;
+archive-location: "&#123;&#123;archiveLocation&#125;&#125;"&#123;% endif %&#125;
+citekey: &#123;&#123;citekey&#125;&#125;
+conference:
+tags: &#123;% for t in tags -%&#125; &#123;&#123;t.tag | lower | replace (" ", "-")&#125;&#125; &#123;%- endfor %&#125;
+takeaway:
+---
+&#123;&#123;bibliography&#125;&#125;
+[online]( &#123;&#123;url&#125;&#125; ) [local]( &#123;&#123;desktopURI&#125;&#125; ) &#123;%- for attachment in attachments | filterby ("path", "endswith", ". pdf") %&#125; [pdf](file:// &#123;&#123;attachment.path | replace(" ", "%20")&#125;&#125; )&#123;% if loop. last %&#125; &#123;% endif %&#125;&#123;%- endfor %&#125; 
+
+%image%
+
+</code></pre>
+<p>**注意<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span>**所有的 paper 需要设置 shortTitle<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>感觉很合理因为本身论文的题目太长了而且经常有冒号之类的奇怪符号<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<p>然后通过 Dataview 来创建一个 paper summary 界面<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+        <a href="/2025/06/14/Zotero-obsidian-for-paper-note/#comments" class="article-comment-link">
+          <span class="post-comments-count valine-comment-count" data-xid="/2025/06/14/Zotero-obsidian-for-paper-note/" itemprop="commentCount"></span>
+          Comments
+        </a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tool/" rel="tag">tool</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-ZeroTier-nomachine 实现更好的远程控制" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2025/03/02/ZeroTier-nomachine%20%E5%AE%9E%E7%8E%B0%E6%9B%B4%E5%A5%BD%E7%9A%84%E8%BF%9C%E7%A8%8B%E6%8E%A7%E5%88%B6/" class="article-date">
@@ -109,6 +184,8 @@
         </a>
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tool/" rel="tag">tool</a></li></ul>
+
     </footer>
   </div>
   
@@ -601,59 +678,6 @@ f(w&#x27;) - f(w) &amp;\leq \langle f&#x27;(w), w&#x27;- w\rangle + \frac L 2 \|
       
         <a href="/2022/06/24/SSD/#comments" class="article-comment-link">
           <span class="post-comments-count valine-comment-count" data-xid="/2022/06/24/SSD/" itemprop="commentCount"></span>
-          Comments
-        </a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/2D-object-detection/" rel="tag">2D object detection</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/computer-vision/" rel="tag">computer vision</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/paper-reading/" rel="tag">paper reading</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-Cascade-R-CNN" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2022/06/24/Cascade-R-CNN/" class="article-date">
-  <time class="dt-published" datetime="2022-06-24T16:24:59.000Z" itemprop="datePublished">2022-06-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2022/06/24/Cascade-R-CNN/">Cascade-R-CNN</a>
-    </h1>
-  
-
-      </header>
-    
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>主要解决了在目标检测中<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>检测框不是特别准<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>容易出现噪声干扰的问题</li>
-<li>Cascade R-CNN就是使用不同的IOU阈值<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>训练了多个级联的检测器<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></li>
-</ul>
-        
-          <p class="article-more-link">
-            <a href="/2022/06/24/Cascade-R-CNN/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-        <a href="/2022/06/24/Cascade-R-CNN/#comments" class="article-comment-link">
-          <span class="post-comments-count valine-comment-count" data-xid="/2022/06/24/Cascade-R-CNN/" itemprop="commentCount"></span>
           Comments
         </a>
       
