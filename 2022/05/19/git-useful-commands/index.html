@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>git-useful-commands | igzat1no&#39;s blog</title>
+  <link rel="stylesheet" href="/css/fonts/Chinese-normal-normal.min.css">
+  <link rel="stylesheet" href="/css/fonts/ChineseMono-normal-normal.min.css">
+  <link rel="stylesheet" href="/css/fonts/Chinese-italic-normal.min.css">
+  <link rel="stylesheet" href="/css/fonts/Chinese-normal-bold.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="记录一些些 git 常用指令.">
+  
+  
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/prism.css">
+  <link rel="stylesheet" href="/css/prism-line-numbers.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox-1.3.4.css">
+  
+  
+    <link rel="stylesheet" href="/katex/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="/katex/katex.min.js" integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="/katex/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+            {left: '\\(', right: '\\)', display: false},
+            {left: '\\[', right: '\\]', display: true}
+          ],
+          throwOnError : false
+        });
+      });
+    </script>
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div id="nav-outer">
+  <nav id="main-nav" class="outer">
+    <a id="main-nav-toggle" class="nav-icon"></a>
+    
+      <a class="main-nav-link" href="/">Home</a>
+    
+      <a class="main-nav-link" href="/archives">Posts</a>
+    
+      <a class="main-nav-link" href="/about">About</a>
+    
+    <div class="main-nav-space-between"></div>
+    
+  </nav>
+</div>
+<div id="header-title">
+
+  
+</div>
+
+      <div id="content" class="outer">
+        <section id="main"><article id="post-git-useful-commands" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/05/19/git-useful-commands/" class="article-date">
+  <time class="dt-published" datetime="2022-05-19T14:48:21.000Z" itemprop="datePublished">2022-05-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      git-useful-commands
+    </h1>
+  
+
+      </header>
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>记录一些些 git 常用指令.</p>
+<span id="more"></span>
+<h1 id="基础指令">基础指令<a class="anchor" href="#基础指令">·</a></h1>
+<p><code>git init</code> 创建一个空的仓库</p>
+<p><code>git add &lt;name&gt;</code> 把文件 <code>&lt;name&gt;</code> 放到暂存区 也可以是文件夹</p>
+<p><code>git commit -m &lt;message&gt;</code> 提交暂存区到仓库 并且注释是 <code>&lt;message&gt;</code></p>
+<p><code>git status</code> 查看目前仓库的信息 包含哪些文件修改了 哪些还没提交</p>
+<p><code>git diff &lt;name&gt;</code> 查看 <code>&lt;name&gt;</code> 文件 本地当前版本与仓库中版本的区别</p>
+<p><code>git log</code> 从最近到最远 查看日志 每次改了啥子</p>
+<h1 id="版本相关">版本相关<a class="anchor" href="#版本相关">·</a></h1>
+<p><code>git reset --hard &lt;commit_id&gt;</code> 回退到某个版本  <code>&lt;commit_id&gt;</code> 指的是 git log 中 commit 后面那一大串玩意儿 <code>&lt;commit_id&gt;</code> 填 <code>HEAD^</code> 表示上一个版本 <code>HEAD^^</code> 表示上两个版本 <code>HEAD~100</code> 表示之前一百个版本</p>
+<p><code>git reflog</code> 可以看命令历史 记录了每一次命令 <code>git log</code> 里没有的东西他也有</p>
+<p>假设你改了文件 但还没有把他 add 到暂存区 可以用 <code>git restore &lt;name&gt;</code> 把他还原成仓库中的样子</p>
+<p>假设你改了文件 并且把他 add 到了暂存区 先用 <code>git restore --staged &lt;name&gt;</code> 把他从暂存区扒出来 然后再 <code>git restore &lt;name&gt;</code> 还原</p>
+<p>删除文件 首先在本地把文件删掉 然后 <code>git rm &lt;name&gt;</code> 将其从仓库中删掉</p>
+<p>如果本地误删除 但还没从仓库中删掉 可以 <code>git restore &lt;name&gt;</code> 将其恢复</p>
+<h1 id="远程仓库">远程仓库<a class="anchor" href="#远程仓库">·</a></h1>
+<p>在本地仓库下 运行 <code>git remote add origin &lt;*.git&gt;</code>  把这个远程仓库的地址添加到本地</p>
+<p><code>git push -u origin &lt;branch name&gt;</code> 把本地的仓库推送到远程仓库上</p>
+<p>第一次需要 <code>-u</code> 去把本地跟远程连接起来 以后只要 <code>git push</code> 就可以了</p>
+<p><code>git remote -v</code> 查看本地连接的远程仓库信息</p>
+<p><code>git remote rm &lt;name&gt;</code> 删除远程仓库与本地的绑定关系</p>
+<p><code>git clone &lt;*.git&gt;</code> 从远程克隆一个本地库</p>
+<h1 id="分支管理">分支管理<a class="anchor" href="#分支管理">·</a></h1>
+<p><code>git branch &lt;name&gt;</code> 新建一个分支</p>
+<p><code>git branch</code> 查看所有分支和当前分支</p>
+<p><code>git branch -d &lt;name&gt;</code> 删除一个分支</p>
+<p><code>git checkout &lt;name&gt;</code> 或者 <code>git switch &lt;name&gt;</code> 切换分支</p>
+<p><code>git checkout -b &lt;name&gt;</code> 或者 <code>git switch -c &lt;name&gt;</code> 新建一个分支并切换过去</p>
+<p><code>git merge &lt;name&gt;</code> 合并分支到当前分支上</p>
+<p><code>git push origin &lt;branch_name&gt;</code> 将本地某个分支推送到远程</p>
+<p><code>git push origin -d &lt;branch_name&gt;</code> 删除远程分支</p>
+<p>如果推送失败 先用 <code>git pull</code> 抓取新的(别人的)提交</p>
+<p><code>git branch --set-upstream-to=origin/dev dev</code> 将本地的 <code>dev</code> 分支 与 远程的 <code>dev</code> 分支连起来</p>
+<p><code>git checkout -b &lt;branch-name&gt; origin/&lt;branch-name&gt;</code> 在本地创建和远程分支对应的分支</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+        <a href="/2022/05/19/git-useful-commands/#comments" class="article-comment-link">
+          <span class="post-comments-count valine-comment-count" data-xid="/2022/05/19/git-useful-commands/" itemprop="commentCount"></span>
+          Comments
+        </a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/" rel="tag">tools</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/05/21/theory-of-computation-note-2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          theory-of-computation-note-2
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/05/07/theory-of-computation-note/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          theory-of-computation-note-1
+        
+      </div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+  <section id="comments" class="vcomment">
+
+  </section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+        <span id="busuanzi_container_site_pv" style='display:none'>Total view count: <span id="busuanzi_value_site_pv"></span></span>
+<p>Powered by <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/">Hexo</a> & Theme <a target="_blank" rel="noopener" href="https://github.com/bill-xia/hexo-theme-mashiro">Mashiro</a> & GitHub Pages</p><p>Copyright © 2024 igzat1no. LICENSE CC BY-NC-SA 4.0.</p>
+      
+    </div>
+  </div>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</footer>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('pre').forEach((preBlock) => {
+      const code = preBlock.querySelector('code');
+      if (!code) return;
+
+      const button = document.createElement('button');
+      button.innerText = 'Copy';
+      button.className = 'copy-button';
+
+      button.addEventListener('click', () => {
+        navigator.clipboard.writeText(code.innerText).then(() => {
+          button.innerText = 'Copied!';
+          setTimeout(() => button.innerText = 'Copy', 1500);
+        }).catch(() => {
+          button.innerText = 'Failed';
+        });
+      });
+
+      preBlock.style.position = 'relative';
+      preBlock.appendChild(button);
+    });
+  });
+  </script>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Posts</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    
+
+<script src="/js/clipboard.min.js"></script>
+<script src="/js/jquery-1.4.3.min.js"></script>
+
+<script src="/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js"></script>
+
+<script>
+    var GUEST_INFO = ['nick','mail','link'];
+    var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+        return GUEST_INFO.indexOf(item) > -1
+    });
+    var notify = 'false' == true;
+    var verify = 'false' == true;
+    new Valine({
+        el: '.vcomment',
+        notify: notify,
+        verify: verify,
+        appId: "k2JFn7Fvw42zZfjmoYffhjGC-gzGzoHsz",
+        appKey: "pLfzf8qWKmVAAZPSJ0fXlTlg",
+        placeholder: "Leave your footprints here!!",
+        pageSize:'10',
+        avatar:'wavatar',
+        lang:'zh-cn'
+    });
+</script>
+
+
+
+  </div>
+</body>
+</html>

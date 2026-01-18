@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Feature Pyramid Networks for Object Detection | igzat1no&#39;s blog</title>
+  <link rel="stylesheet" href="/css/fonts/Chinese-normal-normal.min.css">
+  <link rel="stylesheet" href="/css/fonts/ChineseMono-normal-normal.min.css">
+  <link rel="stylesheet" href="/css/fonts/Chinese-italic-normal.min.css">
+  <link rel="stylesheet" href="/css/fonts/Chinese-normal-bold.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="
+construct feature pyramids with 最低的 extra cost
+为了解决不同尺度下的 object detection 问题
+卷积层自带不同尺寸的功能，每卷一层尺寸缩小一点，并且 semantically stronger
+">
+  
+  
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/prism.css">
+  <link rel="stylesheet" href="/css/prism-line-numbers.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox-1.3.4.css">
+  
+  
+    <link rel="stylesheet" href="/katex/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="/katex/katex.min.js" integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="/katex/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+            {left: '\\(', right: '\\)', display: false},
+            {left: '\\[', right: '\\]', display: true}
+          ],
+          throwOnError : false
+        });
+      });
+    </script>
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div id="nav-outer">
+  <nav id="main-nav" class="outer">
+    <a id="main-nav-toggle" class="nav-icon"></a>
+    
+      <a class="main-nav-link" href="/">Home</a>
+    
+      <a class="main-nav-link" href="/archives">Posts</a>
+    
+      <a class="main-nav-link" href="/about">About</a>
+    
+    <div class="main-nav-space-between"></div>
+    
+  </nav>
+</div>
+<div id="header-title">
+
+  
+</div>
+
+      <div id="content" class="outer">
+        <section id="main"><article id="post-FPN" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/06/24/FPN/" class="article-date">
+  <time class="dt-published" datetime="2022-06-24T11:51:10.000Z" itemprop="datePublished">2022-06-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Feature Pyramid Networks for Object Detection
+    </h1>
+  
+
+      </header>
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>construct feature pyramids with 最低的 extra cost</li>
+<li>为了解决不同尺度下的 object detection 问题</li>
+<li>卷积层自带不同尺寸的功能<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>每卷一层尺寸缩小一点<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>并且 semantically stronger</li>
+</ul>
+<span id="more"></span>
+<h1 id="Feature-Pyramid-Networks">Feature Pyramid Networks<a class="anchor" href="#Feature-Pyramid-Networks">·</a></h1>
+<p>输入一张任意大小的图片<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>输出不同比例缩放下的不同大小的 feature map</p>
+<p>independent of the backbone convolutional architectures</p>
+<p>a bottom-up pathway, a top-down pathway, and lateral connections</p>
+<h2 id="bottom-up-pathway">bottom-up pathway<a class="anchor" href="#bottom-up-pathway">·</a></h2>
+<p>backbone ConvNet 的 feed-forward computation</p>
+<p>正常的卷积网络可以根据输出的大小分成很多 stage<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>有的卷积层输入跟输出一样大小<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>有的可能降低尺寸<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>我们把输出一样尺寸的一段称为一个 stage<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>并且只关心每个 stage 的最后一层的输出<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>用它们生成我们的金字塔<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<h2 id="top-down-pathway-and-lateral-connections">top-down pathway and lateral connections<a class="anchor" href="#top-down-pathway-and-lateral-connections">·</a></h2>
+<p>从上往下<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>把上面的 小的 语义信息浓度高的 层 unsample 到下一层去<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>让下一层有更多的语义信息</p>
+<img src="FPN/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZlbmdiaW5nY2h1bg==,size_16,color_FFFFFF,t_70.png" alt="img" style="zoom: 67%;" />
+<p>横向连接做 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>×</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">1\times 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span> 的卷积是为了降低 channel 的数量</p>
+<p>对于每一个 merged map<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>我们加上一个 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>×</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">3\times 3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">3</span></span></span></span> 的卷积<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>to reduce the aliasing effect of unsampling<span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>混叠效应<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char></span></p>
+<h1 id="应用">应用<a class="anchor" href="#应用">·</a></h1>
+<h2 id="FPN应用于RPN">FPN应用于RPN<a class="anchor" href="#FPN应用于RPN">·</a></h2>
+<p>Faster RCNN中的RPN是通过最后一层的特征来做的<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>最后一层的特征经过3x3卷积<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>得到256个channel的卷积层<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>再分别经过两个1x1卷积得到类别得分和边框回归结果<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>这里将特征层之后的RPN子网络称之为网络头部<span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>network head<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>对于特征层上的每一个点<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>作者用anchor的方式预设了9个框<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>这些框本身包含不同的尺度和不同的长宽比例<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<p>FPN针对RPN的改进是将网络头部应用到每一个P层<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>由于每个P层相对于原始图片具有不同的尺度信息<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>因此作者将原始RPN中的尺度信息分离<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>让每个P层只处理单一的尺度信息<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>具体的<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>对{<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>32</mn><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">32^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">3</span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>、</h-inner></h-char></span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>64</mn><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">64^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">6</span><span class="mord"><span class="mord">4</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>、</h-inner></h-char></span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>128</mn><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">128^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">12</span><span class="mord"><span class="mord">8</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>、</h-inner></h-char></span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>256</mn><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">256^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">25</span><span class="mord"><span class="mord">6</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>、</h-inner></h-char></span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>512</mn><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">512^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">51</span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span>}这五种尺度的anchor<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>分别对应到{P2<span class="bd-box"><h-char class="bd bd-beg"><h-inner>、</h-inner></h-char></span>P3<span class="bd-box"><h-char class="bd bd-beg"><h-inner>、</h-inner></h-char></span>P4<span class="bd-box"><h-char class="bd bd-beg"><h-inner>、</h-inner></h-char></span>P5<span class="bd-box"><h-char class="bd bd-beg"><h-inner>、</h-inner></h-char></span>P6}这五个特征层上<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>每个特征层都处理<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>:</mo><mn>1</mn><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mi mathvariant="normal">&quot;</mi><mi>b</mi><mi>d</mi><mo>−</mo><mi>b</mi><mi>o</mi><mi>x</mi><mi mathvariant="normal">&quot;</mi><mo>&gt;</mo><mo>&lt;</mo><mi>h</mi><mo>−</mo><mi>c</mi><mi>h</mi><mi>a</mi><mi>r</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mi mathvariant="normal">&quot;</mi><mi>b</mi><mi>d</mi><mi>b</mi><mi>d</mi><mo>−</mo><mi>b</mi><mi>e</mi><mi>g</mi><mi mathvariant="normal">&quot;</mi><mo>&gt;</mo><mo>&lt;</mo><mi>h</mi><mo>−</mo><mi>i</mi><mi>n</mi><mi>n</mi><mi>e</mi><mi>r</mi><mo>&gt;</mo><mtext>、</mtext><mo>&lt;</mo><mi mathvariant="normal">/</mi><mi>h</mi><mo>−</mo><mi>i</mi><mi>n</mi><mi>n</mi><mi>e</mi><mi>r</mi><mo>&gt;</mo><mo>&lt;</mo><mi mathvariant="normal">/</mi><mi>h</mi><mo>−</mo><mi>c</mi><mi>h</mi><mi>a</mi><mi>r</mi><mo>&gt;</mo><mo>&lt;</mo><mi mathvariant="normal">/</mi><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mn>1</mn><mo>:</mo><mn>2</mn><mo>&lt;</mo><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mi mathvariant="normal">&quot;</mi><mi>b</mi><mi>d</mi><mo>−</mo><mi>b</mi><mi>o</mi><mi>x</mi><mi mathvariant="normal">&quot;</mi><mo>&gt;</mo><mo>&lt;</mo><mi>h</mi><mo>−</mo><mi>c</mi><mi>h</mi><mi>a</mi><mi>r</mi><mi>c</mi><mi>l</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>=</mo><mi mathvariant="normal">&quot;</mi><mi>b</mi><mi>d</mi><mi>b</mi><mi>d</mi><mo>−</mo><mi>b</mi><mi>e</mi><mi>g</mi><mi mathvariant="normal">&quot;</mi><mo>&gt;</mo><mo>&lt;</mo><mi>h</mi><mo>−</mo><mi>i</mi><mi>n</mi><mi>n</mi><mi>e</mi><mi>r</mi><mo>&gt;</mo><mtext>、</mtext><mo>&lt;</mo><mi mathvariant="normal">/</mi><mi>h</mi><mo>−</mo><mi>i</mi><mi>n</mi><mi>n</mi><mi>e</mi><mi>r</mi><mo>&gt;</mo><mo>&lt;</mo><mi mathvariant="normal">/</mi><mi>h</mi><mo>−</mo><mi>c</mi><mi>h</mi><mi>a</mi><mi>r</mi><mo>&gt;</mo><mo>&lt;</mo><mi mathvariant="normal">/</mi><mi>s</mi><mi>p</mi><mi>a</mi><mi>n</mi><mo>&gt;</mo><mn>2</mn><mo>:</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">1:1&lt;span class=&quot;bd-box&quot;&gt;&lt;h-char class=&quot;bd bd-beg&quot;&gt;&lt;h-inner&gt;、&lt;/h-inner&gt;&lt;/h-char&gt;&lt;/span&gt;1:2&lt;span class=&quot;bd-box&quot;&gt;&lt;h-char class=&quot;bd bd-beg&quot;&gt;&lt;h-inner&gt;、&lt;/h-inner&gt;&lt;/h-char&gt;&lt;/span&gt;2:1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6835em;vertical-align:-0.0391em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">s</span><span class="mord mathnormal">p</span><span class="mord mathnormal">an</span><span class="mord mathnormal">c</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">a</span><span class="mord mathnormal">ss</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord">&quot;</span><span class="mord mathnormal">b</span><span class="mord mathnormal">d</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7335em;vertical-align:-0.0391em;"></span><span class="mord mathnormal">b</span><span class="mord mathnormal">o</span><span class="mord mathnormal">x</span><span class="mord">&quot;</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">h</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">c</span><span class="mord mathnormal">ha</span><span class="mord mathnormal">rc</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">a</span><span class="mord mathnormal">ss</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord">&quot;</span><span class="mord mathnormal">b</span><span class="mord mathnormal">d</span><span class="mord mathnormal">b</span><span class="mord mathnormal">d</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">b</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord">&quot;</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">h</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6986em;vertical-align:-0.0391em;"></span><span class="mord mathnormal">inn</span><span class="mord mathnormal" style="margin-right:0.02778em;">er</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7224em;vertical-align:-0.0391em;"></span><span class="mord cjk_fallback">、</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">/</span><span class="mord mathnormal">h</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6986em;vertical-align:-0.0391em;"></span><span class="mord mathnormal">inn</span><span class="mord mathnormal" style="margin-right:0.02778em;">er</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">/</span><span class="mord mathnormal">h</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7335em;vertical-align:-0.0391em;"></span><span class="mord mathnormal">c</span><span class="mord mathnormal">ha</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">/</span><span class="mord mathnormal">s</span><span class="mord mathnormal">p</span><span class="mord mathnormal">an</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6835em;vertical-align:-0.0391em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">s</span><span class="mord mathnormal">p</span><span class="mord mathnormal">an</span><span class="mord mathnormal">c</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">a</span><span class="mord mathnormal">ss</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord">&quot;</span><span class="mord mathnormal">b</span><span class="mord mathnormal">d</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7335em;vertical-align:-0.0391em;"></span><span class="mord mathnormal">b</span><span class="mord mathnormal">o</span><span class="mord mathnormal">x</span><span class="mord">&quot;</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">h</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">c</span><span class="mord mathnormal">ha</span><span class="mord mathnormal">rc</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">a</span><span class="mord mathnormal">ss</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord">&quot;</span><span class="mord mathnormal">b</span><span class="mord mathnormal">d</span><span class="mord mathnormal">b</span><span class="mord mathnormal">d</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">b</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord">&quot;</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">h</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6986em;vertical-align:-0.0391em;"></span><span class="mord mathnormal">inn</span><span class="mord mathnormal" style="margin-right:0.02778em;">er</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7224em;vertical-align:-0.0391em;"></span><span class="mord cjk_fallback">、</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">/</span><span class="mord mathnormal">h</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6986em;vertical-align:-0.0391em;"></span><span class="mord mathnormal">inn</span><span class="mord mathnormal" style="margin-right:0.02778em;">er</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">/</span><span class="mord mathnormal">h</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7335em;vertical-align:-0.0391em;"></span><span class="mord mathnormal">c</span><span class="mord mathnormal">ha</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">/</span><span class="mord mathnormal">s</span><span class="mord mathnormal">p</span><span class="mord mathnormal">an</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span>三种长宽比例的候选框<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>P6是专门为了RPN网络而设计的<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>用来处理512大小的候选框<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>它由P5经过下采样得到<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<p>另外<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>上述5个网络头部的参数是共享的<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>作者通过实验发现<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>网络头部参数共享和不共享两种设置得到的结果几乎没有差别<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>这说明不同层级之间的特征有相似的语义层次<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>这和特征金字塔网络的原理一致<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<h2 id="FPN应用于Fast-RCNN">FPN应用于Fast RCNN<a class="anchor" href="#FPN应用于Fast-RCNN">·</a></h2>
+<p>作者将FPN的各个特征层类比为图像金字塔的各个level的特征<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>从而将不同尺度的RoI映射到对应的特征层上<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>以224大小的图片输入为例<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>宽高为w和h的RoI将被映射到的特征级别为k<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>它的计算公式如下<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span></p>
+<p><img src="/2022/06/24/FPN/9a5cbbd6fb8642fa90b8ef254d1b6332.png" alt="img" loading="lazy"></p>
+<p>在ResNet中<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>k0的值为4<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>对应了长宽为224的框所在的层次<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>如果框的长宽相对于224分别除以2<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>那么k的值将减1<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>以此类推<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<p>在Faster RCNN中<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>ResNet的conv4层被用来提取RoI<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>经过RoI Pooling后映射到14x14的大小<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>经过RoI Pooling后的特征再进入原来的conv5层<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>进而得到最终的分类和边框回归结果<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>在FPN中<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>conv5层已经被用来作为特征提取器得到P5层<span class="bd-box"><h-char class="bd bd-beg"><h-inner>；</h-inner></h-char></span>因此<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>这里单独设计两个1024维的全连接层作为检测网络的网络头部<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>新的网络头部是随机初始化的<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>它相比于原来的conv5层更加轻量级<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+        <a href="/2022/06/24/FPN/#comments" class="article-comment-link">
+          <span class="post-comments-count valine-comment-count" data-xid="/2022/06/24/FPN/" itemprop="commentCount"></span>
+          留言
+        </a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/2D-object-detection/" rel="tag">2D object detection</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/computer-vision/" rel="tag">computer vision</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/paper-reading/" rel="tag">paper reading</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/06/24/Mask-R-CNN/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Mask R-CNN
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/06/24/Faster-R-CNN/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          Faster R-CNN
+        
+      </div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+  <section id="comments" class="vcomment">
+
+  </section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+        <span id="busuanzi_container_site_pv" style='display:none'>Total view count: <span id="busuanzi_value_site_pv"></span></span>
+<p>Powered by <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/">Hexo</a> & Theme <a target="_blank" rel="noopener" href="https://github.com/bill-xia/hexo-theme-mashiro">Mashiro</a> & GitHub Pages</p><p>Copyright © 2024 igzat1no. LICENSE CC BY-NC-SA 4.0.</p>
+      
+    </div>
+  </div>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</footer>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('pre').forEach((preBlock) => {
+      const code = preBlock.querySelector('code');
+      if (!code) return;
+
+      const button = document.createElement('button');
+      button.innerText = 'Copy';
+      button.className = 'copy-button';
+
+      button.addEventListener('click', () => {
+        navigator.clipboard.writeText(code.innerText).then(() => {
+          button.innerText = 'Copied!';
+          setTimeout(() => button.innerText = 'Copy', 1500);
+        }).catch(() => {
+          button.innerText = 'Failed';
+        });
+      });
+
+      preBlock.style.position = 'relative';
+      preBlock.appendChild(button);
+    });
+  });
+  </script>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Posts</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    
+
+<script src="/js/clipboard.min.js"></script>
+<script src="/js/jquery-1.4.3.min.js"></script>
+
+<script src="/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js"></script>
+
+<script>
+    var GUEST_INFO = ['nick','mail','link'];
+    var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+        return GUEST_INFO.indexOf(item) > -1
+    });
+    var notify = 'false' == true;
+    var verify = 'false' == true;
+    new Valine({
+        el: '.vcomment',
+        notify: notify,
+        verify: verify,
+        appId: "k2JFn7Fvw42zZfjmoYffhjGC-gzGzoHsz",
+        appKey: "pLfzf8qWKmVAAZPSJ0fXlTlg",
+        placeholder: "Leave your footprints here!!",
+        pageSize:'10',
+        avatar:'wavatar',
+        lang:'zh-cn'
+    });
+</script>
+
+
+
+  </div>
+</body>
+</html>

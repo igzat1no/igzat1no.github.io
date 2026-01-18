@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>igzat1no&#39;s blog</title>
+  <link rel="stylesheet" href="/css/fonts/Chinese-normal-normal.min.css">
+  <link rel="stylesheet" href="/css/fonts/ChineseMono-normal-normal.min.css">
+  <link rel="stylesheet" href="/css/fonts/Chinese-italic-normal.min.css">
+  <link rel="stylesheet" href="/css/fonts/Chinese-normal-bold.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/prism.css">
+  <link rel="stylesheet" href="/css/prism-line-numbers.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox-1.3.4.css">
+  
+  
+    <link rel="stylesheet" href="/katex/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="/katex/katex.min.js" integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="/katex/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+            {left: '\\(', right: '\\)', display: false},
+            {left: '\\[', right: '\\]', display: true}
+          ],
+          throwOnError : false
+        });
+      });
+    </script>
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div id="nav-outer">
+  <nav id="main-nav" class="outer">
+    <a id="main-nav-toggle" class="nav-icon"></a>
+    
+      <a class="main-nav-link" href="/">Home</a>
+    
+      <a class="main-nav-link" href="/archives">Posts</a>
+    
+      <a class="main-nav-link" href="/about">About</a>
+    
+    <div class="main-nav-space-between"></div>
+    
+  </nav>
+</div>
+<div id="header-title">
+
+  
+</div>
+
+      <div id="content" class="outer">
+        <section id="main">
+  
+    <article id="post-SSD" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/06/24/SSD/" class="article-date">
+  <time class="dt-published" datetime="2022-06-24T14:46:44.000Z" itemprop="datePublished">2022-06-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/06/24/SSD/">Single Shot MultiBox Detector (SSD)</a>
+    </h1>
+  
+
+      </header>
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>单个网络</li>
+<li>将 bounding box 的输出离散为默认框 anchor<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>有预知的宽高比和尺寸</li>
+<li>对每个默认框打分<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>并且做 bounding box regression</li>
+<li>结合不同分辨率的预测来处理多尺寸的问题</li>
+</ul>
+        
+          <p class="article-more-link">
+            <a href="/2022/06/24/SSD/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+        <a href="/2022/06/24/SSD/#comments" class="article-comment-link">
+          <span class="post-comments-count valine-comment-count" data-xid="/2022/06/24/SSD/" itemprop="commentCount"></span>
+          Comments
+        </a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/2D-object-detection/" rel="tag">2D object detection</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/computer-vision/" rel="tag">computer vision</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/paper-reading/" rel="tag">paper reading</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Cascade-R-CNN" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/06/24/Cascade-R-CNN/" class="article-date">
+  <time class="dt-published" datetime="2022-06-24T13:24:59.000Z" itemprop="datePublished">2022-06-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/06/24/Cascade-R-CNN/">Cascade-R-CNN</a>
+    </h1>
+  
+
+      </header>
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>主要解决了在目标检测中<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>检测框不是特别准<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>容易出现噪声干扰的问题</li>
+<li>Cascade R-CNN就是使用不同的IOU阈值<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>训练了多个级联的检测器<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></li>
+</ul>
+        
+          <p class="article-more-link">
+            <a href="/2022/06/24/Cascade-R-CNN/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+        <a href="/2022/06/24/Cascade-R-CNN/#comments" class="article-comment-link">
+          <span class="post-comments-count valine-comment-count" data-xid="/2022/06/24/Cascade-R-CNN/" itemprop="commentCount"></span>
+          Comments
+        </a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/2D-object-detection/" rel="tag">2D object detection</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/computer-vision/" rel="tag">computer vision</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/paper-reading/" rel="tag">paper reading</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Mask-R-CNN" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/06/24/Mask-R-CNN/" class="article-date">
+  <time class="dt-published" datetime="2022-06-24T12:49:11.000Z" itemprop="datePublished">2022-06-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/06/24/Mask-R-CNN/">Mask R-CNN</a>
+    </h1>
+  
+
+      </header>
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><img src="/2022/06/24/Mask-R-CNN/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3MzkyMjQ0,size_16,color_FFFFFF,t_70.png" alt="img" loading="lazy"></p>
+<p>在 Faster R-CNN 的基础上<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>将 RoI Pooling 换成了 RoI align<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>并且添加了 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>L</mi><mrow><mi>m</mi><mi>a</mi><mi>s</mi><mi>k</mi></mrow></msub></mrow><annotation encoding="application/x-tex">L_{mask}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">ma</span><span class="mord mathnormal mtight">s</span><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span><span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>也是一个 FCN<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>applied to each RoI<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char></span></p>
+<p>从 object detection 扩展到了 segmentation</p>
+        
+          <p class="article-more-link">
+            <a href="/2022/06/24/Mask-R-CNN/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+        <a href="/2022/06/24/Mask-R-CNN/#comments" class="article-comment-link">
+          <span class="post-comments-count valine-comment-count" data-xid="/2022/06/24/Mask-R-CNN/" itemprop="commentCount"></span>
+          Comments
+        </a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/2D-object-detection/" rel="tag">2D object detection</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/2D-semantic-segmentation/" rel="tag">2D semantic segmentation</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/computer-vision/" rel="tag">computer vision</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/paper-reading/" rel="tag">paper reading</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-FPN" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/06/24/FPN/" class="article-date">
+  <time class="dt-published" datetime="2022-06-24T11:51:10.000Z" itemprop="datePublished">2022-06-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/06/24/FPN/">Feature Pyramid Networks for Object Detection</a>
+    </h1>
+  
+
+      </header>
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>construct feature pyramids with 最低的 extra cost</li>
+<li>为了解决不同尺度下的 object detection 问题</li>
+<li>卷积层自带不同尺寸的功能<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>每卷一层尺寸缩小一点<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>并且 semantically stronger</li>
+</ul>
+        
+          <p class="article-more-link">
+            <a href="/2022/06/24/FPN/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+        <a href="/2022/06/24/FPN/#comments" class="article-comment-link">
+          <span class="post-comments-count valine-comment-count" data-xid="/2022/06/24/FPN/" itemprop="commentCount"></span>
+          Comments
+        </a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/2D-object-detection/" rel="tag">2D object detection</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/computer-vision/" rel="tag">computer vision</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/paper-reading/" rel="tag">paper reading</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Faster-R-CNN" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/06/24/Faster-R-CNN/" class="article-date">
+  <time class="dt-published" datetime="2022-06-24T04:17:53.000Z" itemprop="datePublished">2022-06-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/06/24/Faster-R-CNN/">Faster R-CNN</a>
+    </h1>
+  
+
+      </header>
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>在 Fast R-CNN 降低了卷积的时间时候<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>region proposal 成为了效率的瓶颈</li>
+<li>引入了一个 region proposal 的网络 RPN<span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>region proposal network<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>这是一个全卷积网络<span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>FCN<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>可以在每个位置预测<strong>目标边界</strong>和目标分数</li>
+<li>生成区域后用 Fast R-CNN 继续做</li>
+<li>将 RPN 和 Fast R-CNN 合并成一个新的网络</li>
+</ul>
+        
+          <p class="article-more-link">
+            <a href="/2022/06/24/Faster-R-CNN/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+        <a href="/2022/06/24/Faster-R-CNN/#comments" class="article-comment-link">
+          <span class="post-comments-count valine-comment-count" data-xid="/2022/06/24/Faster-R-CNN/" itemprop="commentCount"></span>
+          Comments
+        </a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/2D-object-detection/" rel="tag">2D object detection</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/computer-vision/" rel="tag">computer vision</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/paper-reading/" rel="tag">paper reading</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-SPP-net" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/06/23/SPP-net/" class="article-date">
+  <time class="dt-published" datetime="2022-06-24T02:50:00.000Z" itemprop="datePublished">2022-06-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/06/23/SPP-net/">SPP-net</a>
+    </h1>
+  
+
+      </header>
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>R-CNN 要求把每个 region proposal 做变换到标准的 224*224 大小<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>这是因为 CNN 中最后的全连接层需要固定的输入大小<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>SPP-net 可以消除这个限制<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>它使用了一个叫做 spatial pyramid pooling 空间金字塔池化的策略<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>同时<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>原先的 R-CNN 由于之前所述的那个要求<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>只能对每一个 region 去做 CNN 提取特征<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>现在则可以先对原图预处理经过 CNN 得到特征图<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>再在特征图上提取对应 region 的特征过 SPP 层<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>这样可以大幅提升效率<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+        
+          <p class="article-more-link">
+            <a href="/2022/06/23/SPP-net/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+        <a href="/2022/06/23/SPP-net/#comments" class="article-comment-link">
+          <span class="post-comments-count valine-comment-count" data-xid="/2022/06/23/SPP-net/" itemprop="commentCount"></span>
+          Comments
+        </a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/2D-object-detection/" rel="tag">2D object detection</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/computer-vision/" rel="tag">computer vision</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/paper-reading/" rel="tag">paper reading</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Fast-R-CNN" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/06/23/Fast-R-CNN/" class="article-date">
+  <time class="dt-published" datetime="2022-06-23T13:19:50.000Z" itemprop="datePublished">2022-06-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/06/23/Fast-R-CNN/">Fast R-CNN</a>
+    </h1>
+  
+
+      </header>
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>相较于 R-CNN 更快且更好</li>
+<li>比 R-CNN 训练快9倍<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>测试快213倍</li>
+<li>此前的 R-CNN 和 SPP-net 都是多阶段的训练<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>首先训练一个卷积层提取特征<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>fine-tune<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>然后训练 SVM 分类器<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>Fast R-CNN 提出了多任务损失的<strong>单阶段训练</strong><span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>训练可以更新所有网络层参数</li>
+</ul>
+        
+          <p class="article-more-link">
+            <a href="/2022/06/23/Fast-R-CNN/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+        <a href="/2022/06/23/Fast-R-CNN/#comments" class="article-comment-link">
+          <span class="post-comments-count valine-comment-count" data-xid="/2022/06/23/Fast-R-CNN/" itemprop="commentCount"></span>
+          Comments
+        </a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/2D-object-detection/" rel="tag">2D object detection</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/computer-vision/" rel="tag">computer vision</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/paper-reading/" rel="tag">paper reading</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-R-CNN" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/06/20/R-CNN/" class="article-date">
+  <time class="dt-published" datetime="2022-06-20T13:09:53.000Z" itemprop="datePublished">2022-06-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/06/20/R-CNN/">R-CNN</a>
+    </h1>
+  
+
+      </header>
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="R-CNN">R-CNN<a class="anchor" href="#R-CNN">·</a></h1>
+<ul>
+<li>2014 年</li>
+<li>首次使用 CNN 在 2D 目标检测上达到一个不错的效果</li>
+<li>bottom-up region proposals to localize and segment objects</li>
+<li>提供了一个缺少标注数据的问题的训练方法: pre-train the network with supervision for a auxiliary task and fine-tune the network for the target task</li>
+</ul>
+        
+          <p class="article-more-link">
+            <a href="/2022/06/20/R-CNN/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+        <a href="/2022/06/20/R-CNN/#comments" class="article-comment-link">
+          <span class="post-comments-count valine-comment-count" data-xid="/2022/06/20/R-CNN/" itemprop="commentCount"></span>
+          Comments
+        </a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/2D-object-detection/" rel="tag">2D object detection</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/computer-vision/" rel="tag">computer vision</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/paper-reading/" rel="tag">paper reading</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-how-to-read-a-paper" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/06/19/how-to-read-a-paper/" class="article-date">
+  <time class="dt-published" datetime="2022-06-19T12:59:53.000Z" itemprop="datePublished">2022-06-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/06/19/how-to-read-a-paper/">how-to-read-a-paper</a>
+    </h1>
+  
+
+      </header>
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Three-pass-approach">Three-pass approach<a class="anchor" href="#Three-pass-approach">·</a></h1>
+<ul>
+<li>第一遍<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span>give you a general idea of the paper</li>
+<li>第二遍<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span>grasp content, but not details</li>
+<li>第三遍<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span>understand the paper in depth</li>
+</ul>
+        
+          <p class="article-more-link">
+            <a href="/2022/06/19/how-to-read-a-paper/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+        <a href="/2022/06/19/how-to-read-a-paper/#comments" class="article-comment-link">
+          <span class="post-comments-count valine-comment-count" data-xid="/2022/06/19/how-to-read-a-paper/" itemprop="commentCount"></span>
+          Comments
+        </a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Others/" rel="tag">Others</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/paper-reading/" rel="tag">paper reading</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-theory-of-computation-note-2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/05/21/theory-of-computation-note-2/" class="article-date">
+  <time class="dt-published" datetime="2022-05-21T18:57:03.000Z" itemprop="datePublished">2022-05-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/05/21/theory-of-computation-note-2/">theory-of-computation-note-2</a>
+    </h1>
+  
+
+      </header>
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Time-complexity">Time complexity<a class="anchor" href="#Time-complexity">·</a></h2>
+<h3 id="Definition">Definition<a class="anchor" href="#Definition">·</a></h3>
+<ul>
+<li>Let M be a deterministic Turing machine that halts on all input. The <strong>running time</strong> or <strong>time complexity</strong> of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi></mrow><annotation encoding="application/x-tex">M</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span></span></span></span> is the function <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo>:</mo><mi>N</mi><mo>→</mo><mi>N</mi></mrow><annotation encoding="application/x-tex">f: N\rightarrow N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>, where <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">f(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span> is the <strong>maximum number of steps</strong> that <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi></mrow><annotation encoding="application/x-tex">M</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span></span></span></span> uses on any input of length <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span>.</li>
+</ul>
+        
+          <p class="article-more-link">
+            <a href="/2022/05/21/theory-of-computation-note-2/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+        <a href="/2022/05/21/theory-of-computation-note-2/#comments" class="article-comment-link">
+          <span class="post-comments-count valine-comment-count" data-xid="/2022/05/21/theory-of-computation-note-2/" itemprop="commentCount"></span>
+          Comments
+        </a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Lecture-Note/" rel="tag">Lecture Note</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Theory-of-computation/" rel="tag">Theory of computation</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/list/">&laquo; Prev</a><a class="page-number" href="/list/">1</a><span class="page-number current">2</span><a class="page-number" href="/list/page/3/">3</a><a class="extend next" rel="next" href="/list/page/3/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+        <span id="busuanzi_container_site_pv" style='display:none'>Total view count: <span id="busuanzi_value_site_pv"></span></span>
+<p>Powered by <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/">Hexo</a> & Theme <a target="_blank" rel="noopener" href="https://github.com/bill-xia/hexo-theme-mashiro">Mashiro</a> & GitHub Pages</p><p>Copyright © 2024 igzat1no. LICENSE CC BY-NC-SA 4.0.</p>
+      
+    </div>
+  </div>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</footer>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('pre').forEach((preBlock) => {
+      const code = preBlock.querySelector('code');
+      if (!code) return;
+
+      const button = document.createElement('button');
+      button.innerText = 'Copy';
+      button.className = 'copy-button';
+
+      button.addEventListener('click', () => {
+        navigator.clipboard.writeText(code.innerText).then(() => {
+          button.innerText = 'Copied!';
+          setTimeout(() => button.innerText = 'Copy', 1500);
+        }).catch(() => {
+          button.innerText = 'Failed';
+        });
+      });
+
+      preBlock.style.position = 'relative';
+      preBlock.appendChild(button);
+    });
+  });
+  </script>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Posts</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    
+
+<script src="/js/clipboard.min.js"></script>
+<script src="/js/jquery-1.4.3.min.js"></script>
+
+<script src="/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js"></script>
+
+<script>
+    var GUEST_INFO = ['nick','mail','link'];
+    var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+        return GUEST_INFO.indexOf(item) > -1
+    });
+    var notify = 'false' == true;
+    var verify = 'false' == true;
+    new Valine({
+        el: '.vcomment',
+        notify: notify,
+        verify: verify,
+        appId: "k2JFn7Fvw42zZfjmoYffhjGC-gzGzoHsz",
+        appKey: "pLfzf8qWKmVAAZPSJ0fXlTlg",
+        placeholder: "Leave your footprints here!!",
+        pageSize:'10',
+        avatar:'wavatar',
+        lang:'zh-cn'
+    });
+</script>
+
+
+
+  </div>
+</body>
+</html>

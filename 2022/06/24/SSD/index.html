@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Single Shot MultiBox Detector (SSD) | igzat1no&#39;s blog</title>
+  <link rel="stylesheet" href="/css/fonts/Chinese-normal-normal.min.css">
+  <link rel="stylesheet" href="/css/fonts/ChineseMono-normal-normal.min.css">
+  <link rel="stylesheet" href="/css/fonts/Chinese-italic-normal.min.css">
+  <link rel="stylesheet" href="/css/fonts/Chinese-normal-bold.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="
+单个网络
+将 bounding box 的输出离散为默认框 anchor，有预知的宽高比和尺寸
+对每个默认框打分，并且做 bounding box regression
+结合不同分辨率的预测来处理多尺寸的问题
+">
+  
+  
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/prism.css">
+  <link rel="stylesheet" href="/css/prism-line-numbers.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox-1.3.4.css">
+  
+  
+    <link rel="stylesheet" href="/katex/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="/katex/katex.min.js" integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="/katex/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+            {left: '\\(', right: '\\)', display: false},
+            {left: '\\[', right: '\\]', display: true}
+          ],
+          throwOnError : false
+        });
+      });
+    </script>
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div id="nav-outer">
+  <nav id="main-nav" class="outer">
+    <a id="main-nav-toggle" class="nav-icon"></a>
+    
+      <a class="main-nav-link" href="/">Home</a>
+    
+      <a class="main-nav-link" href="/archives">Posts</a>
+    
+      <a class="main-nav-link" href="/about">About</a>
+    
+    <div class="main-nav-space-between"></div>
+    
+  </nav>
+</div>
+<div id="header-title">
+
+  
+</div>
+
+      <div id="content" class="outer">
+        <section id="main"><article id="post-SSD" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/06/24/SSD/" class="article-date">
+  <time class="dt-published" datetime="2022-06-24T14:46:44.000Z" itemprop="datePublished">2022-06-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Single Shot MultiBox Detector (SSD)
+    </h1>
+  
+
+      </header>
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>单个网络</li>
+<li>将 bounding box 的输出离散为默认框 anchor<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>有预知的宽高比和尺寸</li>
+<li>对每个默认框打分<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>并且做 bounding box regression</li>
+<li>结合不同分辨率的预测来处理多尺寸的问题</li>
+</ul>
+<span id="more"></span>
+<h1 id="此前已经用过的技巧">此前已经用过的技巧<a class="anchor" href="#此前已经用过的技巧">·</a></h1>
+<ul>
+<li>金字塔结构<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>大分辨率的用来检测小物体<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>小分辨率用来检测大物体</li>
+<li>采用 anchor box
+<ul>
+<li>将 feature map 分成许多格子<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>每个格子设定固定大小和比例的先验检测框 anchor</li>
+</ul>
+</li>
+</ul>
+<h1 id="网络结构">网络结构<a class="anchor" href="#网络结构">·</a></h1>
+<p><img src="/2022/06/24/SSD/image-20220624105403252.png" alt="image-20220624105403252" loading="lazy"></p>
+<h3 id="Atrous-Algorithm-span-class-bd-box-h-char-class-bd-bd-end-h-inner-（-h-inner-h-char-span-Dilated-Convolution膨胀卷积-span-class-bd-box-h-char-class-bd-bd-beg-h-inner-、-h-inner-h-char-span-空洞卷积-span-class-bd-box-h-char-class-bd-bd-beg-h-inner-）-h-inner-h-char-span">Atrous Algorithm<span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>Dilated Convolution膨胀卷积<span class="bd-box"><h-char class="bd bd-beg"><h-inner>、</h-inner></h-char></span>空洞卷积<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char></span><a class="anchor" href="#Atrous-Algorithm-span-class-bd-box-h-char-class-bd-bd-end-h-inner-（-h-inner-h-char-span-Dilated-Convolution膨胀卷积-span-class-bd-box-h-char-class-bd-bd-beg-h-inner-、-h-inner-h-char-span-空洞卷积-span-class-bd-box-h-char-class-bd-bd-beg-h-inner-）-h-inner-h-char-span">·</a></h3>
+<h3 id="损失函数">损失函数<a class="anchor" href="#损失函数">·</a></h3>
+<p>和Faster RCNN的基本一样<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>由分类和回归两部分组成<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>回归部分的loss是希望预测的box和prior box的差距尽可能跟ground truth和prior box的差距接近<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>这样预测的box就能尽量和ground truth一样<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>总损失是置信度损失和位置损失的加权和
+<img src="/2022/06/24/SSD/a1ed0d903ca63276a4a56d37652805db.png" alt="总误差" loading="lazy">
+<img src="/2022/06/24/SSD/30045a4eff896f3a86e98ea0715685b4.png" alt="位置损失" loading="lazy"></p>
+<h3 id="数据扩增">数据扩增<a class="anchor" href="#数据扩增">·</a></h3>
+<p>为了使模型对各种输入目标大小和形状更鲁棒<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>每张训练图像都是通过以下选项之一进行随机采样的<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span>1.直接使用整个原始输入图像<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>
+2.采样一个patch<span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>就是feature map 上裁下来一部分<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>使得与目标之间的最小Jaccard overlap重叠为0.1<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>0.3<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>0.5<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>0.7或0.9<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>
+3.水平翻转<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span>以0.5的概率进行水平翻转
+4.光度失真<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span> Some improvements on deep convolutional neural network based image classification中提出的</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+        <a href="/2022/06/24/SSD/#comments" class="article-comment-link">
+          <span class="post-comments-count valine-comment-count" data-xid="/2022/06/24/SSD/" itemprop="commentCount"></span>
+          留言
+        </a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/2D-object-detection/" rel="tag">2D object detection</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/computer-vision/" rel="tag">computer vision</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/paper-reading/" rel="tag">paper reading</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/06/24/Retina-net/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          RetinaNet
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/06/24/Cascade-R-CNN/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          Cascade-R-CNN
+        
+      </div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+  <section id="comments" class="vcomment">
+
+  </section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+        <span id="busuanzi_container_site_pv" style='display:none'>Total view count: <span id="busuanzi_value_site_pv"></span></span>
+<p>Powered by <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/">Hexo</a> & Theme <a target="_blank" rel="noopener" href="https://github.com/bill-xia/hexo-theme-mashiro">Mashiro</a> & GitHub Pages</p><p>Copyright © 2024 igzat1no. LICENSE CC BY-NC-SA 4.0.</p>
+      
+    </div>
+  </div>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</footer>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('pre').forEach((preBlock) => {
+      const code = preBlock.querySelector('code');
+      if (!code) return;
+
+      const button = document.createElement('button');
+      button.innerText = 'Copy';
+      button.className = 'copy-button';
+
+      button.addEventListener('click', () => {
+        navigator.clipboard.writeText(code.innerText).then(() => {
+          button.innerText = 'Copied!';
+          setTimeout(() => button.innerText = 'Copy', 1500);
+        }).catch(() => {
+          button.innerText = 'Failed';
+        });
+      });
+
+      preBlock.style.position = 'relative';
+      preBlock.appendChild(button);
+    });
+  });
+  </script>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Posts</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    
+
+<script src="/js/clipboard.min.js"></script>
+<script src="/js/jquery-1.4.3.min.js"></script>
+
+<script src="/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js"></script>
+
+<script>
+    var GUEST_INFO = ['nick','mail','link'];
+    var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+        return GUEST_INFO.indexOf(item) > -1
+    });
+    var notify = 'false' == true;
+    var verify = 'false' == true;
+    new Valine({
+        el: '.vcomment',
+        notify: notify,
+        verify: verify,
+        appId: "k2JFn7Fvw42zZfjmoYffhjGC-gzGzoHsz",
+        appKey: "pLfzf8qWKmVAAZPSJ0fXlTlg",
+        placeholder: "Leave your footprints here!!",
+        pageSize:'10',
+        avatar:'wavatar',
+        lang:'zh-cn'
+    });
+</script>
+
+
+
+  </div>
+</body>
+</html>

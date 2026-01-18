@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Faster R-CNN | igzat1no&#39;s blog</title>
+  <link rel="stylesheet" href="/css/fonts/Chinese-normal-normal.min.css">
+  <link rel="stylesheet" href="/css/fonts/ChineseMono-normal-normal.min.css">
+  <link rel="stylesheet" href="/css/fonts/Chinese-italic-normal.min.css">
+  <link rel="stylesheet" href="/css/fonts/Chinese-normal-bold.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="
+在 Fast R-CNN 降低了卷积的时间时候，region proposal 成为了效率的瓶颈
+引入了一个 region proposal 的网络 RPN（region proposal network），这是一个全卷积网络（FCN），可以在每个位置预测目标边界和目标分数
+生成区域后用 Fast R-CNN 继续做
+将 RPN 和 Fast R-CNN 合并成一个新的网络
+">
+  
+  
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/prism.css">
+  <link rel="stylesheet" href="/css/prism-line-numbers.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox-1.3.4.css">
+  
+  
+    <link rel="stylesheet" href="/katex/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="/katex/katex.min.js" integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="/katex/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+            {left: '\\(', right: '\\)', display: false},
+            {left: '\\[', right: '\\]', display: true}
+          ],
+          throwOnError : false
+        });
+      });
+    </script>
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div id="nav-outer">
+  <nav id="main-nav" class="outer">
+    <a id="main-nav-toggle" class="nav-icon"></a>
+    
+      <a class="main-nav-link" href="/">Home</a>
+    
+      <a class="main-nav-link" href="/archives">Posts</a>
+    
+      <a class="main-nav-link" href="/about">About</a>
+    
+    <div class="main-nav-space-between"></div>
+    
+  </nav>
+</div>
+<div id="header-title">
+
+  
+</div>
+
+      <div id="content" class="outer">
+        <section id="main"><article id="post-Faster-R-CNN" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/06/24/Faster-R-CNN/" class="article-date">
+  <time class="dt-published" datetime="2022-06-24T04:17:53.000Z" itemprop="datePublished">2022-06-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Faster R-CNN
+    </h1>
+  
+
+      </header>
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>在 Fast R-CNN 降低了卷积的时间时候<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>region proposal 成为了效率的瓶颈</li>
+<li>引入了一个 region proposal 的网络 RPN<span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>region proposal network<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>这是一个全卷积网络<span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>FCN<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>可以在每个位置预测<strong>目标边界</strong>和目标分数</li>
+<li>生成区域后用 Fast R-CNN 继续做</li>
+<li>将 RPN 和 Fast R-CNN 合并成一个新的网络</li>
+</ul>
+<span id="more"></span>
+<h1 id="introduction">introduction<a class="anchor" href="#introduction">·</a></h1>
+<p>卷积特征映射也可以用来生成 region proposal</p>
+<p>在特征的基础上添加额外的卷积层来构建 RPN</p>
+<p>为了将两个网络融合<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>提出了新的训练方式<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span>在 fine-tune region proposal task 和 fine-tune object detection 之间交替</p>
+<h1 id="Region-Proposal-Networks">Region Proposal Networks<a class="anchor" href="#Region-Proposal-Networks">·</a></h1>
+<p>输入任意大小的图像<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>输出一组矩形的 proposals<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>每个 proposal 都有对应的分数 objectness score</p>
+<p><img src="/2022/06/24/Faster-R-CNN/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMwMTQ2OTM3,size_16,color_FFFFFF,t_70.png" alt="在这里插入图片描述" loading="lazy"></p>
+<ul>
+<li>slide a small network over the feature map
+<ul>
+<li>input <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>×</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">n \times n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span> spatial window of the feature map</li>
+<li>output 低维向量</li>
+<li>就是一个 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>×</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">n\times n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span> 的卷积层</li>
+</ul>
+</li>
+<li>分支出去两个<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>一个 box-regression layer (reg) 和一个 box-classification layer (cls)<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>刚才得到的低维向量分别进到两个部分中</li>
+<li>之前说了是 FCN<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>所以两个分支其实是两个 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>×</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">1\times 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span> 的卷积层</li>
+</ul>
+<h2 id="Anchor">Anchor<a class="anchor" href="#Anchor">·</a></h2>
+<p>在每个 sliding window 上<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>同时 predict <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span> 个 region proposals<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>所以 reg 的输出大小是 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4</mn><mi>k</mi></mrow><annotation encoding="application/x-tex">4k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord">4</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span><span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>region proposal 的位置参数<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>cls 的输出大小是 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>k</mi></mrow><annotation encoding="application/x-tex">2k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord">2</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span><span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>只关心这个框是不是background<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>是的概率和不是的概率<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>2个数<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char></span></p>
+<p>我们使用一个 sliding window 在 feature map 上滑动<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>找到这个 sliding window 的中心点在原图上对应的像素点位置<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>在原图上以这个像素点为中心生成一系列 anchor boxes<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>这些 anchor boxes 的大小等是预设的<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<blockquote>
+<p>we use <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">3</span></span></span></span> scales with box areas of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>128</mn><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">128^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">12</span><span class="mord"><span class="mord">8</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span>, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>256</mn><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">256^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">25</span><span class="mord"><span class="mord">6</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span> , and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>512</mn><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">512^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">51</span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span> pixels, and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">3</span></span></span></span> aspect ratios of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>:</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo>:</mo><mn>2</mn><mo separator="true">,</mo></mrow><annotation encoding="application/x-tex">1:1, 1:2,</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8389em;vertical-align:-0.1944em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8389em;vertical-align:-0.1944em;"></span><span class="mord">2</span><span class="mpunct">,</span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>:</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">2:1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></p>
+</blockquote>
+<p>这样就会有 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>×</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">3 \times 3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">3</span></span></span></span> 一共 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>9</mn></mrow><annotation encoding="application/x-tex">9</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">9</span></span></span></span> 种 anchor</p>
+<p>基于候选框的 cls 的得分<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>选出大致 2k 个候选框</p>
+<h2 id="Loss">Loss<a class="anchor" href="#Loss">·</a></h2>
+<p><img src="/2022/06/24/Faster-R-CNN/image-20220624004345039.png" alt="image-20220624004345039" loading="lazy"></p>
+<p><img src="/2022/06/24/Faster-R-CNN/image-20220624004350654.png" alt="image-20220624004350654" loading="lazy"></p>
+<h2 id="权值共享">权值共享<a class="anchor" href="#权值共享">·</a></h2>
+<p>论文提出一种算法通过<strong>交替优化</strong>来实现权值共享<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>有四个步骤<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span></p>
+<ol>
+<li>利用ImageNet预训练分类模型初始化前置卷积网络层参数<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>并开始单独训练RPN网络参数<span class="bd-box"><h-char class="bd bd-beg"><h-inner>；</h-inner></h-char></span></li>
+<li>固定RPN网络独有的卷积层以及全连接层参数<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>再利用 ImageNet预训练分类模型初始化前置卷积网络参数<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>并利用RPN 网络生成的候选框去训练Fast RCNN网络参数<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></li>
+<li>固定利用Fast RCNN训练好的前置卷积网络层参数<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>去微调RPN 网络独有的卷积层以及全连接层参数<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></li>
+<li>同样保持固定前置卷积网络层参数<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>去微调Fast RCNN网络的全连接层参数<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>最后RPN网络与Fast RCNN网络共享前置卷积网络层参数<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>构成一个统一网络<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>对Fast R-CNN的全连接层进行微调<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+        <a href="/2022/06/24/Faster-R-CNN/#comments" class="article-comment-link">
+          <span class="post-comments-count valine-comment-count" data-xid="/2022/06/24/Faster-R-CNN/" itemprop="commentCount"></span>
+          留言
+        </a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/2D-object-detection/" rel="tag">2D object detection</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/computer-vision/" rel="tag">computer vision</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/paper-reading/" rel="tag">paper reading</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/06/24/FPN/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Feature Pyramid Networks for Object Detection
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/06/23/SPP-net/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          SPP-net
+        
+      </div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+  <section id="comments" class="vcomment">
+
+  </section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+        <span id="busuanzi_container_site_pv" style='display:none'>Total view count: <span id="busuanzi_value_site_pv"></span></span>
+<p>Powered by <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/">Hexo</a> & Theme <a target="_blank" rel="noopener" href="https://github.com/bill-xia/hexo-theme-mashiro">Mashiro</a> & GitHub Pages</p><p>Copyright © 2024 igzat1no. LICENSE CC BY-NC-SA 4.0.</p>
+      
+    </div>
+  </div>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</footer>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('pre').forEach((preBlock) => {
+      const code = preBlock.querySelector('code');
+      if (!code) return;
+
+      const button = document.createElement('button');
+      button.innerText = 'Copy';
+      button.className = 'copy-button';
+
+      button.addEventListener('click', () => {
+        navigator.clipboard.writeText(code.innerText).then(() => {
+          button.innerText = 'Copied!';
+          setTimeout(() => button.innerText = 'Copy', 1500);
+        }).catch(() => {
+          button.innerText = 'Failed';
+        });
+      });
+
+      preBlock.style.position = 'relative';
+      preBlock.appendChild(button);
+    });
+  });
+  </script>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Posts</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    
+
+<script src="/js/clipboard.min.js"></script>
+<script src="/js/jquery-1.4.3.min.js"></script>
+
+<script src="/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js"></script>
+
+<script>
+    var GUEST_INFO = ['nick','mail','link'];
+    var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+        return GUEST_INFO.indexOf(item) > -1
+    });
+    var notify = 'false' == true;
+    var verify = 'false' == true;
+    new Valine({
+        el: '.vcomment',
+        notify: notify,
+        verify: verify,
+        appId: "k2JFn7Fvw42zZfjmoYffhjGC-gzGzoHsz",
+        appKey: "pLfzf8qWKmVAAZPSJ0fXlTlg",
+        placeholder: "Leave your footprints here!!",
+        pageSize:'10',
+        avatar:'wavatar',
+        lang:'zh-cn'
+    });
+</script>
+
+
+
+  </div>
+</body>
+</html>

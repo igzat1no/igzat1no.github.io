@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Fast R-CNN | igzat1no&#39;s blog</title>
+  <link rel="stylesheet" href="/css/fonts/Chinese-normal-normal.min.css">
+  <link rel="stylesheet" href="/css/fonts/ChineseMono-normal-normal.min.css">
+  <link rel="stylesheet" href="/css/fonts/Chinese-italic-normal.min.css">
+  <link rel="stylesheet" href="/css/fonts/Chinese-normal-bold.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="
+相较于 R-CNN 更快且更好
+比 R-CNN 训练快9倍，测试快213倍
+此前的 R-CNN 和 SPP-net 都是多阶段的训练，首先训练一个卷积层提取特征，fine-tune，然后训练 SVM 分类器。Fast R-CNN 提出了多任务损失的单阶段训练，训练可以更新所有网络层参数
+">
+  
+  
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/prism.css">
+  <link rel="stylesheet" href="/css/prism-line-numbers.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox-1.3.4.css">
+  
+  
+    <link rel="stylesheet" href="/katex/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="/katex/katex.min.js" integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="/katex/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+            {left: '\\(', right: '\\)', display: false},
+            {left: '\\[', right: '\\]', display: true}
+          ],
+          throwOnError : false
+        });
+      });
+    </script>
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div id="nav-outer">
+  <nav id="main-nav" class="outer">
+    <a id="main-nav-toggle" class="nav-icon"></a>
+    
+      <a class="main-nav-link" href="/">Home</a>
+    
+      <a class="main-nav-link" href="/archives">Posts</a>
+    
+      <a class="main-nav-link" href="/about">About</a>
+    
+    <div class="main-nav-space-between"></div>
+    
+  </nav>
+</div>
+<div id="header-title">
+
+  
+</div>
+
+      <div id="content" class="outer">
+        <section id="main"><article id="post-Fast-R-CNN" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/06/23/Fast-R-CNN/" class="article-date">
+  <time class="dt-published" datetime="2022-06-23T13:19:50.000Z" itemprop="datePublished">2022-06-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Fast R-CNN
+    </h1>
+  
+
+      </header>
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>相较于 R-CNN 更快且更好</li>
+<li>比 R-CNN 训练快9倍<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>测试快213倍</li>
+<li>此前的 R-CNN 和 SPP-net 都是多阶段的训练<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>首先训练一个卷积层提取特征<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>fine-tune<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>然后训练 SVM 分类器<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>Fast R-CNN 提出了多任务损失的<strong>单阶段训练</strong><span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>训练可以更新所有网络层参数</li>
+</ul>
+<span id="more"></span>
+<h1 id="网络架构与训练">网络架构与训练<a class="anchor" href="#网络架构与训练">·</a></h1>
+<p><img src="/2022/06/23/Fast-R-CNN/image-20220623234407334.png" alt="image-20220623234407334" loading="lazy"></p>
+<p>将整个图像和一组候选框作为输入</p>
+<p>首先仍使用卷积层和池化层去处理图像<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>得到特征<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>然后<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>对于每个候选框<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>RoI pooling layer 从对应框中的特征中提取<strong>固定长度</strong>的 feature vector<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>送到全连接中<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>分支成两个输出<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span>一个是 K+1 <span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>1指 background) 个类别的分类器<span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>softmax<span class="bd-box"><h-char class="bd bd-beg"><h-inner>）</h-inner></h-char><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>另外一个是对于 K 个类别的每一个类别输出 4 个实数<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>标识 假设是该类别的情况下 修正后检测框的位置<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<h2 id="RoI-pooling-layer">RoI pooling layer<a class="anchor" href="#RoI-pooling-layer">·</a></h2>
+<p>使用最大池化</p>
+<p>简化版的 SPP layer<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>只有一个金字塔层<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>将矩形窗口内的特征转化为固定大小 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo>×</mo><mi>W</mi></mrow><annotation encoding="application/x-tex">H \times W</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">W</span></span></span></span> 的小特征图<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<h2 id="训练的方法">训练的方法<a class="anchor" href="#训练的方法">·</a></h2>
+<p>Fast R-CNN 能实现单阶段<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>是因为他能够用反向传播训练整个网络的权重<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<p>此前的 R-CNN 和 SPP-net 不能够更新 CNN 部分的权重<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>是因为 region proposal 可能很大<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>SGD 的 batch size 假如说是128<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>那就是每次输入 128 个 region proposal<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>他们基本上来自于不同的图<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>并且大概率跟原图差不多大<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>那就跟训练 128 张完整的图差不多<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>算力跟不上<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<p>Fast R-CNN 提出<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>我们用比较少的图<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>每次多选几个 region proposal<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>比如同样是 128<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>Fast R-CNN 选择用两张图<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>每张图上选 64 个检测框<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>因为同一张图只需要做一次卷积<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>可以共享参数<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>所以相当于快了 64 倍<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<h3 id="Loss-的选择">Loss 的选择<a class="anchor" href="#Loss-的选择">·</a></h3>
+<p><img src="/2022/06/23/Fast-R-CNN/image-20220624001219095.png" alt="image-20220624001219095" loading="lazy"></p>
+<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>L</mi><mrow><mi>c</mi><mi>l</mi><mi>s</mi></mrow></msub><mo stretchy="false">(</mo><mi>p</mi><mo separator="true">,</mo><mi>u</mi><mo stretchy="false">)</mo><mo>=</mo><mo>−</mo><mi>log</mi><mo>⁡</mo><msub><mi>p</mi><mi>u</mi></msub></mrow><annotation encoding="application/x-tex">L_{cls}(p,u) = -\log p_u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">c</span><span class="mord mathnormal mtight" style="margin-right:0.01968em;">l</span><span class="mord mathnormal mtight">s</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">u</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">u</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></p>
+<p>第二项<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span></p>
+<p>对于一个类别 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>首先有一个 true bounding-box <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span></span></span></span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>然后有一个 predicted bounding-box <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>t</mi><mi>u</mi></msup></mrow><annotation encoding="application/x-tex">t^u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6644em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">u</span></span></span></span></span></span></span></span></span></span></span></p>
+<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi><mo stretchy="false">[</mo><mi>u</mi><mo>≥</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">\lambda [u \geq 1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">λ</span><span class="mopen">[</span><span class="mord mathnormal">u</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span> 当 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi><mo>≥</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">u \geq 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719em;vertical-align:-0.136em;"></span><span class="mord mathnormal">u</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span> 是为 1<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>当 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">u=0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span> 时为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>就是说 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span> 类<span class="bd-box"><h-char class="bd bd-end"><h-inner>（</h-inner></h-char></span>background) 是不需要这一项 loss 的</p>
+<p>具体的计算<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span></p>
+<img src="Fast-R-CNN/image-20220624001557360.png" alt="image-20220624001557360" style="zoom:80%;" />
+<p>大概就是两个框差多少</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+        <a href="/2022/06/23/Fast-R-CNN/#comments" class="article-comment-link">
+          <span class="post-comments-count valine-comment-count" data-xid="/2022/06/23/Fast-R-CNN/" itemprop="commentCount"></span>
+          留言
+        </a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/2D-object-detection/" rel="tag">2D object detection</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/computer-vision/" rel="tag">computer vision</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/paper-reading/" rel="tag">paper reading</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/06/23/SPP-net/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          SPP-net
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/06/20/R-CNN/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          R-CNN
+        
+      </div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+  <section id="comments" class="vcomment">
+
+  </section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+        <span id="busuanzi_container_site_pv" style='display:none'>Total view count: <span id="busuanzi_value_site_pv"></span></span>
+<p>Powered by <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/">Hexo</a> & Theme <a target="_blank" rel="noopener" href="https://github.com/bill-xia/hexo-theme-mashiro">Mashiro</a> & GitHub Pages</p><p>Copyright © 2024 igzat1no. LICENSE CC BY-NC-SA 4.0.</p>
+      
+    </div>
+  </div>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</footer>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('pre').forEach((preBlock) => {
+      const code = preBlock.querySelector('code');
+      if (!code) return;
+
+      const button = document.createElement('button');
+      button.innerText = 'Copy';
+      button.className = 'copy-button';
+
+      button.addEventListener('click', () => {
+        navigator.clipboard.writeText(code.innerText).then(() => {
+          button.innerText = 'Copied!';
+          setTimeout(() => button.innerText = 'Copy', 1500);
+        }).catch(() => {
+          button.innerText = 'Failed';
+        });
+      });
+
+      preBlock.style.position = 'relative';
+      preBlock.appendChild(button);
+    });
+  });
+  </script>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Posts</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    
+
+<script src="/js/clipboard.min.js"></script>
+<script src="/js/jquery-1.4.3.min.js"></script>
+
+<script src="/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js"></script>
+
+<script>
+    var GUEST_INFO = ['nick','mail','link'];
+    var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+        return GUEST_INFO.indexOf(item) > -1
+    });
+    var notify = 'false' == true;
+    var verify = 'false' == true;
+    new Valine({
+        el: '.vcomment',
+        notify: notify,
+        verify: verify,
+        appId: "k2JFn7Fvw42zZfjmoYffhjGC-gzGzoHsz",
+        appKey: "pLfzf8qWKmVAAZPSJ0fXlTlg",
+        placeholder: "Leave your footprints here!!",
+        pageSize:'10',
+        avatar:'wavatar',
+        lang:'zh-cn'
+    });
+</script>
+
+
+
+  </div>
+</body>
+</html>

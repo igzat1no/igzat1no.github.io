@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>SPP-net | igzat1no&#39;s blog</title>
+  <link rel="stylesheet" href="/css/fonts/Chinese-normal-normal.min.css">
+  <link rel="stylesheet" href="/css/fonts/ChineseMono-normal-normal.min.css">
+  <link rel="stylesheet" href="/css/fonts/Chinese-italic-normal.min.css">
+  <link rel="stylesheet" href="/css/fonts/Chinese-normal-bold.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="R-CNN 要求把每个 region proposal 做变换到标准的 224*224 大小，这是因为 CNN 中最后的全连接层需要固定的输入大小。SPP-net 可以消除这个限制。它使用了一个叫做 spatial pyramid pooling 空间金字塔池化的策略。同时，原先的 R-CNN 由于之前所述的那个要求，只能对每一个 region 去做 CNN 提取特征，现在则可以先对原图预处理经过 CNN 得到特征图，再在特征图上提取对应 region 的特征过 SPP 层，这样可以大幅提升效率。">
+  
+  
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/prism.css">
+  <link rel="stylesheet" href="/css/prism-line-numbers.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox-1.3.4.css">
+  
+  
+    <link rel="stylesheet" href="/katex/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="/katex/katex.min.js" integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="/katex/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+            {left: '\\(', right: '\\)', display: false},
+            {left: '\\[', right: '\\]', display: true}
+          ],
+          throwOnError : false
+        });
+      });
+    </script>
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div id="nav-outer">
+  <nav id="main-nav" class="outer">
+    <a id="main-nav-toggle" class="nav-icon"></a>
+    
+      <a class="main-nav-link" href="/">Home</a>
+    
+      <a class="main-nav-link" href="/archives">Posts</a>
+    
+      <a class="main-nav-link" href="/about">About</a>
+    
+    <div class="main-nav-space-between"></div>
+    
+  </nav>
+</div>
+<div id="header-title">
+
+  
+</div>
+
+      <div id="content" class="outer">
+        <section id="main"><article id="post-SPP-net" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/06/23/SPP-net/" class="article-date">
+  <time class="dt-published" datetime="2022-06-24T02:50:00.000Z" itemprop="datePublished">2022-06-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      SPP-net
+    </h1>
+  
+
+      </header>
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>R-CNN 要求把每个 region proposal 做变换到标准的 224*224 大小<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>这是因为 CNN 中最后的全连接层需要固定的输入大小<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>SPP-net 可以消除这个限制<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>它使用了一个叫做 spatial pyramid pooling 空间金字塔池化的策略<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>同时<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>原先的 R-CNN 由于之前所述的那个要求<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>只能对每一个 region 去做 CNN 提取特征<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>现在则可以先对原图预处理经过 CNN 得到特征图<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>再在特征图上提取对应 region 的特征过 SPP 层<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>这样可以大幅提升效率<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<span id="more"></span>
+<h1 id="网络结构">网络结构<a class="anchor" href="#网络结构">·</a></h1>
+<h2 id="卷积层">卷积层<a class="anchor" href="#卷积层">·</a></h2>
+<p>首先还是正常的卷积用于提取特征<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>按照往常习惯用 5 层卷积层<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>其中有些卷积层之后也跟着池化层<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>得到我们的 feature maps</p>
+<h2 id="SPP-Layer">SPP Layer<a class="anchor" href="#SPP-Layer">·</a></h2>
+<p>feature map 的大小是跟输入图片的大小相关的<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>SPP 层需要把不同大小的 feature map 转化到相同大小的向量<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>这一层替换掉了原先五层卷积层网络中的最后一层卷积层后面跟着的池化层<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>普通的池化层是对每个固定大小的块做池化<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>比如取该块内的最大值<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>这样<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>池化层之后得到的东西的大小是跟输入相关的<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>现在我们让池化之后的大小固定<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>改变池化时每个块的大小<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<p>设最后一层卷积层的 channel 数量为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>现在我们一共分 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi></mrow><annotation encoding="application/x-tex">M</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span></span></span></span> 个池化块<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>则 SPP 层之后就会得到一个 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mi>M</mi></mrow><annotation encoding="application/x-tex">kM</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span></span></span></span> 大小的向量<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<p><img src="/2022/06/23/SPP-net/f3-1.png" alt="img" loading="lazy"></p>
+<p>如图中所示<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>用不同块数的池化<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>将得到的结果拼到一起<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>对于固定块数的池化<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>比如 4 块的池化<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>我们可以计算出每一块的大小<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<h2 id="网络的训练">网络的训练<a class="anchor" href="#网络的训练">·</a></h2>
+<p>首先在单一尺度的输入上训练<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>SPP-net 就是先在 224*224 的标准尺寸的输入上训练<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<p>然后考虑加入尺度<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>SPP-net 考虑的是 180*180 和 224*224 这两种尺度<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>首先使用缩放<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>将 224*224 的尺寸变换为 180*180<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>然后通过调整池化块的大小<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>让这两个尺寸的 SPP 层的输出是相同的 size<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>这样<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>之后可以使用相同的参数<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>也可以理解为共享参数的两个固定尺寸的网络<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<p>实际训练中是两个尺寸来回切换<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>每个 epoch 使用其中一个<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>共享网络参数<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<p>测试阶段则可以直接用各种尺寸的输入进行测试<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<h1 id="SPP-net-用于物体检测">SPP-net 用于物体检测<a class="anchor" href="#SPP-net-用于物体检测">·</a></h1>
+<p>只在整张图像上抽取一次特征<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>然后在每个特征图的候选窗口上应用空间金字塔池化<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>形成这个窗口的一个固定长度表示<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<img src="http://www.dengfanxin.cn/wp-content/uploads/2017/10/f5-1.png" alt="img" style="zoom:67%;" />
+<h2 id="检测算法流程">检测算法流程<a class="anchor" href="#检测算法流程">·</a></h2>
+<p>首先使用 selective search 产生 2k 个 region proposal<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>然后缩放图像以满足 min(w,h)=s</p>
+<p>从整张图像中提取 feature map</p>
+<p>对于每个 region<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>用一个四级的 SPP layer: <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>×</mo><mn>1</mn><mo separator="true">,</mo><mn>2</mn><mo>×</mo><mn>2</mn><mo separator="true">,</mo><mn>3</mn><mo>×</mo><mn>3</mn><mo separator="true">,</mo><mn>6</mn><mo>×</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">1\times 1, 2\times 2, 3 \times 3,6\times 6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8389em;vertical-align:-0.1944em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8389em;vertical-align:-0.1944em;"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8389em;vertical-align:-0.1944em;"></span><span class="mord">3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">6</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">6</span></span></span></span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>一共 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>50</mn></mrow><annotation encoding="application/x-tex">50</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">50</span></span></span></span> 块池化块<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>这样得到一个 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>12800</mn></mrow><annotation encoding="application/x-tex">12800</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">12800</span></span></span></span> 维的表示<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>传给全连接层<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>然后对于每个类训练一个二分类的 SVM<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+<p>通过多尺度的特征提取<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>可以改进<span class="bd-box"><h-char class="bd bd-beg"><h-inner>：</h-inner></h-char></span></p>
+<p>将图像缩放成不同大小<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>对每一个计算对应的特征图<span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span>对于每一个 region<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>我们选择一个池化尺度<span class="bd-box"><h-char class="bd bd-beg"><h-inner>，</h-inner></h-char></span>让缩放后的像素数量接近 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>224</mn><mo>×</mo><mn>224</mn></mrow><annotation encoding="application/x-tex">224\times 224</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">224</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">224</span></span></span></span><span class="bd-box"><h-char class="bd bd-beg"><h-inner>。</h-inner></h-char></span></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+        <a href="/2022/06/23/SPP-net/#comments" class="article-comment-link">
+          <span class="post-comments-count valine-comment-count" data-xid="/2022/06/23/SPP-net/" itemprop="commentCount"></span>
+          留言
+        </a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/2D-object-detection/" rel="tag">2D object detection</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/computer-vision/" rel="tag">computer vision</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/paper-reading/" rel="tag">paper reading</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/06/24/Faster-R-CNN/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Faster R-CNN
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/06/23/Fast-R-CNN/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          Fast R-CNN
+        
+      </div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+  <section id="comments" class="vcomment">
+
+  </section>
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+        <span id="busuanzi_container_site_pv" style='display:none'>Total view count: <span id="busuanzi_value_site_pv"></span></span>
+<p>Powered by <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/">Hexo</a> & Theme <a target="_blank" rel="noopener" href="https://github.com/bill-xia/hexo-theme-mashiro">Mashiro</a> & GitHub Pages</p><p>Copyright © 2024 igzat1no. LICENSE CC BY-NC-SA 4.0.</p>
+      
+    </div>
+  </div>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</footer>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('pre').forEach((preBlock) => {
+      const code = preBlock.querySelector('code');
+      if (!code) return;
+
+      const button = document.createElement('button');
+      button.innerText = 'Copy';
+      button.className = 'copy-button';
+
+      button.addEventListener('click', () => {
+        navigator.clipboard.writeText(code.innerText).then(() => {
+          button.innerText = 'Copied!';
+          setTimeout(() => button.innerText = 'Copy', 1500);
+        }).catch(() => {
+          button.innerText = 'Failed';
+        });
+      });
+
+      preBlock.style.position = 'relative';
+      preBlock.appendChild(button);
+    });
+  });
+  </script>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Posts</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    
+
+<script src="/js/clipboard.min.js"></script>
+<script src="/js/jquery-1.4.3.min.js"></script>
+
+<script src="/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js"></script>
+
+<script>
+    var GUEST_INFO = ['nick','mail','link'];
+    var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+        return GUEST_INFO.indexOf(item) > -1
+    });
+    var notify = 'false' == true;
+    var verify = 'false' == true;
+    new Valine({
+        el: '.vcomment',
+        notify: notify,
+        verify: verify,
+        appId: "k2JFn7Fvw42zZfjmoYffhjGC-gzGzoHsz",
+        appKey: "pLfzf8qWKmVAAZPSJ0fXlTlg",
+        placeholder: "Leave your footprints here!!",
+        pageSize:'10',
+        avatar:'wavatar',
+        lang:'zh-cn'
+    });
+</script>
+
+
+
+  </div>
+</body>
+</html>
